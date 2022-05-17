@@ -1,0 +1,16 @@
+{
+    "title":"Request Authorization Code",
+    "description":"To verify your identity, we need to send an authorization code to your registered email. The code expires 10 minutes after you request it.",
+    "class":"loginform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"100%","margin":"0px 0px 0px 0px"},
+        "emlist":[
+          {"emid":"via_email", "emtype":"radio", "datatype":"string", "label":"send code to my email - $EMAIL", "name":"send_method", "class":"loginform", "value":"via_email", "required":true, "checked":true},
+          {"emid":"via_phone", "status":"inactive", "emtype":"radio", "datatype":"string", "label":"Send code to my phone - $PHONE", "name":"send_method", "class":    "loginform", "value":"via_phone", "required":false,
+          "description":"Supported carriers include: Alltel, AT&T, Cellular One, T-Mobile, Virgin Mobile, U.S Cellular and Verizon  Wireless."}
+        ]
+      }
+    ]
+}

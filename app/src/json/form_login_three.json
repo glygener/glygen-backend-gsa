@@ -1,0 +1,14 @@
+{
+    "title":"Secure Sign In",
+    "description":"An authorization code was sent to your email, please enter it below.",
+    "class":"loginform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"100%","margin":"0px 0px 0px 0px"},
+        "emlist":[
+          {"emid":"code", "emtype":"text", "datatype":"string", "label":"Authentication Code", "maxlength":20, "class":"loginform", "value":"", "required":true, "description":"The code   expires 10 minutes after you request it."}
+        ]
+    }
+  ]
+}

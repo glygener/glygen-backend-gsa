@@ -1,0 +1,200 @@
+import React, { Component } from "react";
+import SearchResults from "./components/search_results";
+import DatasetPage from "./components/dataset_page";
+import StaticPage from "./components/static_page";
+import HistoryList from "./components/history_list";
+import HistoryDetail from "./components/history_detail";
+import FileUploads from "./components/file_uploads";
+
+import Alertdialog from './components/dialogbox';
+import Loadingicon from "./components/loading_icon";
+import * as LocalConfig from "./components/local_config";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HeaderOne from "./components/header_one";
+import HeaderTwo from "./components/header_two";
+import Footer from "./components/footer";
+import Login from "./components/login";
+import Register from "./components/register";
+
+
+
+
+
+class App extends Component {
+
+  state = {
+    dialog:{
+      status:false, 
+      msg:""
+    }
+  };
+
+
+
+  handleDialogClose = () => {
+    var tmpState = this.state;
+    tmpState.dialog.status = false;
+    this.setState(tmpState);
+  }
+
+  componentDidMount() {
+    this.getInit();
+    this.getUserInfo();
+
+  }
+
+  getUserInfo () {
+    let access_csrf = localStorage.getItem("access_csrf")
+    var reqObj = {};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': access_csrf
+      },
+      body: JSON.stringify(reqObj),
+      credentials: 'include'
+    };
+
+    const svcUrl = LocalConfig.apiHash.auth_userinfo;
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.userinfo = result;
+          tmpState.isLoaded = true;
+          this.setState(tmpState);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+
+
+  }
+
+  getInit() {
+    var reqObj = {};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reqObj)
+    };
+
+    const svcUrl = LocalConfig.apiHash.gsa_init;
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.response = result;
+          tmpState.isLoaded = true;
+          if (tmpState.response.status === 0){
+            tmpState.dialog.status = true;
+            tmpState.dialog.msg = tmpState.response.error;
+          }
+          this.setState(tmpState);
+          //console.log("Request:",svcUrl);
+          console.log("getInit response:", result);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
+
+  render() {
+    
+    if (!("response" in this.state)){
+      return <Loadingicon/>
+    }
+    if (!("userinfo" in this.state)){
+      return <Loadingicon/>
+    }
+
+    var app_ver = process.env.REACT_APP_APP_VERSION;
+    var data_ver = this.state.response.record.dataversion;
+    var moduleTitle = "Glycan Structure Archive (GSA)"
+    var userInfo = ("msg" in this.state.userinfo ? undefined : this.state.userinfo);
+
+    return (
+      <div>
+      <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
+      <HeaderOne onSearch={this.handleSearch} onKeyPress={this.handleKeyPress} initObj={this.state.response.record} module={"gsa"}/>
+      <HeaderTwo moduleTitle={moduleTitle} appVer={app_ver} 
+        initObj={this.state.response.record}
+        userinfo={userInfo}
+      />
+      <Router>
+        <Switch>
+          <Route
+            path="/register"
+            render={(props) => (
+              <Register/>
+            )}
+          />
+          <Route
+            path="/login"
+            render={(props) => (
+              <Login/>
+            )}
+          />
+          <Route
+            path="/uploads"
+            render={(props) => (
+              <FileUploads pageId={"File Uploads"} initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            path="/history_list"
+            render={(props) => (
+              <HistoryList pageId={"History List"}  initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            path="/:bcoId/:dataVersion/history"
+            render={(props) => (
+              <HistoryDetail bcoId={props.match.params.bcoId} dataVersion={props.match.params.dataVersion}  initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            path="/static/:pageId"
+            render={(props) => (
+              <StaticPage pageId={props.match.params.pageId}  initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            path="/:bcoId"
+            render={(props) => (
+              <DatasetPage bcoId={props.match.params.bcoId}  initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <SearchResults  initObj={this.state.response.record}/>
+            )}
+          />
+        </Switch>
+      </Router>
+      <Footer />
+      </div>
+    );
+
+    
+  }
+}
+
+export default App;

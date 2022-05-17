@@ -1,0 +1,14 @@
+{
+    "description":"Please login to your GSA account. If you do not already have an account, <a href=\"/register\">click here</a> to sign up for our services.",
+    "class":"loginform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"100%","margin":"0px 0px 0px 0px"},
+        "emlist":[
+          {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email", "maxlength":20, "class":"loginform", "value":"rykahsay@gmail.com", "required":true},
+          {"emid":"password", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":20, "class":"loginform", "value":"Pass123123!", "required":true}
+        ]
+      }
+    ]
+}

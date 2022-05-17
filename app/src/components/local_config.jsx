@@ -1,0 +1,16 @@
+//import * as Zulamodule from "./module_exports";
+
+export const apiHash = {
+  gsa_init:process.env.REACT_APP_API_URL + "/gsa/init",
+  gsa_search:process.env.REACT_APP_API_URL + "/gsa/search",
+  gsa_detail:process.env.REACT_APP_API_URL + "/gsa/detail",
+  gsa_upload:process.env.REACT_APP_API_URL + "/gsa/upload",
+  gsa_submit:process.env.REACT_APP_API_URL + "/gsa/submit",
+  gsa_static_content:process.env.REACT_APP_API_URL + "/gsa/pagecn",
+  auth_register:process.env.REACT_APP_API_URL + "/auth/register",
+  auth_login_direct:process.env.REACT_APP_API_URL + "/auth/login_direct",
+  auth_logout:process.env.REACT_APP_API_URL + "/auth/logout",
+  auth_userinfo:process.env.REACT_APP_API_URL + "/auth/userinfo"
+};
+
+
