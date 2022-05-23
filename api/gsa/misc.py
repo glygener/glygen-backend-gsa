@@ -5,6 +5,8 @@ import csv
 from flask import (Blueprint,request,jsonify,current_app)
 from gsa.db import get_mongodb, log_error, next_sequence_value
 from flask_restx import Resource, Api
+from flask_mail import Mail, Message
+
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('misc', __name__, url_prefix='/misc')
@@ -60,7 +62,9 @@ def upload():
 def info():
     res_obj = {"config":{}}
     #k_list = ["DB_HOST", "DB_NAME", "DB_USERNAME", "DB_PASSWORD",  "DATA_PATH"]
-    k_list = ["DB_HOST", "DB_NAME", "DB_USERNAME",  "DATA_PATH", "MAX_CONTENT_LENGTH"]
+    #k_list = ["DB_HOST", "DB_NAME", "DB_USERNAME",  "DATA_PATH", "MAX_CONTENT_LENGTH"]
+    k_list = ["MAIL_SERVER", "MAIL_PORT", "MAIL_USE_TLS", "MAIL_USE_SSL", 
+            "MAIL_USERNAME", "MAIL_PASSWORD"]    
     #k_list = ["DATA_PATH", "MAX_CONTENT_LENGTH"]
     for k in k_list:
         res_obj["config"][k] = current_app.config[k]
@@ -69,3 +73,24 @@ def info():
     return jsonify(res_obj), 200
 
 
+@bp.route('/sendmail', methods=('GET', 'POST'))
+def sendmail():
+
+
+    #current_app.config["MAIL_SERVER"] = "localhost"
+    
+    res_obj = {}
+    try:
+        msg = Message(
+            "Authentication code from GSA", 
+            sender = current_app.config["MAIL_SENDER"], 
+            recipients = ["rykahsay@gwu.edu"]
+        )
+        msg.body = "Your code is 112233"
+        mail = Mail(current_app)
+        mail.send(msg)
+        res_obj = {"status":"success"}
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+    return jsonify(res_obj), 200

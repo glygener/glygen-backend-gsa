@@ -1,0 +1,203 @@
+{
+  "step_one":{
+    "title":"Select molecule type and source",
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"40%","margin":"0px 0px 0px 0px"},
+        "emlist":[
+          {
+            "emid":"molecule", "emtype":"select", "datatype":"string", 
+            "label":"Molecule Type", "class":"submissionsform", 
+            "value":{
+              "selected":"GlycoProtein",
+              "optlist":[
+                {"value":"Glycan", "label":"Glycan"},
+                {"value":"GlycoProtein", "label":"GlycoProtein"},
+                {"value":"GlycoPeptide", "label":"GlycoPeptide"},
+                {"value":"GlycoLipid", "label":"GlycoLipid"},
+                {"value":"GPI", "label":"GPI"},
+                {"value":"Other Glycoconjugate", "label":"Other Glycoconjugate"}
+              ]
+            }
+          },
+          {
+            "emid":"source", "emtype":"select", "datatype":"string",
+            "label":"Source", "class":"submissionsform",
+            "value":{
+              "selected":"Biological",
+              "optlist":[
+                {"value":"Biological", "label":"Biological"},
+                {"value":"Recombinant expressed", "label":"Recombinant expressed"},
+                {"value":"Synthetic", "label":"Synthetic"},
+                {"value":"Computational", "label":"Computational"}
+              ]
+            }
+          },
+          {
+            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
+            "value":"Cancel", 
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          },
+          {
+            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Next",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
+      }
+    ]
+  },
+  "step_two_glycan":{
+    "title":"Retrieve or enter glycan sequence",
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"50%","margin":"0px 30px 0px 0px", "border":"0px dashed blue"},
+        "emlist":[
+          {
+            "emid":"glytoucan_ac", "emtype":"text", "datatype":"string",
+            "label":"GlyTouCan Accession", "class":"submissionsform",
+            "style":{"width":"25%"},
+            "value":""
+          },
+          {
+            "emid":"retrievbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Retrieve",
+            "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"50%","margin":"40px 0px 0px 0px", "border":"0px dashed blue"},
+        "emlist":[
+          {
+            "emid":"seq_format", "emtype":"select", "datatype":"string",
+            "label":"Sequence Format", "class":"submissionsform",
+            "style":{"width":"25%"},
+            "value":{
+              "selected":"GlycoCT",
+              "optlist":[
+                {"value":"GlycoCT", "label":"GlycoCT"},
+                {"value":"WURCS", "label":"WURCS"}
+              ]
+            }
+          },
+          {
+            "emid":"seq", "emtype":"textarea", "datatype":"string",
+            "label":"Glycan Sequence", "class":"submissionsform",
+            "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
+            "value":""
+          },
+          {
+            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
+            "value":"Cancel",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          },
+          {
+            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Next",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
+      }
+    ]
+  },
+  "step_two_glycoprotein":{
+    "title":"Enter glycoprotein information",
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"50%","margin":"0px 30px 0px 0px", "border":"0px dashed blue"},
+        "emlist":[
+          {
+            "emid":"glytoucan_ac", "emtype":"text", "datatype":"string",
+            "label":"GlyTouCan Accession", "class":"submissionsform",
+            "style":{"width":"25%"},
+            "value":""
+          },
+          {
+            "emid":"retrievbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Retrieve",
+            "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"50%","margin":"40px 0px 0px 0px", "border":"0px dashed blue"},
+        "emlist":[
+          {
+            "emid":"seq_format", "emtype":"select", "datatype":"string",
+            "label":"Sequence Format", "class":"submissionsform",
+            "style":{"width":"25%"},
+            "value":{
+              "selected":"GlycoCT",
+              "optlist":[
+                {"value":"GlycoCT", "label":"GlycoCT"},
+                {"value":"WURCS", "label":"WURCS"}
+              ]
+            }
+          },
+          {
+            "emid":"seq", "emtype":"textarea", "datatype":"string",
+            "label":"Glycan Sequence", "class":"submissionsform",
+            "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
+            "value":""
+          },
+          {
+            "emid":"glycosites", "emtype":"textarea", "datatype":"string",
+            "label":"Glycosylation Sites", "class":"submissionsform",
+            "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
+            "value":""
+          },
+          {
+            "emid":"uniprotkb_ac", "emtype":"text", "datatype":"string",
+            "label":"UniProtKB Accession", "class":"submissionsform",
+            "style":{"width":"35%", "margin":"0px 10px 0px 0px"},
+            "value":""
+          },
+          {
+            "emid":"uniprotkb_pos", "emtype":"int", "datatype":"int",
+            "label":"Site Position", "class":"submissionsform",
+            "style":{"width":"35%"},
+            "value":""
+          },
+          {
+            "emid":"addsitebtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
+            "value":"Add Site",
+            "style":{"width":"20%", "display":"block", "float":"left", 
+              "margin":"18px 0px 0px 10px"}
+          },
+          {
+            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
+            "value":"Cancel",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          },
+          {
+            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Next",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
+      }
+    ]
+  }
+}
+

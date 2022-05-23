@@ -21,7 +21,9 @@ export function verifyReqObj (reqObj, formObj){
         var emId = obj.emid;
         var emValue =  obj.value;
         if(!(emId in reqObj) === true){
-          errorList.push(<li>field "{emId}" missing in request</li>);
+          if (obj.emtype !== "button"){
+            errorList.push(<li>field "{emId}" missing in request</li>);
+          }
         }
         else if (reqObj[emId].toString() === "" ){
           errorList.push(<li key={"error_in_" + emId}>field "{emId}" cannot be empty value</li>);
@@ -235,7 +237,12 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     alert("Hi there");
   }
 
-  function handleChange (targetId) {
+  function handleChange (em) {
+
+    var targetId = "";
+    if (em !== undefined){
+      targetId = em.target.id;
+    }
 
     var emObj = document.getElementById(targetId);
     if (targetId === "password_one"){
@@ -257,7 +264,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         descObj.textContent = "(weak)";
       }
     }
-    emObj.value = $("#" + targetId).val();
+    //emObj.value = $("#" + targetId).val();
 
 
   }
@@ -270,7 +277,6 @@ export function getFormElement(pathId, formObj,formClass, emValue){
       "stringlist"
   ];
 
-
   var emType = formObj.emtype;
   var em = "";
   if (["text","password","int", "float", "datetime"].indexOf(emType) !== -1){
@@ -280,6 +286,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
       <input tag={newType} key={pathId + "_" +newType +  "_input"}
         maxLength={formObj.maxlength}  id={pathId} type={formObj.emtype}
         className={"form-control " + formClass}
+        onChange={handleChange}
         defaultValue={emValue || ''}
       />
     );
@@ -290,6 +297,10 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         </span>
       );
     }
+  }
+  else if (emType === "button"){
+    em = [];
+    em.push(<button id={pathId} className={formObj.class} onClick={formObj.onclick}>{formObj.value}</button>);
   }
   else if (emType === "radio"){
     em = [];

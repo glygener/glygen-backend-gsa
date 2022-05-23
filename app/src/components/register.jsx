@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Formeditor from "./form_editor";
 import Alertdialog from './dialogbox';
-import registerForm from "../json/form_register.json";
+import registerFormOne from "../json/form_register_one.json";
+import registerFormTwo from "../json/form_register_two.json";
+
 import $ from "jquery";
 import { verifyReqObj, verifyPasswords} from './util';
 import Messagecn from './message_cn';
@@ -54,16 +56,16 @@ class Register extends Component {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();
         reqObj["record"][fieldName] = fieldValue;
-        for (var i in registerForm.groups){
-            for (var j in registerForm.groups[i].emlist){
-              var emObj = registerForm.groups[i].emlist[j];
+        for (var i in registerFormOne.groups){
+            for (var j in registerFormOne.groups[i].emlist){
+              var emObj = registerFormOne.groups[i].emlist[j];
               if (fieldName === emObj.emid){ emObj.value = fieldValue;}
             }
         }
         $(this).val("");
     });
 
-    var errorList = verifyReqObj(reqObj.record, registerForm);
+    var errorList = verifyReqObj(reqObj.record, registerFormOne);
     errorList = errorList.concat(verifyPasswords(reqObj.record["password_one"],reqObj.record["password_two"]));
 
 
@@ -125,12 +127,11 @@ class Register extends Component {
 
   render() {
 
-    //registerForm["one"]["fname"]["value"] = "1111111";
     var formCn = (
       <div>
             <div key={"register_form"} className="leftblock " 
               style={{width:"90%", margin:"40px 0px 0px 5%"}}>
-              <Formeditor formClass={registerForm.class} formObj={registerForm}/>
+              <Formeditor formClass={registerFormOne.class} formObj={registerFormOne}/>
             </div>
             
             

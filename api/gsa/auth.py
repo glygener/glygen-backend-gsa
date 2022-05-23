@@ -228,21 +228,70 @@ def logout():
 
 
 
-@bp.route('/register', methods=('GET', 'POST'))
-def register():
+@bp.route('/register_one', methods=('GET', 'POST'))
+def register_one():
     try:
         req_obj = request.json
-        req_obj["record"]["password"] = bcrypt.hashpw(req_obj["record"]["password"].encode('utf-8'), bcrypt.gensalt())
+        new_email, new_password = req_obj["record"]["email"], req_obj["record"]["password"]
+        new_password = bcrypt.hashpw(new_password.encode('utf-8'),bcrypt.gensalt())
         mongo_dbh, error_obj = get_mongodb()
         if error_obj != {}:
             return jsonify(error_obj), 200
-        if mongo_dbh["c_user"].find({"email":req_obj["record"]["email"]}).count() != 0:
-            return jsonify({"status":0, "error":"The email submitted is already registered!"}), 200
+        if mongo_dbh["c_user"].find({"email":new_email}).count() != 0:
+            return jsonify({"status":0, 
+                "error":"The email submitted is already registered!"}), 200
         else:
-            req_obj["record"]["status"] = 0
-            res_obj = insert_one(req_obj)
-            message = "You have registered successfully! Please <a href=\"/login\">click here</a> to login."
-            res_obj["messagecn"] = message
+            shared_key = random_base32()
+            totp = TOTP(shared_key, interval=current_app.config["TOTP_INTERVAL"])
+            code = totp.now()
+            res_obj = {'status': 1, "email": new_email, "shared_key":shared_key}
+            body = "<#>GSA: DO NOT share this Sign In code. "
+            body += "We will never call you or text  you for it. "
+            body += "Code %s" % (code)
+            mail_obj = {
+                "sender_email":current_app.config["MAIL_USERNAME"],
+                "receiver_email":new_email,
+                "subject":"Authentication code from GSA",
+                "body":body
+            }
+            send_mail(mail_obj)
+            # remove this later!!!!!!!!!!!
+            #res_obj["code"] = code
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+
+    return res_obj, 200
+
+
+@bp.route('/register_two', methods=('GET', 'POST'))
+def register_two():
+
+    res_obj = {}
+    try:
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+        req_obj = request.json
+        pwd = req_obj["record"]["password"]
+        req_obj["record"]["password"] = bcrypt.hashpw(pwd.encode('utf-8'),bcrypt.gensalt())
+        code = req_obj["record"]["code"]
+        shared_key = req_obj["record"]["shared_key"] 
+        totp = TOTP(shared_key, interval=current_app.config["TOTP_INTERVAL"])
+        valid = totp.verify(code)
+        if valid:
+            if mongo_dbh["c_user"].find({"email":req_obj["record"]["email"]}).count() != 0:
+                return jsonify({"status":0,
+                    "error":"The email submitted is already registered!"}), 200
+            else:
+                req_obj["record"]["status"] = 1
+                res_obj = insert_one(req_obj)
+                message = "You have registered successfully! "
+                message += "Please <a href=\"/login\">click here</a> to login."
+                res_obj = {"status":1,  "messagecn":message}
+        else:
+            res_obj = jsonify({"status":0, "error": "invalid code"})
+
     except Exception as e:
         res_obj =  log_error(traceback.format_exc())
 

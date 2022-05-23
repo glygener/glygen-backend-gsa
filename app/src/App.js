@@ -4,7 +4,6 @@ import DatasetPage from "./components/dataset_page";
 import StaticPage from "./components/static_page";
 import HistoryList from "./components/history_list";
 import HistoryDetail from "./components/history_detail";
-import FileUploads from "./components/file_uploads";
 
 import Alertdialog from './components/dialogbox';
 import Loadingicon from "./components/loading_icon";
@@ -16,7 +15,7 @@ import HeaderTwo from "./components/header_two";
 import Footer from "./components/footer";
 import Login from "./components/login";
 import Register from "./components/register";
-
+import Submissions from "./components/submissions";
 
 
 
@@ -151,9 +150,9 @@ class App extends Component {
             )}
           />
           <Route
-            path="/uploads"
+            path="/submissions"
             render={(props) => (
-              <FileUploads pageId={"File Uploads"} initObj={this.state.response.record}/>
+              <Submissions pageId={"Submissions"} initObj={this.state.response.record}/>
             )}
           />
           <Route
