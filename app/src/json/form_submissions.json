@@ -1,12 +1,14 @@
 {
   "step_one":{
-    "title":"Select molecule type and source",
+    "title":"GSA Submission step 1 of 5",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
     "groups":[
       {
         "groupid":"one",
-        "style":{"width":"40%","margin":"0px 0px 0px 0px"},
+        "title":"Molecule Type and Source",
+        "style":{"width":"45%","margin":"0px 2% 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"molecule", "emtype":"select", "datatype":"string", 
@@ -35,15 +37,15 @@
                 {"value":"Computational", "label":"Computational"}
               ]
             }
-          },
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
           {
-            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
-            "value":"Cancel", 
-            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
-          },
-          {
-            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "emid":"nextbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
@@ -53,38 +55,34 @@
     ]
   },
   "step_two_glycan":{
-    "title":"Retrieve or enter glycan sequence",
+    "title":"GSA Submission Step 2 of 5",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
     "groups":[
       {
         "groupid":"one",
-        "style":{"width":"50%","margin":"0px 30px 0px 0px", "border":"0px dashed blue"},
+        "title":"Glycan Info",
+        "style":{"width":"45%","margin":"0px 2% 0px 0px", 
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glytoucan_ac", "emtype":"text", "datatype":"string",
             "label":"GlyTouCan Accession", "class":"submissionsform",
-            "style":{"width":"25%"},
-            "value":""
+            "style":{"width":"30%"},
+            "value":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
-          }
-        ]
-      },
-      {
-        "groupid":"two",
-        "style":{"width":"50%","margin":"40px 0px 0px 0px", "border":"0px dashed blue"},
-        "emlist":[
-          {
+          },
+           {
             "emid":"seq_format", "emtype":"select", "datatype":"string",
             "label":"Sequence Format", "class":"submissionsform",
-            "style":{"width":"25%"},
+            "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "value":{
-              "selected":"GlycoCT",
+              "selected":"WURCS",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -95,16 +93,22 @@
             "emid":"seq", "emtype":"textarea", "datatype":"string",
             "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
-          },
+            "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
           {
-            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
-            "value":"Cancel",
+            "emid":"backbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
-            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "emid":"nextbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
@@ -114,38 +118,34 @@
     ]
   },
   "step_two_glycoprotein":{
-    "title":"Enter glycoprotein information",
+    "title":"GSA Submission step 2 of 5",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
     "groups":[
       {
         "groupid":"one",
-        "style":{"width":"50%","margin":"0px 30px 0px 0px", "border":"0px dashed blue"},
+        "title":"Glycan Info",
+        "style":{"width":"45%","margin":"0px 2% 0px 0px", 
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glytoucan_ac", "emtype":"text", "datatype":"string",
             "label":"GlyTouCan Accession", "class":"submissionsform",
-            "style":{"width":"25%"},
-            "value":""
+            "style":{"width":"30%"},
+            "value":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
-          }
-        ]
-      },
-      {
-        "groupid":"two",
-        "style":{"width":"50%","margin":"40px 0px 0px 0px", "border":"0px dashed blue"},
-        "emlist":[
-          {
+          },
+           {
             "emid":"seq_format", "emtype":"select", "datatype":"string",
             "label":"Sequence Format", "class":"submissionsform",
-            "style":{"width":"25%"},
+            "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "value":{
-              "selected":"GlycoCT",
+              "selected":"WURCS",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -156,41 +156,277 @@
             "emid":"seq", "emtype":"textarea", "datatype":"string",
             "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
-          },
-          {
-            "emid":"glycosites", "emtype":"textarea", "datatype":"string",
-            "label":"Glycosylation Sites", "class":"submissionsform",
-            "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
-          },
+            "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "title":"Glycoprotein Site Info",
+        "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
+          "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
           {
             "emid":"uniprotkb_ac", "emtype":"text", "datatype":"string",
             "label":"UniProtKB Accession", "class":"submissionsform",
-            "style":{"width":"35%", "margin":"0px 10px 0px 0px"},
-            "value":""
+            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
+            "value":"P14210"
           },
           {
             "emid":"uniprotkb_pos", "emtype":"int", "datatype":"int",
             "label":"Site Position", "class":"submissionsform",
-            "style":{"width":"35%"},
-            "value":""
-          },
+            "style":{"width":"45%"},
+            "value":294
+          }
+        ]
+      },
+      {
+        "groupid":"three",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
           {
-            "emid":"addsitebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
-            "value":"Add Site",
-            "style":{"width":"20%", "display":"block", "float":"left", 
-              "margin":"18px 0px 0px 10px"}
-          },
-          {
-            "emid":"cancelbtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleCancel", "class":"btn btn-outline-secondary",
-            "value":"Cancel",
+            "emid":"backbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
-            "emid":"submitbtn", "emtype":"button", "datatype":"string",
+            "emid":"nextbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Next",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
+      }
+    ]
+  },
+  "step_three_source":{
+    "title":"GSA Submission step 3 of 5",
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "title":"Biological Source Info",
+        "style":{"width":"50%","margin":"0px 2% 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"species", "emtype":"text", "datatype":"string",
+            "label":"Species", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
+            "value":"Homo sapiens"
+          },
+          {
+            "emid":"strain", "emtype":"text", "datatype":"string",
+            "label":"Strain", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"serotype", "emtype":"text", "datatype":"string",
+            "label":"Serotype", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"tissue", "emtype":"text", "datatype":"string",
+            "label":"Tissue", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"celltype", "emtype":"text", "datatype":"string",
+            "label":"Cell Type", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"fluid", "emtype":"text", "datatype":"string",
+            "label":"Fluid", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"disease", "emtype":"stringlist", "datatype":"string",
+            "label":"Disease", "class":"submissionsform",
+            "style":{"width":"70%", "margin":"10px 10px 0px 0px"},
+            "value":"xxx"
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "title":"Expression System",
+        "style":{"width":"30%","margin":"0px 0% 0px 30px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"species", "emtype":"text", "datatype":"string",
+            "label":"Species", "class":"submissionsform",
+            "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
+            "value":"Homo sapiens"
+          },
+          {
+            "emid":"strain", "emtype":"text", "datatype":"string",
+            "label":"Strain", "class":"submissionsform",
+            "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
+            "value":"xxx"
+          },
+          {
+            "emid":"celltype", "emtype":"text", "datatype":"string",
+            "label":"Cell Type", "class":"submissionsform",
+            "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
+            "value":"xxx"
+          }
+        ]
+      },
+      {
+        "groupid":"three",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
+          {
+            "emid":"backbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "value":"Back",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          },
+          {
+            "emid":"nextbtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Next",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
+      }
+    ]
+  },
+  "step_four_metadata":{
+    "title":"GSA Submission step 4 of 5",
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "title":"Publication",
+        "style":{"width":"40%","margin":"0px 30px 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"}, 
+        "emlist":[
+          {
+            "emid":"publication", "emtype":"objlist",  "label":"", 
+            "value":[
+              {"type":"PubMed", "id":"00000001"},
+              {"type":"DOI", "id":"00000002"}
+            ],
+            "proplist":[
+              {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string",
+                "style":{"width":"45%", "marginRight":"20px"},
+                "value":{
+                  "selected":"PubMed",
+                  "optlist":[
+                    {"value":"PubMed", "label":"PubMed"},
+                    {"value":"DOI", "label":"DOI"}
+                  ]
+                }
+              }
+              ,{"prop":"id",  "emtype":"text", "datatype":"string", "label":"ID",
+                  "style":{"width":"45%"}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "title":"Database References",
+        "style":{"width":"50%","margin":"0px 0% 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"xrefs","emtype":"objlist",  "label":"",
+            "maxlength":20,  "value":"", "required":true,
+            "proplist":[
+              {"prop":"database", "emtype":"text", "label":"Database",
+                "style":{"width":"20%", "marginRight":"20px"}
+              }
+              ,{"prop":"id", "emtype":"text", "label":"ID",
+                "style":{"width":"20%", "marginRight":"20px"}
+              },
+              {"prop":"url", "emtype":"text", "label":"URL",
+                "style":{"width":"50%", "marginRight":"0px"}
+              }
+            ],
+            "value":[
+              {"database":"XXX", "id":"00001", "url":"https://xxx.org/0001"},
+              {"database":"YYY", "id":"00002", "url":"https://yyy.org/0002"}
+            ]
+          }
+        ]
+      },
+      {
+        "groupid":"three",
+        "title":"Data",
+        "style":{"width":"40%","margin":"30px 30px 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"data","emtype":"objlist",  "label":"",
+            "maxlength":20,  "value":"", "required":true,
+            "proplist":[
+              {"prop":"type", "emtype":"text", "label":"Type",
+                "style":{"width":"20%", "marginRight":"20px"}
+              },
+              {"prop":"url", "emtype":"text", "label":"URL",
+                "style":{"width":"70%", "marginRight":"0px"}
+              }
+            ],
+            "value":[
+              {"type":"XXX", "url":"https://xxx.org"},
+              {"type":"YYY", "url":"https://yyy.org"}
+            ]
+          }
+        ]
+      },
+      {
+        "groupid":"four",
+        "title":"Experimental Method",
+        "style":{"width":"25%","margin":"30px 20px 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
+            "label":"", "class":"submissionsform",
+            "style":{"width":"90%", "margin":"10px 10px 0px 0px"},
+            "value":"xxx"
+          }
+        ]
+      },
+      {
+        "groupid":"five",
+        "title":"Keywords",
+        "style":{"width":"25%","margin":"30px 0 0px 0px",
+           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"keywords", "emtype":"stringlist", "datatype":"string",
+            "label":"", "class":"submissionsform",
+            "style":{"width":"90%", "margin":"10px 10px 0px 0px"},
+            "value":"xxx"
+          }
+        ]
+      },
+      {
+        "groupid":"six",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
+          {
+            "emid":"backbtn", "emtype":"button", "datatype":"string",
+            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "value":"Back",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          },
+          {
+            "emid":"nextbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}

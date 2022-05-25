@@ -32,17 +32,17 @@ class Formeditor extends Component {
   render() {
 
 
-    var emList = [];
+    var grpList = [];
     for (var i in this.state.formObj.groups){
       var grpObj = this.state.formObj.groups[i];
-      emList[i] = [];
+      grpList[i] = [];
       for (var j in grpObj.emlist){
         var obj = grpObj.emlist[j];
         var emId = obj.emid;
         var emValue =  obj.value;
         if (obj.status !== "inactive"){
           var em = getFormElement(emId,obj,this.props.formClass, emValue);
-          emList[i].push(em);
+          grpList[i].push(em);
         }
       }
     }
@@ -63,9 +63,19 @@ class Formeditor extends Component {
             </div>);
     }
 
-    for (var i in emList){
+    for (var i in grpList){
+        var ttl = "";
+        if ("title" in this.state.formObj.groups[i]){
+          var s = {color:"DodgerBlue", width:"100%", margin:"-5px 0px 10px 0px", fontStyle:"italic"};
+          ttl = (
+            <div className="leftblock" key={"grp_title_"+i} style={s}>
+              {this.state.formObj.groups[i].title}
+            </div>
+          );
+        }
         var s = this.state.formObj.groups[i].style;
-        divList.push(<div className="leftblock" style={s}>{emList[i]}</div>);
+        divList.push(<div id={"grp_cn_"+i} key={"grp_ttl_"+i} 
+          className="leftblock" style={s}> {ttl} {grpList[i]}</div>);
     }
       
     return(<div className="leftblock" style={{width:"100%"}}>{divList}</div>);

@@ -21,8 +21,10 @@ export function verifyReqObj (reqObj, formObj){
         var emId = obj.emid;
         var emValue =  obj.value;
         if(!(emId in reqObj) === true){
-          if (obj.emtype !== "button"){
-            errorList.push(<li>field "{emId}" missing in request</li>);
+          if (obj.required === true){
+            if (obj.emtype !== "button"){
+              errorList.push(<li>field "{emId}" missing in request</li>);
+            }
           }
         }
         else if (reqObj[emId].toString() === "" ){

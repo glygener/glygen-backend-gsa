@@ -27,6 +27,19 @@ class Submissions extends Component {
 
   }
 
+
+  dumpFormValues(k) {
+    for (var i in formHash[k]["groups"]){
+      for (var j in formHash[k]["groups"][i]["emlist"]){
+        var emObj = formHash[k]["groups"][i]["emlist"][j];
+        console.log("DUMP", emObj.emid, emObj.value)
+      }
+    }
+
+  }
+
+
+
   processForm() {
 
     var tmpState = this.state;
@@ -36,8 +49,17 @@ class Submissions extends Component {
         for (var j in formHash[k]["groups"][i]["emlist"]){
           var emObj = formHash[k]["groups"][i]["emlist"][j];
           if (emObj.emtype === "button"){
-            var f = (emObj.value === "Cancel" ? this.handleCancel : this.handleSubmit);
+            var f = (emObj.value === "Back" ? this.handleBack : this.handleNext);
             formHash[k]["groups"][i]["emlist"][j]["onclick"] = f;
+          }
+          var emId = emObj.emid;
+          if (emId in tmpState.record){
+              if (["text", "int"].indexOf(emObj.emtype) !== -1){
+                emObj.value =  tmpState.record.emId;
+              }
+              else if (emObj.emtype === "select"){
+                emObj.selected = tmpState.record.emId;
+              }
           }
         }
       }
@@ -65,11 +87,25 @@ class Submissions extends Component {
     this.setState(tmpState);
   }
 
-  handleCancel = () => {
+
+  handleBack = () => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    var tmpState = this.state;
+    if (["step_two_glycan", "step_two_glycoprotein"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_one";
+    }
+    else if (["step_three_source"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_two_" + tmpState.record["molecule"].toLowerCase();
+    }
+    else if (["step_four_metadata"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_three_source";
+    }
+    
+    this.setState(tmpState);
   }
 
 
-  handleSubmit = () => {
+  handleNext = () => {
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     //var reqObj = {recaptcha_token: this.state.recaptcha_token, coll:"c_user", record:{} };
@@ -85,7 +121,14 @@ class Submissions extends Component {
         for (var i in selectedForm.groups){
             for (var j in selectedForm.groups[i].emlist){
               var emObj = selectedForm.groups[i].emlist[j];
-              if (fieldName === emObj.emid){ emObj.value = fieldValue;}
+              if (fieldName === emObj.emid){ 
+                if (emObj.emtype === "select"){
+                  emObj.value.selected = fieldValue;
+                }
+                else{
+                  emObj.value = fieldValue;
+                }
+              }
             }
         }
         $(this).val("");
@@ -103,7 +146,19 @@ class Submissions extends Component {
     for (var f in valHash){
       tmpState.record[f] = valHash[f];
     }
-    tmpState.formKey = "step_two_" + valHash["molecule"].toLowerCase();
+    
+    //alert("before: " + tmpState.formKey);
+    if (["step_one"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_two_" + tmpState.record["molecule"].toLowerCase();
+    }
+    else if (["step_two_glycan", "step_two_glycoprotein"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_three_source";
+    }
+    else if (["step_three_source"].indexOf(tmpState.formKey) !== -1){
+      tmpState.formKey = "step_four_metadata";
+    }
+    //alert("after: " + tmpState.formKey);
+
 
     //tmpState.dialog.status = true;
     //tmpState.dialog.msg = <div>{JSON.stringify(tmpState.record, null, 2)}</div>;
@@ -152,7 +207,8 @@ class Submissions extends Component {
   render() {
 
     var cn = this.state.formCnHash[this.state.formKey];
-
+    this.dumpFormValues(this.state.formKey);
+    
     return (
       <div>
         <div className="pagecn" style={{background:"#fff"}}>
