@@ -201,39 +201,6 @@ export function getFormElement(pathId, formObj,formClass, emValue){
 
   pathId = pathId.replace(".", "_");
 
-  function handleAddListValue (targetId) {
-    var boxJqId = "#" + targetId.replace("_addbtn", "_addbox");
-    $(boxJqId).val("");
-    var boxJqId = "#" + targetId.replace("_addbtn", "_btnsone");
-    $(boxJqId).css("display", "none");
-    $(".btnstwo").css("display", "none");
-    var boxJqId = "#" + targetId.replace("_addbtn", "_btnstwo");
-    $(boxJqId).css("display", "block");
-  }
-
-  function handleSubmitAddListValue (targetId) {
-    var boxJqId = "#" + targetId.replace("_submitbtn", "_addbox");
-    var v = $(boxJqId).val();
-    $(boxJqId).toggle();
-    $(".btnscn").toggle();
-    var boxJqId = "#" + targetId.replace("_submitbtn", "_select");
-    $(boxJqId).append("<option value=\"" + v + "\">" + v + "</option>");
-  }
-
-  function handleCancelAddListValue () {
-    $(".btnscnone").css("display", "block");
-    $(".btnscntwo").css("display", "none");
-  }
-
-  function handleRemoveListValue (targetId) {
-    var boxJqId = "#" + targetId.replace("_delbtn", "_select") + ' option:selected';
-    var selectedList = $(boxJqId).toArray().map(item => item.text);
-    for (var i in selectedList){
-      var v = selectedList[i];
-      var jqId = "#" + targetId.replace("_delbtn", "_select") + " option[value='"+v+"']";
-      $(jqId).remove();
-    }
-  }
 
 
   function handleChange (em) {
@@ -361,39 +328,55 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     if(typeof(emValue) === "object"){
       tmpList = emValue;
     }
-    em = (
-      <div>
-        <div key={pathId +"_divtwo"} className="leftblock" style={sTwo}>
-          <select tag={emType} id={pathId + "_select"}
-            className={"form-control " + formClass} multiple>
-            {tmpList.map((val)  => (
-              <option key={pathId + "_" + val + "_opt"} value={val}>{val}</option>))}
-          </select>
-        </div>
-        <div key={pathId +"_divthree"} id={pathId + "_btnsone"} className="block btnscn btnscnone" style={sTwo}>
-            <button id={pathId + "_addbtn"} className="btn btn-link" style={sThree}
-                onClick={() => handleAddListValue(pathId+"_addbtn")}>
-              <AddOutlinedIcon id={pathId + "_addicon"}  style={{color:"#2358C2"}}
-                onClick={() => handleAddListValue(pathId+"_addbtn")}/>
-            </button> |
-            <button id={pathId + "_delbtn"} className="btn btn-link" style={sThree}
-                onClick={() => handleRemoveListValue(pathId+"_delbtn")}>
-              <RemoveOutlinedIcon id={pathId + "_delicon"} style={{color:"#2358C2"}}
-                onClick={() => handleRemoveListValue(pathId+"_delbtn")}/>
-            </button>
-          </div>
-          <div key={pathId +"_divfour"} id={pathId + "_btnstwo"} className="leftblock btnscn btnscntwo" style={{width:"100%", textAlign:"left", fontSize:"12px", display:"none"}}>
-            <input id={pathId + "_addbox"}  type="text"
-              className={"form-control " + formClass}
-              style={{width:"100%",marginTop:"5px"}}/>
-            <button id={pathId + "_submitbtn"} className="btn btn-link" style={sThree}
-                onClick={() => handleSubmitAddListValue(pathId+"_submitbtn")} >Submit</button> |
-            <button id={pathId + "_cancelbtn"} className="btn btn-link" style={sThree} onClick={handleCancelAddListValue}>Cancel</button>
-          </div>
+    var spanList = [];
+    for (var i in tmpList){
+      var childPathId = pathId + "_"+ i ;
+      var divId = pathId + "_"+ i + "_div";
+      var btnId = pathId + "|"+ i + "|btn";
+      spanList.push(
+        <div id={divId} key={divId} className="leftblock" 
+          style={{width:"100%", padding:"0px", 
+              marginBottom:"3px",border:"1px solid #ccc", borderRadius:"10px"}}>
+          <button id={btnId} key={btnId} className="btn btn-link rightblock"
+            style={{color:"#2358C2", margin:"10px 10px 0px 0px",padding:"0px",
+            textDecoration:"none"}}
+            onClick={formObj.onremoveitem} > X
+          </button>
+          <input id={childPathId} key={childPathId} className={"form-control " + formClass}
+            type={"text"} defaultValue={tmpList[i] || ''}
+            disabled={true} style={formObj.style}
+          />
         </div>
       );
     }
-    else if (emType === "obj"){
+    var divId = pathId + "_last_div";
+    spanList.push(
+        <div id={divId} key={divId} className="leftblock"
+          style={{width:"100%", padding:"5px",
+              marginBottom:"3px",border:"1px solid #ccc", borderRadius:"10px"}}>
+          <div className="leftblock"  style={{width:"80%"}}>
+            <input id={pathId+"_last"} key={pathId+"_last"}
+              className={"form-control " + formClass}
+              type={"text"} defaultValue={""} 
+              disabled={false} 
+            />
+          </div>
+          <div className="leftblock" style={{margin:"2px 0px 0px 5px"}}>
+            <button id={pathId + "|addbtn"}
+              className="btn btn-outline-secondary btn-sm"
+              onClick={formObj.onadditem}>Add
+            </button>
+          </div>
+        </div>
+    );
+    em = (
+      <div id={pathId + "_div_xxx"} key={pathId + "_div_xx"} 
+        className="leftblock" style={{width:"100%"}}>
+        {spanList}
+      </div>
+    );  
+  }
+  else if (emType === "obj"){
       var obj = emValue;
       var spanList = [];
       for (const j in formObj.proplist){
@@ -496,15 +479,15 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         
 
         var divId = pathId + "_obj_" + i + "_div";
-        var btnId = pathId + "_obj_" + i + "_btn";
+        var btnId = pathId + "|obj|" + i + "|btn";
         divList.push(
             <div id={divId} key={divId} className="leftblock" style={{width:"100%", padding:"0px 10px 20px 10px", marginBottom:"10px",border:"1px solid #ccc", borderRadius:"10px"}}>
             <button id={btnId} key={btnId} className="btn btn-link rightblock"
                 style={{color:"#2358C2", margin:"5px 0px 0px 0px",padding:"0px",
                 textDecoration:"none"}}
-                onClick={formObj.onremoveobj} > X 
+                onClick={formObj.onremoveitem} > X 
             </button>
-            <div id={divId + "_divtwo"} key={divId + "_divtwo"} className="leftblock" style={{width:"100%"}}>
+            <div id={divId + "_" + i + "_divtwo"} key={divId + "_" + i +  "_divtwo"} className="leftblock" style={{width:"100%"}}>
             {spanList[i]}
             </div>
             </div>);
@@ -518,11 +501,11 @@ export function getFormElement(pathId, formObj,formClass, emValue){
             className="leftblock"          style={{width:"100%"}}>
             {lastSpanList}
           </div>
-          <div id={divId + "_divtwo"} key={divId + "_divtwo"} 
+          <div id={divId + "_divthree"} key={divId + "_divthree"} 
             className="leftblock" style={{width:"100%", margin:"10px 0px 0px 0px"}}>
-            <button id={pathId + "_addbtn"}
+            <button id={pathId + "|addbtn"}
               className="btn btn-outline-secondary btn-sm" 
-                onClick={formObj.onaddobj}>
+                onClick={formObj.onadditem}>
               Add
             </button>
           </div>
@@ -552,7 +535,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
   if (emType === "radio"){lblDiv = "";}
   return (
     <div className="leftblock" key={pathId +"_" + emType} style={sOuter}>
-      {lblDiv} {passwordStrengthLbl} {em}
+      {lblDiv} {passwordStrengthLbl} {em }
     </div>
   );
 }

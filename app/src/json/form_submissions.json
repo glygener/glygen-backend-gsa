@@ -250,7 +250,7 @@
           {
             "emid":"disease", "emtype":"stringlist", "datatype":"string",
             "label":"Disease", "class":"submissionsform",
-            "style":{"width":"70%", "margin":"10px 10px 0px 0px"},
+            "style":{"width":"80%", "margin":"5px"},
             "value":"xxx"
           }
         ]
@@ -381,28 +381,26 @@
       {
         "groupid":"four",
         "title":"Experimental Method",
-        "style":{"width":"25%","margin":"30px 20px 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"30%","margin":"30px 20px 0px 0px",
+           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
             "label":"", "class":"submissionsform",
-            "style":{"width":"90%", "margin":"10px 10px 0px 0px"},
-            "value":"xxx"
+            "style":{"width":"85%", "margin":"5px"}
           }
         ]
       },
       {
         "groupid":"five",
         "title":"Keywords",
-        "style":{"width":"25%","margin":"30px 0 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"30%","margin":"30px 0 0px 0px",
+           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string",
             "label":"", "class":"submissionsform",
-            "style":{"width":"90%", "margin":"10px 10px 0px 0px"},
-            "value":"xxx"
+            "style":{"width":"85%", "margin":"5px"}
           }
         ]
       },

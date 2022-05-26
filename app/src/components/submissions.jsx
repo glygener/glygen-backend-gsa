@@ -55,12 +55,16 @@ class Submissions extends Component {
             formHash[k]["groups"][i]["emlist"][j]["onclick"] = f;
           }
           if (emObj.emtype === "objlist"){
-            formHash[k]["groups"][i]["emlist"][j]["onaddobj"] = this.handleAddObj;
-            formHash[k]["groups"][i]["emlist"][j]["onremoveobj"] = this.handleRemoveObj;
+            formHash[k]["groups"][i]["emlist"][j]["onadditem"] = this.handleAddItemObj;
+            formHash[k]["groups"][i]["emlist"][j]["onremoveitem"] = this.handleRemoveItemObj;
+          }
+          else if (emObj.emtype === "stringlist"){
+            formHash[k]["groups"][i]["emlist"][j]["onadditem"] = this.handleAddItemValue;
+            formHash[k]["groups"][i]["emlist"][j]["onremoveitem"] = this.handleRemoveItemValue;
           }
           var emId = emObj.emid;
           if (emId in tmpState.record){
-              if (["text", "int", "objlist"].indexOf(emObj.emtype) != -1){
+              if (["text", "int", "objlist", "stringlist"].indexOf(emObj.emtype) != -1){
                 emObj.value =  tmpState.record[emId];
               }
               else if (emObj.emtype === "select"){
@@ -93,9 +97,8 @@ class Submissions extends Component {
     this.setState(tmpState);
   }
 
-  handleAddObj = (e) => {
-    var k = e.target.id.split("_")[0];
-
+  handleAddItemObj = (e) => {
+    var k = e.target.id.split("|")[0];
     var selectedForm = formHash[this.state.formKey];
     var jqClass = "." + selectedForm.class;
     var o = {};
@@ -109,7 +112,6 @@ class Submissions extends Component {
         $(jqId).val("");
       }
     });
-    
     var tmpState = this.state;
     if (!(k in tmpState.record)){
       tmpState.record[k] = [];
@@ -117,16 +119,33 @@ class Submissions extends Component {
     var objList = tmpState.record[k];
     objList.push(o);
     this.setState(tmpState);
-      
-    console.log("EEEE", this.state.record);
     this.updateForm();
-
-  
   }
-  
-  handleRemoveObj = (e) => {
-    var k = e.target.id.split("_")[0];
-    var objIdx = parseInt(e.target.id.split("_")[2]);
+
+
+
+
+
+  handleAddItemValue = (e) => {
+    
+    var k = e.target.id.split("|")[0];
+    var jqId = "#" + k + "_last";
+    var val = $(jqId).val();
+    $(jqId).val("");
+    var tmpState = this.state;
+    if (!(k in tmpState.record)){
+      tmpState.record[k] = [];
+    }
+    var objList = tmpState.record[k].push(val);
+    this.setState(tmpState);
+    this.updateForm();
+  }
+
+
+  handleRemoveItemObj = (e) => {
+    var k = e.target.id.split("|")[0];
+    var objIdx = parseInt(e.target.id.split("|")[2]);
+
     var tmpState = this.state;
     var objList = tmpState.record[k];
     var newObjList = [];
@@ -139,8 +158,17 @@ class Submissions extends Component {
     tmpState.record[k] = newObjList
     this.setState(tmpState);
     this.updateForm();
-
   }
+
+  handleRemoveItemValue = (e) => {
+    var k = e.target.id.split("|")[0];
+    var valueIdx = parseInt(e.target.id.split("|")[1]);
+    var tmpState = this.state;
+    tmpState.record[k].splice(valueIdx, 1);
+    this.setState(tmpState);
+    this.updateForm();
+  }
+
 
 
   handleBack = () => {
