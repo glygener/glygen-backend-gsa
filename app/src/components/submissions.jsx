@@ -23,7 +23,7 @@ class Submissions extends Component {
 
 
   componentDidMount() {
-    this.processForm();
+    this.updateForm();
 
   }
 
@@ -40,7 +40,9 @@ class Submissions extends Component {
 
 
 
-  processForm() {
+
+
+  updateForm() {
 
     var tmpState = this.state;
     tmpState.formCnHash = {};
@@ -52,10 +54,14 @@ class Submissions extends Component {
             var f = (emObj.value === "Back" ? this.handleBack : this.handleNext);
             formHash[k]["groups"][i]["emlist"][j]["onclick"] = f;
           }
+          if (emObj.emtype === "objlist"){
+            formHash[k]["groups"][i]["emlist"][j]["onaddobj"] = this.handleAddObj;
+            formHash[k]["groups"][i]["emlist"][j]["onremoveobj"] = this.handleRemoveObj;
+          }
           var emId = emObj.emid;
           if (emId in tmpState.record){
-              if (["text", "int"].indexOf(emObj.emtype) !== -1){
-                emObj.value =  tmpState.record.emId;
+              if (["text", "int", "objlist"].indexOf(emObj.emtype) != -1){
+                emObj.value =  tmpState.record[emId];
               }
               else if (emObj.emtype === "select"){
                 emObj.selected = tmpState.record.emId;
@@ -85,6 +91,55 @@ class Submissions extends Component {
     var tmpState = this.state;
     tmpState.dialog.status = false;
     this.setState(tmpState);
+  }
+
+  handleAddObj = (e) => {
+    var k = e.target.id.split("_")[0];
+
+    var selectedForm = formHash[this.state.formKey];
+    var jqClass = "." + selectedForm.class;
+    var o = {};
+    $(jqClass).each(function () {
+      var fieldName = $(this).attr("id");
+      var fieldValue = $(this).val();
+      if (fieldName.indexOf(k + "_last_") != -1){
+        var p = fieldName.replace(k + "_last_", "");
+        o[p] =  fieldValue;
+        var jqId = "#" + fieldName;
+        $(jqId).val("");
+      }
+    });
+    
+    var tmpState = this.state;
+    if (!(k in tmpState.record)){
+      tmpState.record[k] = [];
+    }
+    var objList = tmpState.record[k];
+    objList.push(o);
+    this.setState(tmpState);
+      
+    console.log("EEEE", this.state.record);
+    this.updateForm();
+
+  
+  }
+  
+  handleRemoveObj = (e) => {
+    var k = e.target.id.split("_")[0];
+    var objIdx = parseInt(e.target.id.split("_")[2]);
+    var tmpState = this.state;
+    var objList = tmpState.record[k];
+    var newObjList = [];
+    var tmpState = this.state;
+    for (var i in objList){
+        if (i != objIdx){
+          newObjList.push(objList[i]);
+        }
+    }
+    tmpState.record[k] = newObjList
+    this.setState(tmpState);
+    this.updateForm();
+
   }
 
 

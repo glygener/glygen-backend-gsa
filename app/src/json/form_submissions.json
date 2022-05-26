@@ -314,10 +314,7 @@
         "emlist":[
           {
             "emid":"publication", "emtype":"objlist",  "label":"", 
-            "value":[
-              {"type":"PubMed", "id":"00000001"},
-              {"type":"DOI", "id":"00000002"}
-            ],
+            "value":[],
             "proplist":[
               {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string",
                 "style":{"width":"45%", "marginRight":"20px"},
@@ -356,10 +353,7 @@
                 "style":{"width":"50%", "marginRight":"0px"}
               }
             ],
-            "value":[
-              {"database":"XXX", "id":"00001", "url":"https://xxx.org/0001"},
-              {"database":"YYY", "id":"00002", "url":"https://yyy.org/0002"}
-            ]
+            "value":[]
           }
         ]
       },
@@ -380,10 +374,7 @@
                 "style":{"width":"70%", "marginRight":"0px"}
               }
             ],
-            "value":[
-              {"type":"XXX", "url":"https://xxx.org"},
-              {"type":"YYY", "url":"https://yyy.org"}
-            ]
+            "value":[]
           }
         ]
       },
