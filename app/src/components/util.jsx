@@ -332,7 +332,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     for (var i in tmpList){
       var childPathId = pathId + "_"+ i ;
       var divId = pathId + "_"+ i + "_div";
-      var btnId = pathId + "|"+ i + "|btn";
+      var btnId = pathId + "^"+ i + "^btn";
       spanList.push(
         <div id={divId} key={divId} className="leftblock" 
           style={{width:"100%", padding:"0px", 
@@ -350,19 +350,22 @@ export function getFormElement(pathId, formObj,formClass, emValue){
       );
     }
     var divId = pathId + "_last_div";
+    var btnId = pathId + "^addbtn";
+    var inputId = pathId.replace("|", "_") + "_last";
+
     spanList.push(
         <div id={divId} key={divId} className="leftblock"
           style={{width:"100%", padding:"5px",
               marginBottom:"3px",border:"1px solid #ccc", borderRadius:"10px"}}>
           <div className="leftblock"  style={{width:"80%"}}>
-            <input id={pathId+"_last"} key={pathId+"_last"}
+            <input id={inputId} key={inputId}
               className={"form-control " + formClass}
               type={"text"} defaultValue={""} 
               disabled={false} 
             />
           </div>
           <div className="leftblock" style={{margin:"2px 0px 0px 5px"}}>
-            <button id={pathId + "|addbtn"}
+            <button id={btnId}
               className="btn btn-outline-secondary btn-sm"
               onClick={formObj.onadditem}>Add
             </button>
@@ -479,7 +482,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         
 
         var divId = pathId + "_obj_" + i + "_div";
-        var btnId = pathId + "|obj|" + i + "|btn";
+        var btnId = pathId + "^obj^" + i + "^btn";
         divList.push(
             <div id={divId} key={divId} className="leftblock" style={{width:"100%", padding:"0px 10px 20px 10px", marginBottom:"10px",border:"1px solid #ccc", borderRadius:"10px"}}>
             <button id={btnId} key={btnId} className="btn btn-link rightblock"
@@ -493,6 +496,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
             </div>);
       }
       var divId = "last_div";
+      var btnId = pathId + "^addbtn";
       divList.push(
         <div id={divId} key={divId} className="leftblock" 
           style={{width:"100%", padding:"20px 10px 20px 10px", margin:"0px 0px 0px 0px",
@@ -503,7 +507,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
           </div>
           <div id={divId + "_divthree"} key={divId + "_divthree"} 
             className="leftblock" style={{width:"100%", margin:"10px 0px 0px 0px"}}>
-            <button id={pathId + "|addbtn"}
+            <button id={btnId}
               className="btn btn-outline-secondary btn-sm" 
                 onClick={formObj.onadditem}>
               Add

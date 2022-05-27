@@ -7,6 +7,7 @@ import Messagecn from './message_cn';
 import * as LocalConfig from "./local_config";
 
 import formHash from "../json/form_submissions.json";
+import dataModel from "../json/data_model.json";
 
 
 
@@ -38,7 +39,55 @@ class Submissions extends Component {
 
   }
 
+  getSummaryCn () {
 
+    var seen = {}
+    for (var k in this.state.record){
+      var parts = k.split("|");
+      seen[parts[0]] = true;
+      if (["glycan", "biological_source"].indexOf(parts[0]) != -1){
+        dataModel[parts[0]][parts[1]] = this.state.record[k];
+      }
+      else if (["evidence_type", "data_source_type", "glycoconjugate_type"].indexOf(parts[0]) != -1){
+        dataModel[parts[0]] = this.state.record[k];
+        if (dataModel["glycoconjugate_type"] === "Glycan"){
+          dataModel["glycoconjugate_type"] = "";
+        }
+      }
+      else if (parts[1] === "site"){
+        dataModel[parts[0]]["site"][parts[2]] = parseInt(this.state.record[k]);
+      }
+      else if (["uniprotkb_ac", "sequence"].indexOf(parts[1]) != -1){
+        dataModel[parts[0]][parts[1]] = this.state.record[k];
+      }
+    }
+
+    var tmpList = ["glycoprotein","glycopeptide", "glycolipid", "gpi", "other_glycoconjugate",
+      "expression_system", "database_source"
+    ];
+    for (var i in tmpList){
+      if (!(tmpList[i] in seen)){
+        dataModel[tmpList[i]] = {}
+      }
+    }
+
+
+
+    var ttlStyle = {"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"};
+    var cn = (
+      <div className="leftblock" style={{width:"100%",border:"1px dashed orange"}}>
+        <div className="leftblock" style={ttlStyle}>GSA Submission step 5 of 5 </div>
+        <div className="leftblock" style={{width:"45%",marginRight:"20px", border:"1px dashed orange"}}>
+          <pre>{JSON.stringify(this.state.record, null, 4)}</pre>
+        </div>
+        <div className="leftblock" style={{width:"45%",border:"1px dashed orange"}}>
+          <pre>{JSON.stringify(dataModel, null, 4)}</pre>
+        </div>
+      </div>
+    );
+
+    return cn;
+  }
 
 
 
@@ -73,6 +122,7 @@ class Submissions extends Component {
           }
         }
       }
+
       tmpState.formCnHash[k] = (
         <div key={"form_div"+k} className="leftblock "
           style={{width:"90%", margin:"40px 0px 0px 5%"}}>
@@ -80,6 +130,7 @@ class Submissions extends Component {
         </div>
       );
     }
+   
     this.setState(tmpState);
 
   }
@@ -98,7 +149,7 @@ class Submissions extends Component {
   }
 
   handleAddItemObj = (e) => {
-    var k = e.target.id.split("|")[0];
+    var k = e.target.id.split("^")[0];
     var selectedForm = formHash[this.state.formKey];
     var jqClass = "." + selectedForm.class;
     var o = {};
@@ -128,8 +179,8 @@ class Submissions extends Component {
 
   handleAddItemValue = (e) => {
     
-    var k = e.target.id.split("|")[0];
-    var jqId = "#" + k + "_last";
+    var k = e.target.id.split("^")[0];
+    var jqId = "#" + k.replace("|", "_") + "_last";
     var val = $(jqId).val();
     $(jqId).val("");
     var tmpState = this.state;
@@ -143,8 +194,8 @@ class Submissions extends Component {
 
 
   handleRemoveItemObj = (e) => {
-    var k = e.target.id.split("|")[0];
-    var objIdx = parseInt(e.target.id.split("|")[2]);
+    var k = e.target.id.split("^")[0];
+    var objIdx = parseInt(e.target.id.split("^")[2]);
 
     var tmpState = this.state;
     var objList = tmpState.record[k];
@@ -161,8 +212,8 @@ class Submissions extends Component {
   }
 
   handleRemoveItemValue = (e) => {
-    var k = e.target.id.split("|")[0];
-    var valueIdx = parseInt(e.target.id.split("|")[1]);
+    var k = e.target.id.split("^")[0];
+    var valueIdx = parseInt(e.target.id.split("^")[1]);
     var tmpState = this.state;
     tmpState.record[k].splice(valueIdx, 1);
     this.setState(tmpState);
@@ -174,18 +225,35 @@ class Submissions extends Component {
   handleBack = () => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     var tmpState = this.state;
-    if (["step_two_glycan", "step_two_glycoprotein"].indexOf(tmpState.formKey) !== -1){
+
+    if (tmpState.formKey.split("_")[1] === "two"){
       tmpState.formKey = "step_one";
     }
-    else if (["step_three_source"].indexOf(tmpState.formKey) !== -1){
-      tmpState.formKey = "step_two_" + tmpState.record["molecule"].toLowerCase();
+    else if (tmpState.formKey.split("_")[1] === "three"){
+      var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
+      tmpState.formKey = "step_two_" + x;
     }
-    else if (["step_four_metadata"].indexOf(tmpState.formKey) !== -1){
-      tmpState.formKey = "step_three_source";
+    else if (tmpState.formKey.split("_")[1] === "four"){
+      var x = tmpState.record["evidence_type"].split(" ")[0].toLowerCase();
+      if (["biological", "recombinant"].indexOf(x) != -1){
+        tmpState.formKey = "step_three_" + x;
+      }
+      else{
+        var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
+        tmpState.formKey = "step_two_" + x;
+      }
     }
-    
+    else if (tmpState.formKey.split("_")[1] === "five"){
+      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+      tmpState.formKey = "step_four_" + x;
+
+    }
     this.setState(tmpState);
   }
+
+
+
+
 
 
   handleNext = () => {
@@ -200,11 +268,11 @@ class Submissions extends Component {
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();
-        valHash[fieldName] = fieldValue;
         for (var i in selectedForm.groups){
             for (var j in selectedForm.groups[i].emlist){
               var emObj = selectedForm.groups[i].emlist[j];
               if (fieldName === emObj.emid){ 
+                valHash[fieldName] = fieldValue;
                 if (emObj.emtype === "select"){
                   emObj.value.selected = fieldValue;
                 }
@@ -230,15 +298,26 @@ class Submissions extends Component {
       tmpState.record[f] = valHash[f];
     }
     
-    //alert("before: " + tmpState.formKey);
-    if (["step_one"].indexOf(tmpState.formKey) !== -1){
-      tmpState.formKey = "step_two_" + tmpState.record["molecule"].toLowerCase();
+    if (tmpState.formKey === "step_one"){
+      var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
+      tmpState.formKey = "step_two_" + x;
     }
-    else if (["step_two_glycan", "step_two_glycoprotein"].indexOf(tmpState.formKey) !== -1){
-      tmpState.formKey = "step_three_source";
+    else if (tmpState.formKey.split("_")[1] === "two"){
+      var x = tmpState.record["evidence_type"].split(" ")[0].toLowerCase();
+      if (["biological", "recombinant"].indexOf(x) != -1){
+        tmpState.formKey = "step_three_" + x;
+      }
+      else{
+        var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+        tmpState.formKey = "step_four_" + x;
+      }
     }
-    else if (["step_three_source"].indexOf(tmpState.formKey) !== -1){
-      tmpState.formKey = "step_four_metadata";
+    else if (tmpState.formKey.split("_")[1] === "three"){
+      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+      tmpState.formKey = "step_four_" + x;
+    }
+    else if (tmpState.formKey.split("_")[1] === "four"){
+      tmpState.formKey = "step_five";
     }
     //alert("after: " + tmpState.formKey);
 
@@ -290,7 +369,11 @@ class Submissions extends Component {
   render() {
 
     var cn = this.state.formCnHash[this.state.formKey];
-    this.dumpFormValues(this.state.formKey);
+    if (this.state.formKey === "step_five"){
+      cn = this.getSummaryCn();
+    }
+
+    //this.dumpFormValues(this.state.formKey);
     
     return (
       <div>

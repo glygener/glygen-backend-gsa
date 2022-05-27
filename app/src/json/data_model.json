@@ -1,0 +1,72 @@
+{
+    "gsa_id": "",
+    "glycan": {
+        "glytoucan_ac": "",
+        "sequence": "",
+        "sequence_type": "",
+        "glycotree_approved": ""
+    },
+    "submission_time": "",
+    "user_id": "",
+    "data_source_type": "",
+    "evidence_type": "",
+    "embargo": true,
+    "glycoconjugate_type": "",
+    "glycoprotein": {
+        "uniprotkb_ac": "",
+        "site":{
+          "start_pos": 0,
+          "end_pos": 0
+        }
+    },
+    "glycopeptide": {
+        "sequence": "",
+        "site": {
+          "uniprotkb_ac": "",
+          "star_pos": 0,
+          "end_pos": 0
+        }
+    },
+    "glycolipid": {
+        "lipid_id": "",
+        "sequence": ""
+    },
+    "gpi": {
+        "lipid_id": "",
+        "uniprotkb_ac": "",
+        "sequence": ""
+    },
+    "other_glycoconjugate": {
+        "pubchem_id": "",
+        "site": {
+          "uniprotkb_ac": "",
+          "star_pos": 0,
+          "end_pos": 0
+        }
+    },
+    "biological_source": {
+      "tax_id": 0,
+      "tax_name": "",
+      "strain": "",
+      "serotype": "",
+      "tissue": "",
+      "cell_type": "",
+      "fluid": "",
+      "disease": []
+    },
+    "expression_system": {
+        "tax_id": 0,
+        "tax_name": "",
+        "strain": "",
+        "cell_type": ""
+    },
+    "database_source": {
+        "name": "",
+        "id": ""
+    },
+    "xrefs": [],
+    "keywords": [],
+    "publication": [],
+    "experimental_method": [],
+    "experimental_data": []
+}
