@@ -21,9 +21,9 @@
     },
     "glycopeptide": {
         "sequence": "",
+        "uniprotkb_ac": "",
         "site": {
-          "uniprotkb_ac": "",
-          "star_pos": 0,
+          "start_pos": 0,
           "end_pos": 0
         }
     },
@@ -40,7 +40,7 @@
         "pubchem_id": "",
         "site": {
           "uniprotkb_ac": "",
-          "star_pos": 0,
+          "start_pos": 0,
           "end_pos": 0
         }
     },

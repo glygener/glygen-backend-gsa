@@ -42,7 +42,7 @@
             "emid":"data_source_type", "emtype":"select", "datatype":"string",
             "label":"Data Source Type", "class":"submissionsform",
             "value":{
-              "selected":"Paper",
+              "selected":"Both",
               "optlist":[
                 {"value":"Paper", "label":"Paper"},
                 {"value":"Database", "label":"Database"},
@@ -267,6 +267,12 @@
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
           "border":"1px solid #ddd", "borderRadius":"10px"},
         "emlist":[
+           {
+            "emid":"glycopeptide|uniprotkb_ac", "emtype":"text", "datatype":"string",
+            "label":"UniProtKB Accession", "class":"submissionsform",
+            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
+            "value":"P14210"
+          }, 
           {
             "emid":"glycopeptide|sequence", "emtype":"text", "datatype":"string",
             "label":"Peptide Sequence", "class":"submissionsform",

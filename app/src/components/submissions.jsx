@@ -39,16 +39,23 @@ class Submissions extends Component {
 
   }
 
-  getSummaryCn () {
 
+
+  getSummaryCn () {
+  
+    var grpOne = ["glycan", "biological_source"];
+    var grpTwo = [
+      "evidence_type", "data_source_type", "glycoconjugate_type",
+      "keywords", "xrefs", "experimental_method", "publication","experimental_data"
+    ];
     var seen = {}
     for (var k in this.state.record){
       var parts = k.split("|");
       seen[parts[0]] = true;
-      if (["glycan", "biological_source"].indexOf(parts[0]) != -1){
+      if (grpOne.indexOf(parts[0]) != -1){
         dataModel[parts[0]][parts[1]] = this.state.record[k];
       }
-      else if (["evidence_type", "data_source_type", "glycoconjugate_type"].indexOf(parts[0]) != -1){
+      else if (grpTwo.indexOf(parts[0]) != -1){
         dataModel[parts[0]] = this.state.record[k];
         if (dataModel["glycoconjugate_type"] === "Glycan"){
           dataModel["glycoconjugate_type"] = "";
@@ -57,7 +64,7 @@ class Submissions extends Component {
       else if (parts[1] === "site"){
         dataModel[parts[0]]["site"][parts[2]] = parseInt(this.state.record[k]);
       }
-      else if (["uniprotkb_ac", "sequence"].indexOf(parts[1]) != -1){
+      else if (["uniprotkb_ac", "sequence", "lipid_id"].indexOf(parts[1]) != -1){
         dataModel[parts[0]][parts[1]] = this.state.record[k];
       }
     }
@@ -71,24 +78,82 @@ class Submissions extends Component {
       }
     }
 
+    // <pre>{JSON.stringify(this.state.record, null, 4)}</pre>
+    // <pre>{JSON.stringify(dataModel, null, 4)}</pre>
+
+    var secList = [
+      "evidence_type", "data_source_type", "glycan", 
+      "glycoconjugate_type", "biological_source", 
+      "glycoprotein", "glycopeptide", "glycolipid", "gpi",
+      "keywords", "xrefs", "experimental_method",
+      "publication","experimental_data"
+    ];
+   
+    var secGrpOne = ["glycan", "biological_source", "glycoprotein", "glycopeptide",
+      "glycolipid","gpi"];
+    var secGrpTwo = ["xrefs", "publication","experimental_data"];
+    var secGrpThree = ["keywords",  "experimental_method"];
+
+    var cnList = [];
+    for (var i in secList){
+      var sec = secList[i];
+      if (!(sec in seen)){
+        continue;
+      }
+      if (secGrpOne.indexOf(sec) != -1){
+        var tmpList = [];
+        for (var k in dataModel[sec]){
+          if (k === "site"){
+            for (var q in dataModel[sec][k]){
+              tmpList.push(<li><b>{k}_{q}</b>: {dataModel[sec][k][q]}</li>);
+            }
+          }
+          else{
+            tmpList.push(<li><b>{k}</b>: {dataModel[sec][k]}</li>);
+          }
+        }
+        cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+      }
+      else if (secGrpTwo.indexOf(sec) != -1){
+        var tmpList = [];
+        for (var i in dataModel[sec]){
+          tmpList.push(<li>{JSON.stringify(dataModel[sec][i], null, 4)}</li>);
+        }
+        cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+      }
+      else{
+        cnList.push(<li><b>{sec}</b>: {JSON.stringify(dataModel[sec], null, 4)}</li>);
+      }
+    }
+    var cn = (<ul>{cnList}</ul>);
 
 
-    var ttlStyle = {"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"};
+    var ttlStyle = {"width":"90%", "margin":"40px 0px 15px 5%", "fontWeight":"bold"};
+    var sOne = { width:"90%",margin:"15px 0px 0px 5%", padding:"20px 0px 0px 0px", 
+      border:"1px solid #ccc", borderRadius:"10px"};
     var cn = (
-      <div className="leftblock" style={{width:"100%",border:"1px dashed orange"}}>
+      <div className="leftblock" style={{width:"100%"}}>
         <div className="leftblock" style={ttlStyle}>GSA Submission step 5 of 5 </div>
-        <div className="leftblock" style={{width:"45%",marginRight:"20px", border:"1px dashed orange"}}>
-          <pre>{JSON.stringify(this.state.record, null, 4)}</pre>
+        <div className="leftblock" style={sOne}>
+          {cn}<br/>
         </div>
-        <div className="leftblock" style={{width:"45%",border:"1px dashed orange"}}>
-          <pre>{JSON.stringify(dataModel, null, 4)}</pre>
-        </div>
+      <div className="leftblock" style={{width:"90%", margin:"20px 0px 0px 5%"}}>
+        <button id={"final_back"} className={"btn btn-outline-secondary"} 
+            onClick={this.handleBack}>Back</button> &nbsp;
+        <button id={"final_submit"} className={"btn btn-outline-secondary"}
+            onClick={this.handleSubmit}>Submit</button>
       </div>
+    </div>
+
     );
 
     return cn;
   }
 
+
+  handleSubmit() {
+
+  }
 
 
   updateForm() {
@@ -294,6 +359,9 @@ class Submissions extends Component {
     }
 
     var tmpState = this.state;
+    if (tmpState.formKey === "step_one"){
+      tmpState.record = {};
+    }
     for (var f in valHash){
       tmpState.record[f] = valHash[f];
     }
