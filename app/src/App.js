@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import SearchResults from "./components/search_results";
-import DatasetPage from "./components/dataset_page";
 import StaticPage from "./components/static_page";
-import HistoryList from "./components/history_list";
-import HistoryDetail from "./components/history_detail";
-
 import Alertdialog from './components/dialogbox';
 import Loadingicon from "./components/loading_icon";
 import * as LocalConfig from "./components/local_config";
@@ -16,6 +12,7 @@ import Footer from "./components/footer";
 import Login from "./components/login";
 import Register from "./components/register";
 import Submissions from "./components/submissions";
+import Detail from "./components/detail";
 
 
 
@@ -156,27 +153,15 @@ class App extends Component {
             )}
           />
           <Route
-            path="/history_list"
-            render={(props) => (
-              <HistoryList pageId={"History List"}  initObj={this.state.response.record}/>
-            )}
-          />
-          <Route
-            path="/:bcoId/:dataVersion/history"
-            render={(props) => (
-              <HistoryDetail bcoId={props.match.params.bcoId} dataVersion={props.match.params.dataVersion}  initObj={this.state.response.record}/>
-            )}
-          />
-          <Route
             path="/static/:pageId"
             render={(props) => (
               <StaticPage pageId={props.match.params.pageId}  initObj={this.state.response.record}/>
             )}
           />
           <Route
-            path="/:bcoId"
+            path="/detail/:gsaId"
             render={(props) => (
-              <DatasetPage bcoId={props.match.params.bcoId}  initObj={this.state.response.record}/>
+              <Detail gsaId={props.match.params.gsaId}  initObj={this.state.response.record}/>
             )}
           />
           <Route

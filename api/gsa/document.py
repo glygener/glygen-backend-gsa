@@ -6,6 +6,7 @@ import pymongo
 from flask import (current_app)
 from gsa.db import get_mongodb, log_error, next_sequence_value
 from collections import OrderedDict
+import datetime
 
 
 
@@ -53,7 +54,10 @@ def get_one(req_obj):
 
         if "_id" in doc:
             doc.pop("_id")
-
+        for k in ["createdts"]:
+            if k in doc:
+                ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
+                doc[k] = doc[k].strftime(ts_format)
         res_obj["record"] = doc
         #res_obj["query"] = req_obj
     except Exception as e:
@@ -113,6 +117,10 @@ def get_many(req_obj):
         for doc in doc_list:
             if "_id" in doc:
                 doc.pop("_id")
+            for k in ["createdts"]:
+                if k in doc:
+                    ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
+                    doc[k] = doc[k].strftime(ts_format)
             if coll_name.find("c_extract") != -1:
                 if "categories" in doc:
                     res_obj["recordlist"].append(doc)
@@ -183,7 +191,6 @@ def order_json_obj(json_obj, ordr_dict):
 
 
 
-
 def insert_one(req_obj):
 
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -206,17 +213,23 @@ def insert_one(req_obj):
             return {"status":0, "error":"unknown collection name"}
 
         res_obj = {"status": 1, "error":""}
-
         coll_name = req_obj["coll"]
-        doc = req_obj["record"]
         sequence_name = "%s.id" % (coll_name)
         primary_id = config_obj["collinfo"][coll_name]["primaryid"]
+        doc = req_obj["record"]
         doc[primary_id] = next_sequence_value(mongo_dbh["c_counter"], sequence_name)
-
+        doc["createdts"] = datetime.datetime.now()
+        if coll_name == "c_glycan":
+            pid_str = str(doc[primary_id])
+            doc["gsa_id"] = "GSA000000000"[0:9-len(str(pid_str))] + pid_str
         res = mongo_dbh[coll_name].insert_one(doc)
         for k in ["_id", "password"]:
             if k in doc:
                 doc.pop(k)
+        for k in ["createdts"]:
+            if k in doc:
+                ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
+                doc[k] = doc[k].strftime(ts_format)
         res_obj["record"] = doc
         res_obj["query"] = req_obj
     except Exception as e:

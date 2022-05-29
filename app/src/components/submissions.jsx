@@ -5,14 +5,16 @@ import $ from "jquery";
 import { verifyReqObj, verifyPasswords} from './util';
 import Messagecn from './message_cn';
 import * as LocalConfig from "./local_config";
-
 import formHash from "../json/form_submissions.json";
 import dataModel from "../json/data_model.json";
+import { Link } from "react-router-dom";
 
 
 
 class Submissions extends Component {
   state = {
+    user_id:"",
+    loginforward:false,
     formKey:"step_one",
     formCnHash:{},
     record:{},
@@ -24,8 +26,44 @@ class Submissions extends Component {
 
 
   componentDidMount() {
-    this.updateForm();
+    
+    let access_csrf = localStorage.getItem("access_csrf")
+    var reqObj = {};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': access_csrf
+      },
+      body: JSON.stringify(reqObj),
+      credentials: 'include'
+    };
+    const svcUrl = LocalConfig.apiHash.auth_userinfo;
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.response = result;
+          tmpState.isLoaded = true;
+          if (tmpState.response.status === 0){
+            tmpState.dialog.status = true;
+            tmpState.dialog.msg = tmpState.response.error;
+          }
+          tmpState.loginforward = "msg" in result;
+          tmpState.user_id = result.email;
+          this.setState(tmpState);
 
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+          //console.log("Ajax error:", error);
+        }
+      );
+    this.updateForm();
   }
 
 
@@ -41,11 +79,33 @@ class Submissions extends Component {
 
 
 
+  getConfirmationCn() {
+
+    var gsaId = this.state.response.record.gsa_id;
+    var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
+
+    var ttlStyle = {"width":"90%", "margin":"40px 0px 15px 5%", "fontWeight":"bold"};
+    var sOne = { width:"90%",margin:"15px 0px 0px 5%", padding:"20px",
+      border:"1px solid #ccc", borderRadius:"10px"};
+    var cn = (
+      <div className="leftblock" style={{width:"100%"}}>
+        <div className="leftblock" style={ttlStyle}>GSA Submission confirmation </div>
+        <div className="leftblock" style={sOne}>
+          Record saved successfully! The GSA ID for this record is <b>{gsaLink}</b>.
+        </div>
+    </div>
+    );
+    return cn;
+  }
+
+
+
   getSummaryCn () {
-  
+ 
+
     var grpOne = ["glycan", "biological_source"];
     var grpTwo = [
-      "evidence_type", "data_source_type", "glycoconjugate_type",
+      "user_id", "evidence_type", "data_source_type", "glycoconjugate_type",
       "keywords", "xrefs", "experimental_method", "publication","experimental_data"
     ];
     var seen = {}
@@ -78,11 +138,9 @@ class Submissions extends Component {
       }
     }
 
-    // <pre>{JSON.stringify(this.state.record, null, 4)}</pre>
-    // <pre>{JSON.stringify(dataModel, null, 4)}</pre>
 
     var secList = [
-      "evidence_type", "data_source_type", "glycan", 
+      "user_id","evidence_type", "data_source_type", "glycan", 
       "glycoconjugate_type", "biological_source", 
       "glycoprotein", "glycopeptide", "glycolipid", "gpi",
       "keywords", "xrefs", "experimental_method",
@@ -125,6 +183,10 @@ class Submissions extends Component {
         cnList.push(<li><b>{sec}</b>: {JSON.stringify(dataModel[sec], null, 4)}</li>);
       }
     }
+    
+    //cnList.push(<pre>{JSON.stringify(this.state.record, null, 4)}</pre>);
+    //cnList.push(<pre>{JSON.stringify(dataModel, null, 4)}</pre>);
+
     var cn = (<ul>{cnList}</ul>);
 
 
@@ -151,7 +213,45 @@ class Submissions extends Component {
   }
 
 
-  handleSubmit() {
+  handleSubmit = () => {  
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    let access_csrf = localStorage.getItem("access_csrf")
+    var reqObj = {"record":dataModel};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': access_csrf
+      },
+      body: JSON.stringify(reqObj),
+      credentials: 'include'
+    };
+    const svcUrl = LocalConfig.apiHash.gsa_submit;
+
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.response = result;
+          tmpState.isLoaded = true;
+          if (tmpState.response.status === 0){
+            tmpState.dialog.status = true;
+            tmpState.dialog.msg = tmpState.response.error;
+          }
+          tmpState.loginforward = "msg" in result;
+          tmpState.formKey = "step_six";
+          this.setState(tmpState);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+          //console.log("Ajax error:", error);
+        }
+      );
 
   }
 
@@ -360,7 +460,7 @@ class Submissions extends Component {
 
     var tmpState = this.state;
     if (tmpState.formKey === "step_one"){
-      tmpState.record = {};
+      tmpState.record = {"user_id":this.state.user_id};
     }
     for (var f in valHash){
       tmpState.record[f] = valHash[f];
@@ -436,11 +536,17 @@ class Submissions extends Component {
 
   render() {
 
+    if(this.state.loginforward === true){
+      window.location.href = "/login";
+    }
+
     var cn = this.state.formCnHash[this.state.formKey];
     if (this.state.formKey === "step_five"){
       cn = this.getSummaryCn();
     }
-
+    else if (this.state.formKey === "step_six"){
+      cn = this.getConfirmationCn();
+    }
     //this.dumpFormValues(this.state.formKey);
     
     return (

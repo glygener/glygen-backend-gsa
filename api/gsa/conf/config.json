@@ -43,20 +43,21 @@
             }
         },
         "c_glycan":{
+            "primaryid":"recordid",
             "max_batch_size":100,
             "get_one":{
                 "prj":{},
                 "queryfields":{
-                    "recordid":{
+                    "gsa_id":{
                       "required":true,
                       "datatype":"string",
                       "junction":"$or",
-                      "pathlist":[{"path":"recordid","operator":"$eq"}]
+                      "pathlist":[{"path":"gsa_id","operator":"$eq"}]
                     }
                 }
             },
             "get_many":{
-                "prj":{"glycan":1},
+                "prj":{"glycan":1, "gsa_id":1},
                 "sortfield":"recordid",
                 "queryfields":{
                     "query":{

@@ -128,10 +128,16 @@ export function rndrSearchResults(objList, startIdx, endIdx) {
     var obj = objList[i];
     var titleText = obj.name;
 
+    var gsaId = obj.gsa_id;
+    var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
+
     cardList.push(
       <div className="leftblock" style={{width:"100%", background:"#fff", margin:"10px 0% 0px 0%"}}>
         <div className="leftblock" style={{width:"100%", padding:"15px"}}>
-          {obj.glycan.glytoucan_ac}<br/>{obj.glycan.sequence}
+          GSA ID: {gsaLink}<br/>
+          GlyToucan Accession: {obj.glycan.glytoucan_ac}<br/>
+          Sequence Type:{obj.glycan.sequence_type}<br/>
+          Sequence:{obj.glycan.sequence}<br/>
         </div>
       </div>
     );

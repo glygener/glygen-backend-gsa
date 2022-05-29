@@ -84,7 +84,7 @@ def login_two():
             message = "<#>GSA: DO NOT share this Sign In code. We will never call you or text you for it. "
             message += "Code %s" % (code)
             mail_obj = {
-                "sender_email":current_app.config["MAIL_USERNAME"],
+                "sender_email":current_app.config["MAIL_SENDER"],
                 "receiver_email":user_doc["email"],
                 "subject":"Authentication code from GSA",
                 "body":message
@@ -249,7 +249,7 @@ def register_one():
             body += "We will never call you or text  you for it. "
             body += "Code %s" % (code)
             mail_obj = {
-                "sender_email":current_app.config["MAIL_USERNAME"],
+                "sender_email":current_app.config["MAIL_SENDER"],
                 "receiver_email":new_email,
                 "subject":"Authentication code from GSA",
                 "body":body
@@ -324,7 +324,7 @@ def generate_otp():
     code = totp.now()
     res_obj = {'ok': True, 'code':code, 'message': 'Code sent to {phone}', 'shared_key': shared_key}
     mail_obj = {
-        "sender_email":current_app.config["MAIL_USERNAME"],
+        "sender_email":current_app.config["MAIL_SENDER"],
         "receiver_email":"rykahsay@gmail.com",
         "subject":"Test message",
         "body":"Hi there"

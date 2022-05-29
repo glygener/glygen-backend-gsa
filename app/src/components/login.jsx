@@ -165,8 +165,7 @@ class Login extends Component {
       );
     }
     else if (this.state.stage === 4){
-      //window.location.href = LocalConfig.forwardUrl;
-      window.location.href = "/";
+      window.location.href = "/submissions";
     }
     else if (this.state.stage === -1){
       cn =  (<Loadingicon/>);
