@@ -63,7 +63,7 @@ def info():
     res_obj = {"config":{}}
     #k_list = ["DB_HOST", "DB_NAME", "DB_USERNAME", "DB_PASSWORD",  "DATA_PATH"]
     #k_list = ["DB_HOST", "DB_NAME", "DB_USERNAME",  "DATA_PATH", "MAX_CONTENT_LENGTH"]
-    k_list = ["MAIL_SERVER", "MAIL_PORT", "MAIL_USE_TLS", "MAIL_USE_SSL", 
+    k_list = ["SERVER","MAIL_SERVER", "MAIL_PORT", "MAIL_USE_TLS", "MAIL_USE_SSL", 
             "MAIL_USERNAME", "MAIL_PASSWORD"]    
     #k_list = ["DATA_PATH", "MAX_CONTENT_LENGTH"]
     for k in k_list:

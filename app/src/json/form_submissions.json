@@ -8,7 +8,7 @@
         "groupid":"one",
         "title":"Glycoconjugate and evidence types",
         "style":{"width":"45%","margin":"0px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycoconjugate_type", "emtype":"select", "datatype":"string", 
@@ -75,7 +75,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -138,7 +138,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -176,7 +176,7 @@
         "groupid":"two",
         "title":"Glycoprotein Site Information",
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
-          "border":"1px solid #ddd", "borderRadius":"10px"},
+          "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycoprotein|uniprotkb_ac", "emtype":"text", "datatype":"string",
@@ -227,7 +227,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -265,7 +265,7 @@
         "groupid":"two",
         "title":"Glycopeptide Site Information",
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
-          "border":"1px solid #ddd", "borderRadius":"10px"},
+          "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
            {
             "emid":"glycopeptide|uniprotkb_ac", "emtype":"text", "datatype":"string",
@@ -322,7 +322,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -360,7 +360,7 @@
         "groupid":"two",
         "title":"Glycolipid Information",
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
-          "border":"1px solid #ddd", "borderRadius":"10px"},
+          "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycolipid|lipid_id", "emtype":"text", "datatype":"string",
@@ -405,7 +405,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -443,7 +443,7 @@
         "groupid":"two",
         "title":"GPI Information",
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
-          "border":"1px solid #ddd", "borderRadius":"10px"},
+          "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"gpi|uniprotkb_ac", "emtype":"text", "datatype":"string",
@@ -494,7 +494,7 @@
         "groupid":"one",
         "title":"Glycan Info",
         "style":{"width":"45%","margin":"0px 2% 0px 0px", 
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string",
@@ -532,7 +532,7 @@
         "groupid":"two",
         "title":"Glycoconjugate Information",
         "style":{"width":"45%","margin":"0px 0% 0px 0px", "padding":"20px", 
-          "border":"1px solid #ddd", "borderRadius":"10px"},
+          "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"other_glycoconjugate|pubchem_id", "emtype":"text", "datatype":"string",
@@ -583,7 +583,7 @@
         "groupid":"one",
         "title":"Biological Source Info",
         "style":{"width":"50%","margin":"0px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
@@ -633,7 +633,7 @@
         "groupid":"two",
         "title":"Expression System",
         "style":{"width":"30%","margin":"0px 0% 0px 30px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"expression_system|tax_name", "emtype":"text", "datatype":"string",
@@ -684,7 +684,7 @@
         "groupid":"one",
         "title":"Biological Source Info",
         "style":{"width":"50%","margin":"0px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
@@ -758,11 +758,13 @@
       {
         "groupid":"one",
         "title":"Publication",
-        "style":{"width":"40%","margin":"0px 30px 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"}, 
+        "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"}, 
         "emlist":[
           {
             "emid":"publication", "emtype":"objlist",  "label":"", 
+            "wrapperstyle":{ "padding":"0px 10px 20px 10px", 
+              "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "value":[],
             "proplist":[
               {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string",
@@ -785,21 +787,23 @@
       {
         "groupid":"two",
         "title":"Database References",
-        "style":{"width":"50%","margin":"0px 0% 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"xrefs","emtype":"objlist",  "label":"",
+            "wrapperstyle":{"width":"45%", "padding":"0px 10px 20px 10px",
+              "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":true,
             "proplist":[
               {"prop":"database", "emtype":"text", "label":"Database",
-                "style":{"width":"20%", "marginRight":"20px"}
+                "style":{"width":"15%", "marginRight":"20px"}
               }
               ,{"prop":"id", "emtype":"text", "label":"ID",
-                "style":{"width":"20%", "marginRight":"20px"}
+                "style":{"width":"15%", "marginRight":"20px"}
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"50%", "marginRight":"0px"}
+                "style":{"width":"60%"}
               }
             ],
             "value":[]
@@ -809,11 +813,13 @@
       {
         "groupid":"three",
         "title":"Experimental Data",
-        "style":{"width":"40%","margin":"30px 30px 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_data","emtype":"objlist",  "label":"",
+            "wrapperstyle":{ "padding":"0px 10px 20px 10px",
+              "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":true,
             "proplist":[
               {"prop":"type", "emtype":"text", "label":"Type",
@@ -830,8 +836,8 @@
       {
         "groupid":"four",
         "title":"Experimental Method",
-        "style":{"width":"30%","margin":"30px 20px 0px 0px",
-           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
@@ -843,8 +849,8 @@
       {
         "groupid":"five",
         "title":"Keywords",
-        "style":{"width":"30%","margin":"30px 0 0px 0px",
-           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
+        "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string",
@@ -882,10 +888,12 @@
         "groupid":"one",
         "title":"Publication",
         "style":{"width":"40%","margin":"0px 30px 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"publication", "emtype":"objlist",  "label":"",
+            "wrapperstyle":{ "padding":"0px 10px 20px 10px",
+              "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "value":[],
             "proplist":[
               {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string",
@@ -909,10 +917,12 @@
         "groupid":"two",
         "title":"Experimental Data",
         "style":{"width":"40%","margin":"30px 30px 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_data","emtype":"objlist",  "label":"",
+            "wrapperstyle":{ "padding":"0px 10px 20px 10px",
+              "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":true,
             "proplist":[
               {"prop":"type", "emtype":"text", "label":"Type",
@@ -930,7 +940,7 @@
         "groupid":"three",
         "title":"Experimental Method",
         "style":{"width":"30%","margin":"30px 20px 0px 0px",
-           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
@@ -943,7 +953,7 @@
         "groupid":"five",
         "title":"Keywords",
         "style":{"width":"30%","margin":"30px 0 0px 0px",
-           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string",
@@ -981,10 +991,12 @@
         "groupid":"two",
         "title":"Database References",
         "style":{"width":"50%","margin":"0px 0% 0px 0px",
-           "padding":"20px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"xrefs","emtype":"objlist",  "label":"",
+            "wrapperstyle":{"width":"45% !important","padding":"0px 10px 20px 10px",
+              "margin":"0px 20px 10px 0px", "border":"1px solid green", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":true,
             "proplist":[
               {"prop":"database", "emtype":"text", "label":"Database",
@@ -994,7 +1006,7 @@
                 "style":{"width":"20%", "marginRight":"20px"}
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"50%", "marginRight":"0px"}
+                "style":{"width":"20%", "marginRight":"0px"}
               }
             ],
             "value":[]
@@ -1005,7 +1017,7 @@
         "groupid":"five",
         "title":"Keywords",
         "style":{"width":"30%","margin":"30px 0 0px 0px",
-           "padding":"10px", "border":"1px solid #ddd", "borderRadius":"10px"},
+           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string",

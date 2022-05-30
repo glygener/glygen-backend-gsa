@@ -485,13 +485,11 @@ export function getFormElement(pathId, formObj,formClass, emValue){
             );
           }
         }
-        
-
         var divId = pathId + "_obj_" + i + "_div";
         var btnId = pathId + "^obj^" + i + "^btn";
         divList.push(
-            <div id={divId} key={divId} className="leftblock" style={{width:"100%", padding:"0px 10px 20px 10px", marginBottom:"10px",border:"1px solid #ccc", borderRadius:"10px"}}>
-            <button id={btnId} key={btnId} className="btn btn-link rightblock"
+            <div id={divId} key={divId} className="leftblock" style={formObj.wrapperstyle}>
+              <button id={btnId} key={btnId} className="btn btn-link rightblock"
                 style={{color:"#2358C2", margin:"5px 0px 0px 0px",padding:"0px",
                 textDecoration:"none"}}
                 onClick={formObj.onremoveitem} > X 
