@@ -57,7 +57,7 @@
                 }
             },
             "get_many":{
-                "prj":{"glycan":1, "gsa_id":1},
+                "prj":{},
                 "sortfield":"recordid",
                 "queryfields":{
                     "query":{

@@ -80,7 +80,32 @@ class DatasetList(Resource):
         req_obj = request.json
         req_obj["coll"] = "c_glycan"
         res_obj = get_many(req_obj)
-        
+        #xxx
+        catObjListOne = [
+            {"prop":"biological_source", "label":"Biological Source", "childprop":"tax_name"},
+            {"prop":"expression_system", "label":"Expression System", "childprop":"tax_name"}
+        ]
+        catObjListTwo = [
+            {"prop":"glycoprotein", "label":"Glycoprotein"},
+            {"prop":"glycopeptide", "label":"Glycopeptide"},
+            {"prop":"glycolipid", "label":"Glycolipid"},
+            {"prop":"gpi", "label":"GPI"},
+            {"prop":"other_glycoconjugate", "label":"Other"}
+        ]
+        for doc in res_obj["recordlist"]:
+            doc["categories"] = {}
+            for obj in catObjListOne:
+                p, lbl, child_p = obj["prop"], obj["label"], obj["childprop"]
+                if p in doc:
+                    if child_p in doc[p]:
+                        doc["categories"][lbl] = doc[p][child_p]
+            for obj in catObjListTwo:
+                p, lbl = obj["prop"], obj["label"]
+                if p in doc:
+                    if doc[p] != {}:
+                        doc["categories"]["Glycoconjugate Type"] = lbl
+
+
         return res_obj
 
 

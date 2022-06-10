@@ -1,5 +1,5 @@
 {
-    "description":"Please login to your GSA account. If you do not already have an account, <a href=\"/register\">click here</a> to sign up for our services.",
+    "description":"Please login to your GSA account. If you do not have an account, <a href=\"/register\">click here</a> to register.",
     "class":"loginform",
     "style":{"background":"#fff"},
     "groups":[
@@ -7,8 +7,8 @@
         "groupid":"one",
         "style":{"width":"100%","background":"#fff", "margin":"0px 0px 0px 0px"},
         "emlist":[
-          {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email", "maxlength":20, "class":"loginform", "value":"rykahsay@gwu.edu", "required":true},
-          {"emid":"password", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":20, "class":"loginform", "value":"Pass123123!", "required":true}
+          {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email", "maxlength":320, "class":"loginform", "value":"", "required":true},
+          {"emid":"password", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":64, "class":"loginform", "value":"", "required":true}
         ]
       }
     ]

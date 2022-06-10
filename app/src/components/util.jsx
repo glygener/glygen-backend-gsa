@@ -7,13 +7,15 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 
 
+var validationHash = {};
+
+
 
 
 
 export function verifyReqObj (reqObj, formObj){
     var errorList = [];
     
-
     for (var i in formObj.groups){
       var grpObj = formObj.groups[i];
       for (var j in grpObj.emlist){
@@ -31,17 +33,14 @@ export function verifyReqObj (reqObj, formObj){
           errorList.push(<li key={"error_in_" + emId}>field "{emId}" cannot be empty value</li>);
         }
         else if (typeof(reqObj[emId]) !== obj["datatype"] ){
-          alert(typeof(reqObj[emId]));
           errorList.push(<li>field "{emId}" type mismatch</li>);
         }
       }
       if (errorList.length === 0){
         return errorList;
       }
-      console.log(errorList);
     }
-
-    return (<ul> {errorList} </ul>);
+    return errorList;
 }
 
 export function getStarList(starCount){
@@ -208,7 +207,6 @@ export function getFormElement(pathId, formObj,formClass, emValue){
   pathId = pathId.replace(".", "_");
 
 
-
   function handleChange (em) {
 
     var targetId = "";
@@ -217,26 +215,71 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     }
 
     var emObj = document.getElementById(targetId);
-    if (targetId === "password_one"){
+    if (emObj.className === "form-control registerform_one" && ["password_one", "password_two"].indexOf(targetId) != -1){
       var descObj = document.getElementById("lbl_" +targetId);
       var pass = emObj.value;
       let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
       let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,    }))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
       if(strongPassword.test(pass)) {
+        validationHash[targetId] = true;
         emObj.style.border = "1px solid green";
         descObj.style.color = "green";
-        descObj.textContent = "(strong)";
+        if (descObj.textContent.indexOf("(") == -1){
+          descObj.textContent += " (strong)";
+        }
       } else if(mediumPassword.test(pass)){
+        validationHash[targetId] = true;
         emObj.style.border = "1px solid orange";
-        descObj.style.color = "yellow";
-        descObj.textContent = "(medium)";
+        descObj.style.color = "orange";
+        if (descObj.textContent.indexOf("(") == -1){
+          descObj.textContent += " (medium)";
+        }
       } else{
+        validationHash[targetId] = true;
         emObj.style.border = "1px solid red";
         descObj.style.color = "red";
-        descObj.textContent = "(weak)";
+        if (descObj.textContent.indexOf("(") == -1){
+          descObj.textContent += " (weak)";
+        }
       }
     }
-    //emObj.value = $("#" + targetId).val();
+    else if (emObj.className === "form-control registerform_one" && targetId === "email"){
+      var email = emObj.value;
+      var descObj = document.getElementById("lbl_" +targetId);
+      if (email.indexOf("@") != -1 && email.indexOf(".") != -1){
+        validationHash[targetId] = true;
+        emObj.style.border = "1px solid green";
+        descObj.style.color = "green";
+        if (descObj.textContent.indexOf("(") == -1){
+          descObj.textContent += " (valid)";
+        }
+      }
+      else{
+        validationHash[targetId] = true;
+        emObj.style.border = "1px solid red";
+        descObj.style.color = "red";
+      }
+    }
+    
+    
+    if (["password_one", "password_two"].indexOf(targetId) != -1){
+      var passwordOne = document.getElementById("password_one").value;
+      var passwordTwo = document.getElementById("password_two").value;
+      if (passwordOne.trim() !== "" && passwordOne === passwordTwo) {
+        validationHash["password"] = true;
+      }
+      else{
+        validationHash["password"] = false;
+      }
+
+      if (validationHash["email"] && validationHash["password_one"] 
+          && validationHash["password_two"] && validationHash["password"]){
+        document.getElementById("registerbtn_one").disabled = false;
+      }
+      else{
+        document.getElementById("registerbtn_one").disabled = true;
+      }
+    }
 
 
   }
@@ -473,6 +516,8 @@ export function getFormElement(pathId, formObj,formClass, emValue){
             }
             childFormObj.disable = true;
             var tmpEm = getFormElement(childPathId,childFormObj, formClass, childPropValue);
+            //var s = {border:"1px dashed green"};
+            //var tmpEm = (<div className="leftblock" style={s}>{childFormObj.label}</div>);
             spanList[i].push(tmpEm);
           }
           else{
@@ -534,12 +579,14 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     sOuter = formObj.style;
   }
   var sInner = { paddingRight:"5px", background:"#fff",  fontSize:"12px"};
+  
   var passwordStrengthLbl = "";
-  if (pathId === "password_one"){
-    passwordStrengthLbl = <div id={"lbl_"+pathId} className="leftblock" style={sInner} >
-      </div>;
-  }
-  var lblDiv = (<div className="leftblock" style={sInner} >{formObj.label} </div>);
+  //if (pathId === "password_one"){
+  //  passwordStrengthLbl = <div id={"lbl_"+pathId} className="leftblock" style={sInner} >
+  //    </div>;
+  //}
+
+  var lblDiv = (<div id={"lbl_"+pathId} className="leftblock" style={sInner} >{formObj.label} </div>);
   if (emType === "radio"){lblDiv = "";}
   return (
     <div className="leftblock" key={pathId +"_" + emType} style={sOuter}>

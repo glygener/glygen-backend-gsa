@@ -6,18 +6,32 @@
         "groupid":"one",
         "style":{"width":"40%","margin":"0px 0px 0px 0px"},
         "emlist":[
-          {"emid":"fname", "emtype":"text", "datatype":"string", "label":"First Name", "maxlength":20, "class":          "registerform_one", "value":"Robel", "required":true},
-          {"emid":"lname", "emtype":"text", "datatype":"string", "label":"Last Name", "maxlength":20, "class":           "registerform_one", "value":"Kahsay", "required":true},
-          {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email Address", "maxlength":20, "class":        "registerform_one", "value":"rykahsay@gmail.com", "required":true}
+          {"emid":"fname", "emtype":"text", "datatype":"string", "label":"First Name", "maxlength":50, "class":          "registerform_one", "value":"", "required":true},
+          {"emid":"lname", "emtype":"text", "datatype":"string", "label":"Last Name", "maxlength":50, "class":           "registerform_one", "value":"", "required":true},
+          {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email Address", "maxlength":320, "class":        "registerform_one", "value":"", "required":true,
+          "description":"Email must have at least one '@' and one '.' character"}
         ]
     },
     {
       "groupid":"two",
       "style":{"width":"40%","margin":"0px 0px 0px 20px"},
       "emlist":[
-        {"emid":"password_one", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":20, "class":    "registerform_one", "value":"Pass123123!", "required":true, "description":""},
-        {"emid":"password_two", "emtype":"password", "datatype":"string", "label":"Confiorm Password",        "maxlength":20,    "class":"registerform_one", "value":"Pass123123!", "required":true, "description":"Password must be at    least 8 characters    long, a mixture of uppercase and lowercase letters, with at least one number and one    special  charcater such  as ! @ # ?"}
+        {"emid":"password_one", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":64, "class":    "registerform_one", "value":"", "required":true, "description":""},
+        {"emid":"password_two", "emtype":"password", "datatype":"string", "label":"Confiorm Password",        "maxlength":20,    "class":"registerform_one", "value":"", "required":true, "description":"Password must be at    least 8 characters    long, a mixture of uppercase and lowercase letters, with at least one number and one    special  charcater such  as ! @ # ?"}
       ]
+    },
+    {
+        "groupid":"three",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
+          {
+            "emid":"registerbtn_one", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Submit to register",
+            "disable":true,
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
     }
   ]
 }

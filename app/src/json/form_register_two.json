@@ -9,6 +9,18 @@
         "emlist":[
           {"emid":"code", "emtype":"text", "datatype":"string", "label":"Authentication Code", "maxlength":20, "class":"registerform_two", "value":"", "required":true, "description":"The code   expires 10 minutes after you request it."}
         ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"70%","margin":"0px 2% 0px 0px"},
+        "emlist":[
+          {
+            "emid":"registerbtn_two", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "value":"Submit Code",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
+          }
+        ]
     }
   ]
 }

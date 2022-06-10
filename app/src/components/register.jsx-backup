@@ -48,8 +48,12 @@ class Register extends Component {
 
   handleRegisterOne = () => {
 
+    alert("handleRegisterOne");
+
     document.body.scrollTop = document.documentElement.scrollTop = 0;
+    //var reqObj = {recaptcha_token: this.state.recaptcha_token, coll:"c_user", record:{} };
     var reqObj = {coll:"c_user", record:{} };
+
     var jqClass = ".registerform_one";
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
@@ -62,7 +66,7 @@ class Register extends Component {
               if (fieldName === emObj.emid){ emObj.value = fieldValue;}
             }
         }
-        //$(this).val("");
+        $(this).val("");
     });
 
     var errorList = verifyReqObj(reqObj.record, registerFormOne);
@@ -221,10 +225,14 @@ class Register extends Component {
         }
     }
 
+    var emObj = registerFormOne["groups"][0]["emlist"][0];
+
+
     var formCnHash = {
       "step_one":(<div id={"register_step_one"} key={"register_step_one"}>
             <div id={"register_form"} key={"register_form"} className="leftblock "
               style={{width:"90%", margin:"40px 0px 0px 5%"}}>
+              {emObj.value}<br/>
               <Formeditor formClass={registerFormOne.class} formObj={registerFormOne}/>
             </div>
         </div>),
@@ -242,7 +250,12 @@ class Register extends Component {
           </div>)
       };
 
-    var cn = formCnHash[this.state.formKey];
+
+    //var cn = formCnHash[this.state.formKey];
+    alert("render:" + emObj.value );
+    var cn = (<Formeditor formClass={registerFormOne.class} formObj={registerFormOne}/>);
+
+
     return (
       <div>
         <div className="pagecn" style={{background:"#fff"}}>
