@@ -19,12 +19,14 @@ from flask_jwt_extended import (
 api = Namespace("gsa", description="Glycan APIs")
 
 gsa_search_query_model = api.model(
-    'Dataset Search Query', 
-    {
-        'query': fields.String(required=True, default="", description='Query string')
-    }
+    'GSA Search Query', 
+    { 'query': fields.String(required=True, default="", description='Query string')}
 )
 
+gsa_recordlist_query_model = api.model(
+    'GSA Record List Query',
+    { 'user_id': fields.String(required=True, default="", description='User ID/Email')}
+)
 
 gsa_detail_query_model = api.model(
     'Dataset Detail Query',
@@ -33,7 +35,6 @@ gsa_detail_query_model = api.model(
         'dataversion': fields.String(required=False, default="1.12.1", description='Dataset Release [e.g: 1.12.1]'),
     }
 )
-
 
 gsa_submit_query_model = api.model(
     'Dataset Submit Query',
@@ -71,12 +72,12 @@ ds_model = api.model('Dataset', {
 
 @api.route('/search')
 class DatasetList(Resource):
-    '''f dfdsfadsfas f '''
-    @api.doc('search_gsas')
+    '''Search GSA database '''
+    @api.doc('search')
     @api.expect(gsa_search_query_model)
     #@api.marshal_list_with(ds_model)
     def post(self):
-        '''Search gsas'''
+        '''Search GSA database'''
         req_obj = request.json
         req_obj["coll"] = "c_glycan"
         res_obj = get_many(req_obj)
@@ -109,10 +110,51 @@ class DatasetList(Resource):
         return res_obj
 
 
+@api.route('/recordlist')
+class DatasetRecordlist(Resource):
+    '''Get list of GSA records created by a user'''
+    @api.doc('recordlist')
+    @api.expect(gsa_recordlist_query_model)
+    def post(self):
+        '''Get list of GSA records created by a user'''
+        req_obj = request.json
+        req_obj["coll"] = "c_glycan"
+        gsa_obj = get_many(req_obj)
+        if "error" in gsa_obj:
+            return gsa_obj
+        
+
+        field_obj_list = [
+            {"path":"gsa_id", "label":"GSA ID", "type":"string"},
+            {"path":"glycan.glytoucan_ac", "label":"GlyTouCan AC", "type":"string"},
+            {"path":"data_source_type", "label":"Data Source Type", "type":"string"},
+            {"path":"evidence_type", "label":"Evidence Type", "type":"string"},
+            {"path":"createdts", "label":"Created On", "type":"string"}
+        ]
+
+        res_obj = {"tabledata":[], "status":1}
+        header_row = []
+        for obj in field_obj_list:
+            header_row.append({"label":obj["label"], "type":obj["type"]})
+        res_obj["tabledata"].append(header_row)
+
+        for doc in gsa_obj["recordlist"]:
+            row = []
+            for o in field_obj_list:
+                p_list = o["path"].split(".")
+                val = ""
+                for p in p_list:
+                    val = doc[p] if p in doc else ""
+                row.append(val)
+            res_obj["tabledata"].append(row)
+
+        return res_obj
+
+
 @api.route('/detail')
 class DatasetDetail(Resource):
     '''Show a single gsa item'''
-    @api.doc('get_gsa')
+    @api.doc('detail')
     @api.expect(gsa_detail_query_model)
     #@api.marshal_with(ds_model)
     def post(self):
@@ -124,9 +166,9 @@ class DatasetDetail(Resource):
         if "error" in gsa_obj:
             return gsa_obj
 
-        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(SITE_ROOT, "conf/config.json")
-        config_obj = json.load(open(json_url))
+        #SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+        #json_url = os.path.join(SITE_ROOT, "conf/config.json")
+        #config_obj = json.load(open(json_url))
         res_obj = gsa_obj
         res_obj["status"] = 1
 
@@ -136,7 +178,7 @@ class DatasetDetail(Resource):
 @api.route('/pagecn')
 class Dataset(Resource):
     '''Get static page content '''
-    @api.doc('get_record')
+    @api.doc('pagecn')
     @api.expect(pagecn_query_model)
     #@api.marshal_with(ds_model)
     def post(self):
@@ -152,7 +194,7 @@ class Dataset(Resource):
 @api.route('/init')
 class Dataset(Resource):
     '''Get init '''
-    @api.doc('get_record')
+    @api.doc('init')
     @api.expect(init_query_model)
     def post(self):
         '''Get init '''
@@ -169,7 +211,7 @@ class Dataset(Resource):
 @api.route('/submit')
 class Dataset(Resource):
     '''Submit gsa '''
-    @api.doc('get_gsa')
+    @api.doc('submit')
     @api.expect(gsa_submit_query_model)
     @jwt_required
     def post(self):

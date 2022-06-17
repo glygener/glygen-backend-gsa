@@ -17,7 +17,7 @@
       "style":{"width":"40%","margin":"0px 0px 0px 20px"},
       "emlist":[
         {"emid":"password_one", "emtype":"password", "datatype":"string", "label":"Password", "maxlength":64, "class":    "registerform_one", "value":"", "required":true, "description":""},
-        {"emid":"password_two", "emtype":"password", "datatype":"string", "label":"Confiorm Password",        "maxlength":20,    "class":"registerform_one", "value":"", "required":true, "description":"Password must be at    least 8 characters    long, a mixture of uppercase and lowercase letters, with at least one number and one    special  charcater such  as ! @ # ?"}
+        {"emid":"password_two", "emtype":"password", "datatype":"string", "label":"Confirm Password",        "maxlength":20,    "class":"registerform_one", "value":"", "required":true, "description":"Password must be at    least 8 characters    long, a mixture of uppercase and lowercase letters, with at least one number and one    special  charcater such  as ! @ # ?"}
       ]
     },
     {
@@ -28,7 +28,7 @@
             "emid":"registerbtn_one", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
             "value":"Submit to register",
-            "disable":true,
+            "disable":false,
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]

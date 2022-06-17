@@ -1,0 +1,7 @@
+[
+  {"id":"submissions", "labelone":"Existing", "labeltwo":"Submissions", "url":"/submissions"},
+  {"id":"new_submission", "labelone":"New", "labeltwo":"Submission", "url":"/new_submission"},
+  {"id":"update_profile", "labelone":"Update", "labeltwo":"Profile", "url":"/update_profile"},
+  {"id":"update_profile", "labelone":"Change", "labeltwo":"Password", "url":"/change_password"}
+]
+

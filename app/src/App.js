@@ -11,9 +11,13 @@ import HeaderTwo from "./components/header_two";
 import Footer from "./components/footer";
 import Login from "./components/login";
 import Register from "./components/register";
-import Submissions from "./components/submissions";
 import Detail from "./components/detail";
 
+import Dashboard from "./components/dashboard";
+import Newsubmission from "./components/new_submission";
+import Submission from "./components/submissions";
+import Updateprofile from "./components/update_profile";
+import Changepassword from "./components/change_password";
 
 
 
@@ -135,6 +139,24 @@ class App extends Component {
       <Router>
         <Switch>
           <Route
+            path="/dashboard"
+            render={(props) => (
+              <Dashboard/>
+            )}
+          />
+          <Route
+            path="/update_profile"
+            render={(props) => (
+              <Updateprofile/>
+            )}
+          />
+          <Route
+            path="/change_password"
+            render={(props) => (
+              <Changepassword/>
+            )}
+          />
+          <Route
             path="/register"
             render={(props) => (
               <Register/>
@@ -147,9 +169,15 @@ class App extends Component {
             )}
           />
           <Route
+            path="/new_submission"
+            render={(props) => (
+              <Newsubmission pageId={"new_submission"} initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
             path="/submissions"
             render={(props) => (
-              <Submissions pageId={"Submissions"} initObj={this.state.response.record}/>
+              <Submission pageId={"submissions"} initObj={this.state.response.record}/>
             )}
           />
           <Route

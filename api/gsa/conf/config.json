@@ -66,9 +66,18 @@
                       "junction":"$or",
                       "pathlist":[
                           {"path":"recordid", "operator":"$regex"},
+                          {"path":"user_id", "operator":"$regex"},
                           {"path":"title", "operator":"$regex"},
                           {"path":"description", "operator":"$regex"},
                           {"path":"filename", "operator":"$regex"}
+                      ]
+                    },
+                    "user_id":{
+                      "required":false,
+                      "datatype":"string",
+                      "junction":"$or",
+                      "pathlist":[
+                          {"path":"user_id", "operator":"$eq"}
                       ]
                     }
                 }

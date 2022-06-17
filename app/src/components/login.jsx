@@ -165,7 +165,7 @@ class Login extends Component {
       );
     }
     else if (this.state.stage === 4){
-      window.location.href = "/submissions";
+      window.location.href = "/dashboard";
     }
     else if (this.state.stage === -1){
       cn =  (<Loadingicon/>);

@@ -66,7 +66,7 @@ class Register extends Component {
     });
 
     var errorList = verifyReqObj(reqObj.record, registerFormOne);
-    errorList = errorList.concat(verifyPasswords(reqObj.record["password_one"],
+    errorList = errorList.concat(verifyPasswords(reqObj.record["email"],reqObj.record["password_one"],
       reqObj.record["password_two"]));
 
     
@@ -102,15 +102,15 @@ class Register extends Component {
             tmpState.dialog.status = true;
             tmpState.dialog.msg = this.state.response.error;
           }
-          tmpState.fname = reqObj["record"]["fname"];
-          tmpState.lname = reqObj["record"]["lname"];
-          tmpState.password = reqObj["record"]["password"];
-          tmpState.email = reqObj["record"]["email"];
-          tmpState.shared_key = result.shared_key;
-
-          tmpState.formKey = "step_two";
+          else{
+            tmpState.fname = reqObj["record"]["fname"];
+            tmpState.lname = reqObj["record"]["lname"];
+            tmpState.password = reqObj["record"]["password"];
+            tmpState.email = reqObj["record"]["email"];
+            tmpState.shared_key = result.shared_key;
+            tmpState.formKey = "step_two";
+          }
           this.setState(tmpState);
-          //recaptchaEm.componentDidMount();
           console.log("Ajax response:", result);
         },
         (error) => {
@@ -125,7 +125,8 @@ class Register extends Component {
 
 
   handleRegisterTwo = () => {
-     document.body.scrollTop = document.documentElement.scrollTop = 0;
+     
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     var reqObj = {
       coll:"c_user", 
       record:{
@@ -180,7 +181,9 @@ class Register extends Component {
             tmpState.dialog.status = true;
             tmpState.dialog.msg = this.state.response.error;
           }
-          tmpState.formKey = "step_three";
+          else{
+            tmpState.formKey = "step_three";
+          }
           this.setState(tmpState);
           //recaptchaEm.componentDidMount();
           console.log("Ajax response:", result);
@@ -215,7 +218,12 @@ class Register extends Component {
           if (emObj.emid === "registerbtn_one"){
               emObj["onclick"] = this.handleRegisterOne;
           }
-          else if (emObj.emid === "registerbtn_two"){
+        }
+    }
+    for (var i in registerFormTwo["groups"]){
+        for (var j in registerFormTwo["groups"][i]["emlist"]){
+          var emObj = registerFormTwo["groups"][i]["emlist"][j];
+          if (emObj.emid === "registerbtn_two"){
               emObj["onclick"] = this.handleRegisterTwo;
           }
         }

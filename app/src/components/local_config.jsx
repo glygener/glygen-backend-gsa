@@ -3,6 +3,7 @@
 export const apiHash = {
   gsa_init:process.env.REACT_APP_API_URL + "/gsa/init",
   gsa_search:process.env.REACT_APP_API_URL + "/gsa/search",
+  gsa_recordlist:process.env.REACT_APP_API_URL + "/gsa/recordlist",
   gsa_detail:process.env.REACT_APP_API_URL + "/gsa/detail",
   gsa_upload:process.env.REACT_APP_API_URL + "/gsa/upload",
   gsa_submit:process.env.REACT_APP_API_URL + "/gsa/submit",

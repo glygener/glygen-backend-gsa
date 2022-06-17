@@ -9,6 +9,11 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 var validationHash = {};
 
+let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+
+
+
+
 
 
 
@@ -218,26 +223,18 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     if (emObj.className === "form-control registerform_one" && ["password_one", "password_two"].indexOf(targetId) != -1){
       var descObj = document.getElementById("lbl_" +targetId);
       var pass = emObj.value;
-      let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
-      let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,    }))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
       if(strongPassword.test(pass)) {
         validationHash[targetId] = true;
         emObj.style.border = "1px solid green";
         descObj.style.color = "green";
-        if (descObj.textContent.indexOf("(") == -1){
-          descObj.textContent += " (strong)";
-        }
-      } else if(mediumPassword.test(pass)){
-        validationHash[targetId] = true;
-        emObj.style.border = "1px solid orange";
-        descObj.style.color = "orange";
-        if (descObj.textContent.indexOf("(") == -1){
-          descObj.textContent += " (medium)";
-        }
+        descObj.textContent = descObj.textContent.replace("weak", "strong");
+        descObj.textContent = descObj.textContent.replace("medium", "strong");
       } else{
-        validationHash[targetId] = true;
+        validationHash[targetId] = false;
         emObj.style.border = "1px solid red";
         descObj.style.color = "red";
+        descObj.textContent = descObj.textContent.replace("medium", "weak");
+        descObj.textContent = descObj.textContent.replace("strong", "weak");
         if (descObj.textContent.indexOf("(") == -1){
           descObj.textContent += " (weak)";
         }
@@ -260,8 +257,9 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         descObj.style.color = "red";
       }
     }
+  
     
-    
+      
     if (["password_one", "password_two"].indexOf(targetId) != -1){
       var passwordOne = document.getElementById("password_one").value;
       var passwordTwo = document.getElementById("password_two").value;
@@ -272,13 +270,29 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         validationHash["password"] = false;
       }
 
-      if (validationHash["email"] && validationHash["password_one"] 
-          && validationHash["password_two"] && validationHash["password"]){
-        document.getElementById("registerbtn_one").disabled = false;
+      if (validationHash["password_one"] == true && validationHash["password_two"]){
+        var tmpEmObj = document.getElementById("password_two");
+        var tmpDescObj = document.getElementById("lbl_password_two");
+        if (validationHash["password"]){
+          tmpDescObj.style.color = "green";
+          tmpDescObj.textContent = tmpDescObj.textContent.replace(", but not matching", "");
+        }
+        else{
+          tmpDescObj.style.color = "red";
+          tmpDescObj.textContent = tmpDescObj.textContent.replace(", but not matching", "");
+          tmpDescObj.textContent = tmpDescObj.textContent.replace(")",", but not matching)");
+        }
       }
-      else{
-        document.getElementById("registerbtn_one").disabled = true;
-      }
+
+
+      //if (validationHash["email"] && validationHash["password_one"] 
+      //    && validationHash["password_two"] && validationHash["password"]){
+      //  document.getElementById("registerbtn_one").disabled = false;
+      //
+      //}
+      //else{
+      //  document.getElementById("registerbtn_one").disabled = true;
+      //}
     }
 
 
@@ -762,19 +776,18 @@ export async function getLogoutResponse  ()  {
 
 
 
-export function verifyPasswords (passwordOne, passwordTwo) {
+export function verifyPasswords (email, passwordOne, passwordTwo) {
 
   var errorList = [];
-  let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
 
-  if (passwordOne.length < 8){
-    errorList.push(<li>selected password is too short</li>);
+  if (strongPassword.test(passwordOne) === false) {
+    errorList.push(<li>password is not strong enough</li>);
   }
-  else if (passwordOne !== passwordTwo){
+  if (passwordOne !== passwordTwo){
     errorList.push(<li>submitted passwords do not match</li>);
   }
-  else if (strongPassword.test(passwordOne) === false) {
-    errorList.push(<li>password is not strong enough</li>);
+  if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
+    errorList.push(<li>invalid email</li>);
   }
 
   return errorList;

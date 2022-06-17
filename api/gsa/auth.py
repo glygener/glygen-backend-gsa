@@ -1,5 +1,6 @@
 import os
 import bcrypt
+import re
 import json
 import traceback
 import functools
@@ -233,7 +234,13 @@ def register_one():
     try:
         req_obj = request.json
         new_email, new_password = req_obj["record"]["email"], req_obj["record"]["password"]
+        
         new_password = bcrypt.hashpw(new_password.encode('utf-8'),bcrypt.gensalt())
+        error_obj = verify_password(req_obj["record"]["email"], req_obj["record"]["password"])
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+
+
         mongo_dbh, error_obj = get_mongodb()
         if error_obj != {}:
             return jsonify(error_obj), 200
@@ -395,6 +402,21 @@ def get_userinfo(user_name):
     except Exception as e:
         err_obj =  log_error(traceback.format_exc())
         return {}, err_obj, 0
+
+
+
+def verify_password(email, password):
+
+    error_obj = {}
+    if email.find("@") == -1 or email.find(".") == -1 :
+        error_obj = {"status":0, "error": "invalid email"}
+    reg = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
+    mat = re.match(reg, password)
+    if mat == None:
+        error_obj = {"status":0, "error": "weak password"}
+
+    return error_obj
+
 
 
 
