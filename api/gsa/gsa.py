@@ -129,7 +129,8 @@ class DatasetRecordlist(Resource):
             {"path":"glycan.glytoucan_ac", "label":"GlyTouCan AC", "type":"string"},
             {"path":"data_source_type", "label":"Data Source Type", "type":"string"},
             {"path":"evidence_type", "label":"Evidence Type", "type":"string"},
-            {"path":"createdts", "label":"Created On", "type":"string"}
+            {"path":"createdts", "label":"Created On", "type":"string"},
+            {"path":"createdts", "label":"", "type":"string"}
         ]
 
         res_obj = {"tabledata":[], "status":1}
@@ -140,12 +141,13 @@ class DatasetRecordlist(Resource):
 
         for doc in gsa_obj["recordlist"]:
             row = []
-            for o in field_obj_list:
+            for o in field_obj_list[:-1]:
                 p_list = o["path"].split(".")
                 val = ""
                 for p in p_list:
                     val = doc[p] if p in doc else ""
                 row.append(val)
+            row.append("<a href=\"/update_submission/%s\">Update/Edit</a>" % (doc["gsa_id"]))
             res_obj["tabledata"].append(row)
 
         return res_obj

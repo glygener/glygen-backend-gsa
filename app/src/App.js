@@ -15,6 +15,7 @@ import Detail from "./components/detail";
 
 import Dashboard from "./components/dashboard";
 import Newsubmission from "./components/new_submission";
+import Updatesubmission from "./components/update_submission";
 import Submission from "./components/submissions";
 import Updateprofile from "./components/update_profile";
 import Changepassword from "./components/change_password";
@@ -172,6 +173,12 @@ class App extends Component {
             path="/new_submission"
             render={(props) => (
               <Newsubmission pageId={"new_submission"} initObj={this.state.response.record}/>
+            )}
+          />
+          <Route
+            path="/update_submission/:gsaId"
+            render={(props) => (
+              <Updatesubmission pageId={"update_submission"} gsaId={props.match.params.gsaId}  initObj={this.state.response.record}/>
             )}
           />
           <Route
