@@ -1,5 +1,5 @@
 {
-  "step_one":{
+  "submission_type":{
     "title":"",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
@@ -60,7 +60,7 @@
       }
     ]
   },
-  "step_two_glycan":{
+  "glycan":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -74,7 +74,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":""
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -98,7 +98,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string",
             "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
+            "value":""
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -110,7 +110,7 @@
       }
     ]
   },
-  "step_two_glycoprotein":{
+  "glycoprotein":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -124,19 +124,19 @@
             "emid":"glycoprotein|uniprotkb_ac", "emtype":"text", "datatype":"string",
             "label":"UniProtKB Accession", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"P14210"
+            "value":""
           },
           {
             "emid":"glycoprotein|site|start_pos", "emtype":"int", "datatype":"int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
-            "value":294
+            "value":0
           },
           {
             "emid":"glycoprotein|site|end_pos", "emtype":"int", "datatype":"int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
-            "value":294
+            "value":0
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -148,7 +148,7 @@
       }
     ]
   },
-  "step_two_glycopeptide":{
+  "glycopeptide":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -162,25 +162,25 @@
             "emid":"glycopeptide|uniprotkb_ac", "emtype":"text", "datatype":"string",
             "label":"UniProtKB Accession", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"P14210"
+            "value":""
           }, 
           {
             "emid":"glycopeptide|sequence", "emtype":"text", "datatype":"string",
             "label":"Peptide Sequence", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"SSPPNNAAA"
+            "value":""
           },
           {
             "emid":"glycopeptide|site|start_pos", "emtype":"int", "datatype":"int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
-            "value":294
+            "value":0
           },
           {
             "emid":"glycopeptide|site|end_pos", "emtype":"int", "datatype":"int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
-            "value":294
+            "value":0
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -193,7 +193,7 @@
       }
     ]
   },
-  "step_two_glycolipid":{
+  "glycolipid":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -207,13 +207,13 @@
             "emid":"glycolipid|lipid_id", "emtype":"text", "datatype":"string",
             "label":"Lipid ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"L00001"
+            "value":""
           },
           {
             "emid":"glycolipid|sequence", "emtype":"text", "datatype":"string",
             "label":"Lipid Sequence", "class":"submissionsform",
             "style":{"width":"45%"},
-            "value":"AAAYYYZZZZ"
+            "value":""
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -225,7 +225,7 @@
       }
     ]
   },
-  "step_two_gpi":{
+  "gpi":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -239,19 +239,19 @@
             "emid":"gpi|uniprotkb_ac", "emtype":"text", "datatype":"string",
             "label":"UniProtKB Accession", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"P14210"
+            "value":""
           },
           {
             "emid":"gpi|lipid_id", "emtype":"text", "datatype":"string",
             "label":"Lipid ID", "class":"submissionsform",
             "style":{"width":"45%"},
-            "value":"L000001"
+            "value":""
           },
           {
             "emid":"gpi|sequence", "emtype":"text", "datatype":"string",
             "label":"Lipid Sequence", "class":"submissionsform",
             "style":{"width":"45%"},
-            "value":"ZAAAAZZZ"
+            "value":""
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -263,7 +263,7 @@
       }
     ]
   },
-  "step_two_other":{
+  "other_glycoconjugate":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -277,19 +277,19 @@
             "emid":"other_glycoconjugate|pubchem_id", "emtype":"text", "datatype":"string",
             "label":"PubChem ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":"0000001"
+            "value":""
           },
           {
             "emid":"other_glycoconjugate|site|start_pos", "emtype":"int", "datatype":"int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
-            "value":294
+            "value":0
           },
           {
             "emid":"other_glycoconjugate|site|end_pos", "emtype":"int", "datatype":"int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
-            "value":294
+            "value":0
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -301,67 +301,11 @@
       }
     ]
   },
-  "step_three_recombinant":{
+  "expression_system":{
     "title":"",
     "class":"submissionsform",
     "groups":[
-      {
-        "groupid":"one",
-        "title":"Biological Source Info",
-        "style":{"margin":"40px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
-        "emlist":[
-          {
-            "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Species", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"Homo sapiens"
-          },
-          {
-            "emid":"biological_source|strain", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Strain", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"biological_source|serotype", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Serotype", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"biological_source|tissue", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Tissue", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"biological_source|cell_type", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Cell Type", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"biological_source|fluid", "emtype":"text", "datatype":"string",
-            "maxlength":128, "label":"Fluid", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"biological_source|disease", "emtype":"stringlist", "datatype":"string",
-            "maxlength":128, "label":"Disease", "class":"submissionsform",
-            "style":{"width":"80%", "margin":"5px"},
-            "value":"xxx"
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
-          }
-        ]
-      },
-      {
+      {      
         "groupid":"two",
         "title":"Expression System",
         "style":{"margin":"40px 0% 0px 0px",
@@ -371,19 +315,19 @@
             "emid":"expression_system|tax_name", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Species", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"Homo sapiens"
+            "value":""
           },
           {
             "emid":"expression_system|strain", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Strain", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"expression_system|cell_type", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -395,7 +339,7 @@
       }
     ]
   },
-  "step_three_biological":{
+  "biological_source":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -409,43 +353,43 @@
             "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Species", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"Homo sapiens"
+            "value":""
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Strain", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"biological_source|serotype", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Serotype", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"biological_source|tissue", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Tissue", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"biological_source|cell_type", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"biological_source|fluid", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Fluid", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"biological_source|disease", "emtype":"stringlist", "datatype":"string",
             "maxlength":128, "label":"Disease", "class":"submissionsform",
             "style":{"width":"80%", "margin":"5px"},
-            "value":"xxx"
+            "value":""
           },
           {
             "emid":"savebtn", "emtype":"button", "datatype":"string",
@@ -457,7 +401,7 @@
       }
     ]
   },
-  "step_four_both":{
+  "publication":{
     "title":"",
     "class":"submissionsform",
     "groups":[
@@ -495,7 +439,13 @@
             "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
-      },
+      }
+    ]
+  },
+  "database_reference":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
       {
         "groupid":"two",
         "title":"Database References",
@@ -527,7 +477,13 @@
             "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
-      },
+      }
+    ]
+  },
+  "experimental_data":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
       {
         "groupid":"three",
         "title":"Experimental Data",
@@ -556,7 +512,13 @@
             "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
-      },
+      }
+    ]
+  },
+  "experimental_method":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
       {
         "groupid":"four",
         "title":"Experimental Method",
@@ -575,7 +537,13 @@
             "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
-      },
+      }
+    ]
+  },
+  "keywords":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
       {
         "groupid":"five",
         "title":"Keywords",

@@ -393,7 +393,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     }
     var spanList = [];
     for (var i in tmpList){
-      var childPathId = pathId + "_"+ i ;
+      var childPathId = pathId + "_"+ i + "_" + tmpList[i].replace(" ", "");
       var divId = pathId + "_"+ i + "_div";
       var btnId = pathId + "^"+ i + "^btn";
       spanList.push(
