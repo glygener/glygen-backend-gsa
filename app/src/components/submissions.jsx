@@ -16,7 +16,7 @@ class Submissions extends Component {
     navinfo:{
       submissions:[
         {id:"dashboard", label: "Dashboard", url: "/dashboard"},
-        {id:"submissions", label: "Exising Submissions", url: "/submissions"}  
+        {id:"submissions", label: "My Submissions", url: "/submissions"}  
       ]
     },
     dialog:{

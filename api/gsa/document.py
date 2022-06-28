@@ -54,7 +54,7 @@ def get_one(req_obj):
 
         if "_id" in doc:
             doc.pop("_id")
-        for k in ["createdts"]:
+        for k in ["createdts", "modifiedts"]:
             if k in doc:
                 ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
                 doc[k] = doc[k].strftime(ts_format)
@@ -117,7 +117,7 @@ def get_many(req_obj):
         for doc in doc_list:
             if "_id" in doc:
                 doc.pop("_id")
-            for k in ["createdts"]:
+            for k in ["createdts", "modifiedts"]:
                 if k in doc:
                     ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
                     doc[k] = doc[k].strftime(ts_format)
@@ -226,7 +226,7 @@ def insert_one(req_obj):
         for k in ["_id", "password"]:
             if k in doc:
                 doc.pop(k)
-        for k in ["createdts"]:
+        for k in ["createdts", "modifiedts"]:
             if k in doc:
                 ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
                 doc[k] = doc[k].strftime(ts_format)
@@ -237,3 +237,34 @@ def insert_one(req_obj):
 
     return res_obj
 
+
+
+def update_one(coll_name, qry_obj, update_obj):
+
+
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "conf/config.json")
+    config_obj = json.load(open(json_url))
+
+    try:
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return error_obj
+        res_obj = {"status": 1, "error":""}
+        update_obj["modifiedts"] = datetime.datetime.now()
+        res = mongo_dbh[coll_name].update_one(qry_obj, {"$set":update_obj})
+        doc = mongo_dbh[coll_name].find_one(qry_obj)
+        for k in ["_id", "password"]:
+            if k in doc:
+                doc.pop(k)
+        for k in ["createdts", "modifiedts"]:
+            if k in doc:
+                ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
+                doc[k] = doc[k].strftime(ts_format)
+        res_obj["record"] = doc
+        #res_obj["query"] = {}
+
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+    return res_obj

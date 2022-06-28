@@ -1,7 +1,7 @@
 import os,sys
 from flask_restx import Namespace, Resource, fields
 from flask import (request, current_app)
-from gsa.document import get_one, get_many, insert_one, order_json_obj
+from gsa.document import get_one, get_many, insert_one, update_one, order_json_obj
 from gsa.auth import get_userinfo
 
 from werkzeug.utils import secure_filename
@@ -29,7 +29,7 @@ gsa_recordlist_query_model = api.model(
 )
 
 gsa_detail_query_model = api.model(
-    'Dataset Detail Query',
+    'GSA Detail Query',
     {
         'bcoid': fields.String(required=True, default="GLY_000001", description='BCO ID'),
         'dataversion': fields.String(required=False, default="1.12.1", description='Dataset Release [e.g: 1.12.1]'),
@@ -37,12 +37,17 @@ gsa_detail_query_model = api.model(
 )
 
 gsa_submit_query_model = api.model(
-    'Dataset Submit Query',
+    'GSA Submit Query',
     {
-        'fname': fields.String(required=True, default="", description='First name'),
-        'lname': fields.String(required=True, default="", description='Last name'),
-        'email': fields.String(required=True, default="", description='Email address'),
-        'affilation': fields.String(required=True, default="", description='Affilation')
+    }
+)
+
+
+gsa_update_query_model = api.model(
+    'GSA Update Query',
+    {
+        'gsa_id': fields.String(required=True, default="", description='GSA_ID'),
+        'update_obj': fields.String(required=True, default="", description='Update Object')
     }
 )
 
@@ -54,7 +59,7 @@ gsa_finder_query_model = api.model(
 )
 
 pagecn_query_model = api.model(
-    'Dataset Page Query',
+    'GSA Page Query',
     {
         'pageid': fields.String(required=True, default="faq", description='Page ID')
     }
@@ -64,18 +69,13 @@ init_query_model = api.model('Init Query',{})
 
 
 
-ds_model = api.model('Dataset', {
-    'id': fields.String(readonly=True, description='Unique record identifier'),
-    'title': fields.String(required=True, description='Dataset title')
-})
 
 
 @api.route('/search')
-class DatasetList(Resource):
+class GSAList(Resource):
     '''Search GSA database '''
     @api.doc('search')
     @api.expect(gsa_search_query_model)
-    #@api.marshal_list_with(ds_model)
     def post(self):
         '''Search GSA database'''
         req_obj = request.json
@@ -111,7 +111,7 @@ class DatasetList(Resource):
 
 
 @api.route('/recordlist')
-class DatasetRecordlist(Resource):
+class GSARecordlist(Resource):
     '''Get list of GSA records created by a user'''
     @api.doc('recordlist')
     @api.expect(gsa_recordlist_query_model)
@@ -129,6 +129,7 @@ class DatasetRecordlist(Resource):
             {"path":"glycan.glytoucan_ac", "label":"GlyTouCan AC", "type":"string"},
             {"path":"data_source_type", "label":"Data Source Type", "type":"string"},
             {"path":"evidence_type", "label":"Evidence Type", "type":"string"},
+            {"path":"glycoconjugate_type", "label":"Glycoconjugate Type", "type":"string"},
             {"path":"createdts", "label":"Created On", "type":"string"},
             {"path":"createdts", "label":"", "type":"string"}
         ]
@@ -154,11 +155,10 @@ class DatasetRecordlist(Resource):
 
 
 @api.route('/detail')
-class DatasetDetail(Resource):
+class GSADetail(Resource):
     '''Show a single gsa item'''
     @api.doc('detail')
     @api.expect(gsa_detail_query_model)
-    #@api.marshal_with(ds_model)
     def post(self):
         '''Get single gsa object'''
         req_obj = request.json
@@ -178,11 +178,10 @@ class DatasetDetail(Resource):
 
 
 @api.route('/pagecn')
-class Dataset(Resource):
+class GSA(Resource):
     '''Get static page content '''
     @api.doc('pagecn')
     @api.expect(pagecn_query_model)
-    #@api.marshal_with(ds_model)
     def post(self):
         '''Get static page content '''
         req_obj = request.json
@@ -194,7 +193,7 @@ class Dataset(Resource):
 
 
 @api.route('/init')
-class Dataset(Resource):
+class GSA(Resource):
     '''Get init '''
     @api.doc('init')
     @api.expect(init_query_model)
@@ -211,7 +210,7 @@ class Dataset(Resource):
 
 
 @api.route('/submit')
-class Dataset(Resource):
+class GSA(Resource):
     '''Submit gsa '''
     @api.doc('submit')
     @api.expect(gsa_submit_query_model)
@@ -226,6 +225,29 @@ class Dataset(Resource):
         req_obj["useremail"] = current_user
         req_obj["coll"] = "c_glycan"
         res_obj = insert_one(req_obj)
+        #res_obj["userinfo"] = user_info
+
+        return res_obj
+
+
+
+@api.route('/update')
+class GSA(Resource):
+    '''Update gsa '''
+    @api.doc('update')
+    @api.expect(gsa_update_query_model)
+    @jwt_required
+    def post(self):
+        '''Update gsa '''
+        req_obj = request.json
+        current_user = get_jwt_identity()
+        user_info, err_obj, status = get_userinfo(current_user)
+        if status == 0:
+            return err_obj
+        req_obj["useremail"] = current_user
+        qry_obj = {"gsa_id":req_obj["gsa_id"]}
+        update_obj = req_obj["update_obj"]
+        res_obj = update_one("c_glycan", qry_obj, update_obj);
         #res_obj["userinfo"] = user_info
 
         return res_obj

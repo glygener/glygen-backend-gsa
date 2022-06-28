@@ -6,13 +6,27 @@
     "groups":[
       {
         "groupid":"one",
+        "title":"",
+        "style":{"width":"96%","margin":"0px 2% 10px 0px", "borderBottom":"1px solid #ccc"},
+        "emlist":[
+          {
+            "emid":"savebtn", "emtype":"button", "datatype":"string",
+            "onclick":"this.handleSaveChanges", "class":"btn btn-outline-secondary",
+            "value":"Save Changes",
+            "style":{"display":"block", "float":"right", "margin":"10px 10px 10px 0px"}
+          }
+        ]
+      },
+      {
+        "groupid":"two",
         "title":"Glycoconjugate and evidence types",
-        "style":{"margin":"0px 2% 0px 0px",
+        "style":{"width":"96%","margin":"0px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycoconjugate_type", "emtype":"select", "datatype":"string", 
             "label":"Glycoconjugate Type", "class":"submissionsform", 
+            "onchange":"this.handleSelectorChange",
             "value":{
               "selected":"GlycoProtein",
               "optlist":[
@@ -28,6 +42,7 @@
           {
             "emid":"evidence_type", "emtype":"select", "datatype":"string",
             "label":"Evidence Type", "class":"submissionsform",
+            "onchange":"this.handleSelectorChange",
             "value":{
               "selected":"Biological",
               "optlist":[
@@ -41,6 +56,7 @@
           {
             "emid":"data_source_type", "emtype":"select", "datatype":"string",
             "label":"Data Source Type", "class":"submissionsform",
+            "onchange":"this.handleSelectorChange",
             "value":{
               "selected":"Both",
               "optlist":[
@@ -49,12 +65,6 @@
                 {"value":"Both", "label":"Both"}
               ]
             }
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -67,7 +77,7 @@
       {
         "groupid":"one",
         "title":"Glycan Info",
-        "style":{"margin":"20px 2% 0px 0px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", 
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -99,12 +109,6 @@
             "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":""
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -117,7 +121,7 @@
       {
         "groupid":"two",
         "title":"Glycoprotein Site Information",
-        "style":{"margin":"40px 0% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 20% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -137,12 +141,6 @@
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
             "value":0
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -155,7 +153,7 @@
       {
         "groupid":"two",
         "title":"Glycopeptide Site Information",
-        "style":{"margin":"40px 0% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
            {
@@ -181,12 +179,6 @@
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
             "value":0
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
 
         ]
@@ -200,7 +192,7 @@
       {
         "groupid":"two",
         "title":"Glycolipid Information",
-        "style":{"margin":"40px 0% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -214,12 +206,6 @@
             "label":"Lipid Sequence", "class":"submissionsform",
             "style":{"width":"45%"},
             "value":""
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -232,7 +218,7 @@
       {
         "groupid":"two",
         "title":"GPI Information",
-        "style":{"margin":"40px 0% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -252,12 +238,6 @@
             "label":"Lipid Sequence", "class":"submissionsform",
             "style":{"width":"45%"},
             "value":""
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -270,7 +250,7 @@
       {
         "groupid":"two",
         "title":"Glycoconjugate Information",
-        "style":{"margin":"40px 0% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -290,12 +270,6 @@
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
             "value":0
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -308,7 +282,7 @@
       {      
         "groupid":"two",
         "title":"Expression System",
-        "style":{"margin":"40px 0% 0px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -328,12 +302,6 @@
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
             "value":""
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -346,7 +314,7 @@
       {
         "groupid":"one",
         "title":"Biological Source Info",
-        "style":{"margin":"40px 2% 0px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -390,12 +358,6 @@
             "maxlength":128, "label":"Disease", "class":"submissionsform",
             "style":{"width":"80%", "margin":"5px"},
             "value":""
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -408,7 +370,7 @@
       {
         "groupid":"one",
         "title":"Publication",
-        "style":{"margin":"40px 30px 30px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"}, 
         "emlist":[
           {
@@ -431,12 +393,6 @@
                   "style":{"width":"45%"}
               }
             ]
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -449,7 +405,7 @@
       {
         "groupid":"two",
         "title":"Database References",
-        "style":{"margin":"40px 30px 30px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -469,12 +425,6 @@
               }
             ],
             "value":[]
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -487,7 +437,7 @@
       {
         "groupid":"three",
         "title":"Experimental Data",
-        "style":{"width":"90%","margin":"40px 30px 30px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -504,12 +454,6 @@
               }
             ],
             "value":[]
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -522,19 +466,13 @@
       {
         "groupid":"four",
         "title":"Experimental Method",
-        "style":{"width":"90%","margin":"40px 30px 30px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
             "label":"", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }
@@ -547,19 +485,13 @@
       {
         "groupid":"five",
         "title":"Keywords",
-        "style":{"width":"90%","margin":"40px 30px 30px 0px",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string",
             "label":"", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
-          },
-          {
-            "emid":"savebtn", "emtype":"button", "datatype":"string",
-            "onclick":"handleSaveChanges", "class":"btn btn-outline-secondary",
-            "value":"Save Changes",
-            "style":{"width":"90%","display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
         ]
       }

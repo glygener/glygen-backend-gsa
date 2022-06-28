@@ -376,9 +376,10 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     }
     em = (
         <select tag={emType} key={pathId + "_select"} id={pathId}
-          className={"form-control " + formClass}
+          className={"form-select " + formClass}
           defaultValue={emValue.selected || ''}
           disabled={disableFlag}
+          onChange={formObj.onchange}
         >
           {optList}
         </select>
@@ -393,7 +394,8 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     }
     var spanList = [];
     for (var i in tmpList){
-      var childPathId = pathId + "_"+ i + "_" + tmpList[i].replace(" ", "");
+      var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+      var childPathId = pathId + "_"+ i + "_" + randStr;
       var divId = pathId + "_"+ i + "_div";
       var btnId = pathId + "^"+ i + "^btn";
       spanList.push(
@@ -516,8 +518,9 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         obj = emValue[i];
         spanList[i] = [];
         for (const j in childPropList){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           var childPropName = childPropList[j];
-          var childPathId = pathId + "_" + i + "_" + j + "_" + childPropName;
+          var childPathId = pathId + "_" + i + "_" + j + "_" + childPropName + ' _' + randStr;
           var childTypePath = pathId + "_" + childPropName;
           var childPropType = (childTypePath in typeMap ? typeMap[childTypePath] : "");
           if(basicTypeList.indexOf(childPropType) !== -1){
