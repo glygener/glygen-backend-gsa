@@ -41,6 +41,7 @@ class Updatesubmission extends Component {
   state = {
     pageid:"update_submission",
     loginforward:false,
+    saved:false,
     dialog:{
       status:false, 
       msg:""
@@ -57,7 +58,7 @@ class Updatesubmission extends Component {
 
 
   componentDidMount() {
-    
+   
     let access_csrf = localStorage.getItem("access_csrf")
     var reqObj = {"gsa_id":this.props.gsaId};
     const requestOptions = {
@@ -248,9 +249,9 @@ class Updatesubmission extends Component {
           tmpState.loginforward = "msg" in result;
           if (result.status == 1){
             tmpState.record = result.record;
+            tmpState.saved = true;
           }
           console.log("response:", result);
-
           this.setState(tmpState);
         },
         (error) => {
@@ -367,16 +368,24 @@ class Updatesubmission extends Component {
       cnList.push(<Formeditor formClass={formHash[k].class} formObj={formHash[k]}/>);
     }
 
+    var cn = cnList;
+    if (this.state.saved){
+      cn = (<div className="leftblock" style={{padding:"40px 0px 0px 20px", color:"green"}}>
+        Changes have been saved successfully!
+      </div>);
 
+      var tmpState = this.state;
+      tmpState.saved = false;
+    }
     var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
-
+    
     return (
       <div>
         <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           <div key={randStr} className="leftblock" style={{margin:"30px 0px 0px 4%"}}> 
-            {cnList}
+            {cn}
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ import Updatesubmission from "./components/update_submission";
 import Submission from "./components/submissions";
 import Updateprofile from "./components/update_profile";
 import Changepassword from "./components/change_password";
-
+import Resetpassword from "./components/reset_password";
 
 
 class App extends Component {
@@ -142,19 +142,25 @@ class App extends Component {
           <Route
             path="/dashboard"
             render={(props) => (
-              <Dashboard/>
+              <Dashboard userinfo={userInfo}/>
             )}
           />
           <Route
             path="/update_profile"
             render={(props) => (
-              <Updateprofile/>
+              <Updateprofile userinfo={userInfo}/>
             )}
           />
           <Route
             path="/change_password"
             render={(props) => (
-              <Changepassword/>
+              <Changepassword userinfo={userInfo}/>
+            )}
+          />
+          <Route
+            path="/reset_password"
+            render={(props) => (
+              <Resetpassword/>
             )}
           />
           <Route
@@ -172,19 +178,19 @@ class App extends Component {
           <Route
             path="/new_submission"
             render={(props) => (
-              <Newsubmission pageId={"new_submission"} initObj={this.state.response.record}/>
+              <Newsubmission pageId={"new_submission"} initObj={this.state.response.record} userinfo={userInfo}/>
             )}
           />
           <Route
             path="/update_submission/:gsaId"
             render={(props) => (
-              <Updatesubmission pageId={"update_submission"} gsaId={props.match.params.gsaId}  initObj={this.state.response.record}/>
+              <Updatesubmission pageId={"update_submission"} gsaId={props.match.params.gsaId}  initObj={this.state.response.record} userinfo={userInfo}/>
             )}
           />
           <Route
             path="/submissions"
             render={(props) => (
-              <Submission pageId={"submissions"} initObj={this.state.response.record}/>
+              <Submission pageId={"submissions"} initObj={this.state.response.record} userinfo={userInfo}/>
             )}
           />
           <Route

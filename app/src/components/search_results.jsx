@@ -6,6 +6,7 @@ import * as LocalConfig from "./local_config";
 import Loadingicon from "./loading_icon";
 import Alertdialog from './dialogbox';
 import $ from "jquery";
+import Nav from "./nav";
 
 
 class SearchResults extends Component {  
@@ -16,6 +17,13 @@ class SearchResults extends Component {
     pageBatchSize:5,
     pageStartIdx:1,
     pageEndIdx:5,
+    pageid:"home",
+    navinfo:{
+      home:[
+        {id:"home", label: "Home", url: "/"}
+      ]
+    },
+    navparaminfo:{},
     dialog:{
       status:false, 
       msg:""
@@ -168,7 +176,8 @@ class SearchResults extends Component {
     return (
       <div>
       <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
-
+      <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
+        
       <div className="pagecn">
         <div className="leftblock" style={{width:"100%", margin:"5px 0px 0px 0px",display:filterHideFlag}}>
           <Resultfilter

@@ -4,6 +4,7 @@ import re
 import json
 import traceback
 import functools
+
 from bson import json_util
 from pyotp import TOTP, random_base32
 from flask_mail import Mail, Message
@@ -21,7 +22,7 @@ from flask_jwt_extended import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from gsa.db import get_mongodb,  log_error
-from gsa.document import get_one, get_many, insert_one
+from gsa.document import get_one, get_many, update_one, insert_one
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
@@ -314,6 +315,8 @@ def register_two():
     return res_obj, 200
 
 
+
+
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
 @bp.route("/userinfo", methods=["GET", "POST"])
@@ -420,5 +423,78 @@ def verify_password(email, password):
 
 
 
+
+
+@bp.route('/reset_password', methods=('GET', 'POST'))
+def reset_password():
+    try:
+        req_obj = request.json
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+        if mongo_dbh["c_user"].find({"email":req_obj["email"]}).count() == 0:
+            return jsonify({"status":0, "error":"Submitted email is not registered!"}), 200
+        else:
+            tmp_password = random_base32()
+            tmp_password = tmp_password[0:8].lower()
+            new_pwd = bcrypt.hashpw(tmp_password.encode('utf-8'),bcrypt.gensalt())
+            qry_obj = {"email":req_obj["email"]}
+            update_obj = {"password":new_pwd}
+            res_obj = update_one("c_user", qry_obj, update_obj);
+            if res_obj["status"] != 1:
+                return res_obj
+
+            res_obj = {'status': 1}
+            body = "Please use this temporary password to login and change your password. Your temporary password is %s " % (tmp_password)
+            mail_obj = {
+                "sender_email":current_app.config["MAIL_SENDER"],
+                "receiver_email":req_obj["email"],
+                "subject":"Temporary password from GSA",
+                "body":body
+            }
+            if current_app.config["SERVER"] == "dev":
+                res_obj["mailobj"] = mail_obj
+            else:
+                send_mail(mail_obj)
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+
+    return res_obj, 200
+
+
+
+
+@bp.route('/change_password', methods=('GET', 'POST'))
+@jwt_required
+def change_password():
+
+    try:
+        req_obj = request.json
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+        
+        current_pwd = bcrypt.hashpw(req_obj["current_password"].encode('utf-8'),bcrypt.gensalt())
+        new_pwd = bcrypt.hashpw(req_obj["new_password"].encode('utf-8'),bcrypt.gensalt())
+        current_user = get_jwt_identity()
+        user_info, err_obj, status = get_userinfo(current_user)
+        if status == 0:
+            return err_obj
+        req_obj["useremail"] = current_user
+        user_doc = get_one({"coll":"c_user", "email" : current_user })
+        submitted_password = req_obj["current_password"].encode('utf-8')
+        stored_password = user_doc["record"]['password']
+        if bcrypt.hashpw(submitted_password, stored_password) != stored_password:
+            return {"status":0, "error":"Invalid current password"}
+        qry_obj = {"email":current_user}
+        update_obj = {"password":new_pwd}
+        res_obj = update_one("c_user", qry_obj, update_obj);
+
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+
+    return res_obj, 200
 
 

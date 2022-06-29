@@ -16,17 +16,16 @@
         },
         "c_user":{
             "primaryid":"userid",
-            "prj":{
-              "one":{},
-              "many":{}
-            },
-            "queryfields":{
+            "get_one":{
+              "prj":{},
+              "queryfields":{
                 "email":{
                   "datatype":"string",
                   "required":true,
                   "junction":"$or",
                   "pathlist":[{"path":"email","operator":"$eq"}]
                 }
+              }
             }
         },
         "c_html":{

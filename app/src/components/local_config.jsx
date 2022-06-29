@@ -13,7 +13,9 @@ export const apiHash = {
   auth_register_two:process.env.REACT_APP_API_URL + "/auth/register_two",
   auth_login_direct:process.env.REACT_APP_API_URL + "/auth/login_direct",
   auth_logout:process.env.REACT_APP_API_URL + "/auth/logout",
-  auth_userinfo:process.env.REACT_APP_API_URL + "/auth/userinfo"
+  auth_userinfo:process.env.REACT_APP_API_URL + "/auth/userinfo",
+  auth_change_password:process.env.REACT_APP_API_URL + "/auth/change_password",
+  auth_reset_password:process.env.REACT_APP_API_URL + "/auth/reset_password"
 };
 
 

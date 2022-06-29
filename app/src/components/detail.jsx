@@ -4,12 +4,21 @@ import Loadingicon from "./loading_icon";
 import $ from "jquery";
 import * as LocalConfig from "./local_config";
 import { Link } from "react-router-dom";
+import Nav from "./nav";
 
 
 
 class Detail extends Component {
   state = {
     record:{},
+    pageid:"detail",
+    navinfo:{
+      detail:[
+        {id:"home", label: "Home", url: "/"},
+        {id:"detail", label: "Details View (GSA_ID)", url: "/detail/GSA_ID"},
+      ]
+    },
+    navparaminfo:{gsa_id:this.props.gsaId},
     dialog:{
       status:false, 
       msg:""
@@ -113,6 +122,7 @@ class Detail extends Component {
       border:"0px solid #ccc", borderRadius:"10px"};
     return (
       <div>
+        <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           <div className="leftblock" style={sOne}> 

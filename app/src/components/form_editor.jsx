@@ -56,7 +56,9 @@ class Formeditor extends Component {
           </div>);
     }
     if ("description" in this.state.formObj){
-          divList.push(<div className="leftblock" style={{width:"100%", marginBottom:"20px"}}>
+        var s = {width:"100%", marginBottom:"20px"};
+        s = ("descstyle" in this.state.formObj ? this.state.formObj.descstyle : s);
+        divList.push(<div className="leftblock" style={s}>
             <Markup content={formDesc}/>
             </div>);
     }

@@ -8,20 +8,25 @@ import $ from "jquery";
 import { verifyReqObj, verifyPasswords} from './util';
 import Messagecn from './message_cn';
 import * as LocalConfig from "./local_config";
-
+import Nav from "./nav";
 
 
 class Register extends Component {
   state = {
     formKey:"step_one",
     recaptcha_token:"",
-    navinfo_register:[
-      {id:"register", label: "Register", url: "/register"}
-    ],
-    navinfo_confirmation:[
-      {id:"register", label: "Register", url: "/register"},
-      {id:"confirmation", label: "Confirmation", url: "/confirmation", flag:"disabled"},
-    ],
+    pageid:"register",
+    navinfo:{
+      register:[
+        {id:"home", label: "Home", url: "/"},
+        {id:"register", label: "Register", url: "/register"}
+      ],
+      confirmation:[
+        {id:"home", label: "Home", url: "/"},
+        {id:"confirmation", label: "Confirmation", url: "/confirmation", flag:"disabled"},
+      ]
+    },
+    navparaminfo:{},
     dialog:{
       status:false, 
       msg:""
@@ -253,6 +258,7 @@ class Register extends Component {
     var cn = formCnHash[this.state.formKey];
     return (
       <div>
+        <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           {cn}

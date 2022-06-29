@@ -9,16 +9,20 @@ import loginFormOne from "../json/form_login_one.json";
 import loginFormTwo from "../json/form_login_two.json";
 import loginFormThree from "../json/form_login_three.json";
 import loginFormDirect from "../json/form_login_direct.json";
+import Nav from "./nav";
 
 
 class Login extends Component {
   state = {
     stage: 1,
-    firstpageid:"bsnslist",
-    pageid:"bsnslist",
-    navinfo_login:[
-      {id:"login", label: "Log In", url: "/login"}
-    ],
+    pageid:"login",
+    navinfo:{
+      login:[
+        {id:"home", label: "Home", url: "/"},
+        {id:"login", label: "Login", url: "/login"}
+      ]
+    },
+    navparaminfo:{},
     dialog:{
       status:false, 
       msg:""
@@ -132,6 +136,7 @@ class Login extends Component {
             style={{width:"80%", margin:"10px 0px 0px 5%"}}>
             <button className="btn btn-outline-secondary" 
                   onClick={this.handleLoginDirect}>Login </button>
+            <br/><br/><a href="/reset_password" style={{textDecoration:"none"}}>Forgot password?</a>
           </div>
         </div>
       );
@@ -171,9 +176,9 @@ class Login extends Component {
       cn =  (<Loadingicon/>);
     }
 
-    var navParamInfo = {};
     return (
       <div>
+        <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           {cn}

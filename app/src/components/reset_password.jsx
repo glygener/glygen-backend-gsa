@@ -1,31 +1,34 @@
 import React, { Component } from "react";
-import Alertdialog from './dialogbox';
-import Nav from './nav';
-import $ from "jquery";
-import * as LocalConfig from "./local_config";
-import { Link } from "react-router-dom";
-import { verifyReqObj, verifyPasswords} from './util';
 import Formeditor from "./form_editor";
-import formHash from "../json/form_password_change.json";
+import Alertdialog from './dialogbox';
+import formHash from "../json/form_password_reset.json";
+import $ from "jquery";
+import { verifyReqObj, verifyPasswords} from './util';
+import Messagecn from './message_cn';
+import * as LocalConfig from "./local_config";
+import Nav from './nav';
 
 
-class Changepassword extends Component {
+
+class Resetpassword extends Component {
+
   state = {
     user_id:"",
-    saved:false, 
-    loginforward:false,
-    pageid:"change_password",
+    sent:false, 
+    pageid:"reset_password",
     navinfo:{
-      change_password:[
-        {id:"dashboard", label: "Dashboard", url: "/dashboard"},
-        {id:"change_password", label: "Change Password", url: "/change_password"}  
+      reset_password:[
+        {id:"home", label: "Home", url: "/"},
+        {id:"reset_password", label: "Reset Password", url: "/reset_password"}  
       ]
     },
+    navparaminfo:{},
     dialog:{
       status:false, 
       msg:""
     }
   };
+
 
   handleDialogClose = () => {
     var tmpState = this.state;
@@ -35,12 +38,11 @@ class Changepassword extends Component {
 
 
 
-  
-  handleChangePassword = () => {
+  handleResetPassword = () => {
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     var reqObj = {};
-    var jqClass = ".registerform_one";
+    var jqClass = ".passwordresetform";
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();
@@ -51,14 +53,8 @@ class Changepassword extends Component {
               if (fieldName === emObj.emid){ emObj.value = fieldValue;}
             }
         }
-        //$(this).val("");
     });
-
     var errorList = verifyReqObj(reqObj, formHash);
-    errorList = errorList.concat(verifyPasswords(this.props.userinfo.email, 
-      reqObj["password_one"], reqObj["password_two"]));
-
-
     if (errorList.length !== 0) {
       var tmpState = this.state;
       tmpState.dialog.status = true;
@@ -68,22 +64,15 @@ class Changepassword extends Component {
       return;
     }
 
-    reqObj["new_password"] = reqObj.password_one;
-    delete reqObj.password_one;
-    delete reqObj.password_two;
-
-
-    let access_csrf = localStorage.getItem("access_csrf")
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': access_csrf
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(reqObj),
-      credentials: 'include'
+      body: JSON.stringify(reqObj)
     };
-    const svcUrl = LocalConfig.apiHash.auth_change_password;
+    const svcUrl = LocalConfig.apiHash.auth_reset_password;
+
     fetch(svcUrl, requestOptions)
       .then((res) => res.json())
       .then(
@@ -96,9 +85,8 @@ class Changepassword extends Component {
             tmpState.dialog.msg = this.state.response.error;
           }
           else{
-            tmpState.saved = true;
+            tmpState.sent = true;
           }
-          tmpState.loginforward = "msg" in result;
           this.setState(tmpState);
           console.log("Ajax response:", result);
         },
@@ -113,15 +101,10 @@ class Changepassword extends Component {
   }
 
 
-
+  
 
 
   render() {
-
-
-    if(this.props.userinfo == undefined || this.state.loginforward){
-      window.location.href = "/login";
-    }
 
     for (var i in formHash["groups"]){
       for (var j in formHash["groups"][i]["emlist"]){
@@ -134,18 +117,19 @@ class Changepassword extends Component {
     }
 
     var cn = (<Formeditor formClass={formHash.class} formObj={formHash}/>);
-    if (this.state.saved){
+    if (this.state.sent){
       cn = (<div className="leftblock" style={{padding:"40px 0px 0px 20px", color:"green"}}>
-        Changes have been saved successfully!
+        Temporary password has been sent to your email address.
       </div>);
       var tmpState = this.state;
-      tmpState.saved = false;
+      tmpState.sent = false;
     }
+
 
 
     return (
       <div>
-        <Nav navinfo={this.state.navinfo[this.state.pageid]} />
+        <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           {cn}
@@ -159,4 +143,4 @@ class Changepassword extends Component {
   }
 }
 
-export default Changepassword;
+export default Resetpassword;
