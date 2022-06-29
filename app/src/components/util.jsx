@@ -321,7 +321,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         onChange={handleChange}
         defaultValue={emValue || ''}
         disabled={disableFlag}
-
+        placeHolder={formObj.placeholder}
       />
     );
     if ("description" in formObj){

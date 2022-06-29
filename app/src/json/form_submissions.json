@@ -81,7 +81,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -144,7 +144,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -233,7 +233,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -328,7 +328,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -411,7 +411,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -500,7 +500,7 @@
             "emid":"glycan|glytoucan_ac", "emtype":"text", "datatype":"string", "maxlength":10,
             "label":"GlyTouCan Accession", "class":"submissionsform",
             "style":{"width":"30%"},
-            "value":"G17689DH"
+            "value":"", "placeholder":"G17689DH"
           },
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
@@ -589,7 +589,7 @@
             "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Species", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"Homo sapiens"
+            "value":"", "placeholder":"Homo sapiens"
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string",
@@ -639,7 +639,7 @@
             "emid":"expression_system|tax_name", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Species", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"Homo sapiens"
+            "value":""
           },
           {
             "emid":"expression_system|strain", "emtype":"text", "datatype":"string",
@@ -690,7 +690,7 @@
             "emid":"biological_source|tax_name", "emtype":"text", "datatype":"string",
             "maxlength":128, "label":"Species", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"Homo sapiens"
+            "value":"", "placeholder":"Homo sapiens"
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string",

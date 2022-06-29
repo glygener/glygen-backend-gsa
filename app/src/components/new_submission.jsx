@@ -464,6 +464,7 @@ class Newsubmission extends Component {
       tmpState.dialog.status = true;
       tmpState.dialog.msg = <div><ul> {errorList} </ul></div>;
       this.setState(tmpState);
+      return;
     }
 
     var tmpState = this.state;
