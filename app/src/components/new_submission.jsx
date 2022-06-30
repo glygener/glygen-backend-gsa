@@ -492,7 +492,7 @@ class Newsubmission extends Component {
         var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
         tmpState.formKey = "step_four_" + x;
       }
-      this.validateGlycanSequence();
+      //this.validateGlycanSequence();
     }
     else if (tmpState.formKey.split("_")[1] === "three"){
       var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
