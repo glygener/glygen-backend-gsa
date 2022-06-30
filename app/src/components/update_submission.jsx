@@ -353,17 +353,23 @@ class Updatesubmission extends Component {
 
 
     for (var k in formHash){
-      var tmpList = filterHashOne[this.state.record["evidence_type"]];
-      if (tmpList.indexOf(k) != -1){
-        continue;
+      if (this.state.record["evidence_type"] in filterHashOne){
+        var tmpList = filterHashOne[this.state.record["evidence_type"]];
+        if (tmpList.indexOf(k) != -1){
+          continue;
+        }
       }
-      var tmpList = filterHashTwo[this.state.record["data_source_type"]];
-      if (tmpList.indexOf(k) != -1){
-        continue;
+      if (this.state.record["data_source_type"] in filterHashTwo){
+        var tmpList = filterHashTwo[this.state.record["data_source_type"]];
+        if (tmpList.indexOf(k) != -1){
+          continue;
+        }
       }
-      var tmpList = filterHashThree[this.state.record["glycoconjugate_type"]];
-      if (tmpList.indexOf(k) != -1){
-        continue;
+      if (this.state.record["glycoconjugate_type"] in filterHashThree){
+        var tmpList = filterHashThree[this.state.record["glycoconjugate_type"]];
+        if (tmpList.indexOf(k) != -1){
+          continue;
+        }
       }
       cnList.push(<Formeditor formClass={formHash[k].class} formObj={formHash[k]}/>);
     }
