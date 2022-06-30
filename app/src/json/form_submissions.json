@@ -12,7 +12,7 @@
         "emlist":[
           {
             "emid":"glycoconjugate_type", "emtype":"select", "datatype":"string|string", 
-            "label":"Glycoconjugate Type", "class":"submissionsform", 
+            "required":true,"label":"Glycoconjugate Type", "class":"submissionsform", 
             "value":{
               "selected":"GlycoProtein",
               "optlist":[
@@ -27,7 +27,7 @@
           },
           {
             "emid":"evidence_type", "emtype":"select", "datatype":"string|string",
-            "label":"Evidence Type", "class":"submissionsform",
+            "required":true,"label":"Evidence Type", "class":"submissionsform",
             "value":{
               "selected":"Biological",
               "optlist":[
@@ -40,7 +40,7 @@
           },
           {
             "emid":"data_source_type", "emtype":"select", "datatype":"string|string",
-            "label":"Data Source Type", "class":"submissionsform",
+            "required":true,"label":"Data Source Type", "class":"submissionsform",
             "value":{
               "selected":"Both",
               "optlist":[
@@ -93,6 +93,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -103,7 +104,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -156,6 +157,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -166,7 +168,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -181,20 +183,20 @@
           {
             "emid":"glycoprotein|uniprotkb_ac", "emtype":"text", "datatype":"string|string",
             "label":"UniProtKB Accession", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
+            "style":{"width":"35%", "margin":"0px 10px 0px 0px"},
             "value":"", "placeholder":"P14210", "required":true
           },
           {
             "emid":"glycoprotein|site|start_pos", "emtype":"int", "maxlength":5, "datatype":"number|int", "maxlength":5,
             "label":"Site Start Position", "class":"submissionsform",
-            "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
+            "style":{"width":"30%", "margin":"0px 10px 0px 0px"},
             "placeholder":294, "required":true
           },
           {
             "emid":"glycoprotein|site|end_pos", "emtype":"int", "datatype":"number|int",
             "maxlength":5,
             "label":"Site End Position", "class":"submissionsform",
-            "style":{"width":"24%"},
+            "style":{"width":"30%"},
             "placeholder":294, "required":true
           }
         ]
@@ -246,6 +248,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -256,7 +259,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -341,6 +344,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -351,7 +355,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -424,6 +428,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -434,7 +439,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -513,6 +518,7 @@
             "emid":"glycan|sequence_type", "emtype":"select", "datatype":"string|string",
             "label":"Sequence Type", "class":"submissionsform",
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
+            "required":true,
             "value":{
               "selected":"WURCS",
               "optlist":[
@@ -523,7 +529,7 @@
           },
           {
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
-            "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
+            "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":"WURCS=2.0/6,12,11/[a2122h-1b_1-5_2*NCC/3=O][a1122h-1b_1-5][a1122h-1a_1-5][a2112h-1b_1-5][Aad21122h-2a_2-6_5*NCC/3=O][a1221m-1a_1-5]/1-1-2-3-1-4-5-3-1-4-5-6/a4-b1_a6-l1_b4-c1_c3-d1_c6-h1_d2-e1_e4-f1_f3-g2_h2-i1_i4-j1_j3-k2"
           }
@@ -767,6 +773,7 @@
             "wrapperstyle":{ "padding":"0px 10px 20px 10px", 
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
             "value":[],
+            "required":true,
             "proplist":[
               {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string|string",
                 "style":{"width":"45%", "marginRight":"20px"},
@@ -842,7 +849,7 @@
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string|string",
-            "label":"Experimental Method", "class":"submissionsform",
+            "required":true,"label":"Experimental Method", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
           }
         ]
@@ -855,7 +862,7 @@
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
-            "label":"Keywords", "class":"submissionsform",
+            "required":true,"label":"Keywords", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
           }
         ]
@@ -896,6 +903,7 @@
             "wrapperstyle":{ "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
             "value":[],
+            "required":true,
             "proplist":[
               {"prop":"type",  "emtype":"select", "label":"Type", "datatype":"string|string",
                 "style":{"width":"45%", "marginRight":"20px"},
@@ -945,7 +953,7 @@
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string|string",
-            "label":"Experimental Method", "class":"submissionsform",
+            "required":true,"label":"Experimental Method", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
           }
         ]
@@ -958,7 +966,7 @@
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
-            "label":"Keywords", "class":"submissionsform",
+            "required":true,"label":"Keywords", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
           }
         ]
@@ -1022,7 +1030,7 @@
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
-            "label":"Keywords", "class":"submissionsform",
+            "required":true,"label":"Keywords", "class":"submissionsform",
             "style":{"width":"85%", "margin":"5px"}
           }
         ]

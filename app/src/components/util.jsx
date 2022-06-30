@@ -19,8 +19,9 @@ let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0
 
 
 export function verifyReqObj (reqObj, formObj){
+    
+    var typeList = ["text", "int", "float", "select", "textarea", "stringlist", "obj", "objlist"];
     var errorList = [];
-     
     for (var i in formObj.groups){
       var grpObj = formObj.groups[i];
       for (var j in grpObj.emlist){
@@ -28,17 +29,21 @@ export function verifyReqObj (reqObj, formObj){
         var emId = obj.emid;
         var emValue =  obj.value;
         var emLbl = obj.label;
-        if (["text", "int", "float", "select", "textarea"].indexOf(obj.emtype) === -1){
+        
+
+        if (typeList.indexOf(obj.emtype) === -1){
             continue;
-        }
-        if(!(emId in reqObj) === true){
-          if (obj.required === true){
-            if (obj.emtype !== "button"){
-              errorList.push(<li>"{emLbl}" missing in request</li>);
-            }
+        } 
+        else if (obj.required === true && ["stringlist", "objlist"].indexOf(obj.emtype) !== -1){
+          console.log("OOOO", obj);
+          if (emValue === undefined){
+            errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+          }
+          else if (emValue.length === 0){
+            errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
           }
         }
-        else if (reqObj[emId] == null){
+        else if (obj.required === true && reqObj[emId] == null){
           errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
         }
         else if (obj.required === true && obj["datatype"].split("|")[1] === "int" && isNaN(reqObj[emId])){
@@ -47,8 +52,10 @@ export function verifyReqObj (reqObj, formObj){
         else if (obj.required === true && reqObj[emId].toString() === "" ){
           errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
         }
-        else if (typeof(reqObj[emId]) !== obj["datatype"].split("|")[0]){
-          errorList.push(<li>"{emLbl}" type mismatch</li>);
+        else if (obj["datatype"].split("|")[0] === "number"){
+          if (typeof(reqObj[emId]) !== obj["datatype"].split("|")[0]){
+            errorList.push(<li>"{emLbl}" type mismatch</li>);
+          }
         }
         //else{
         //  console.log("FLAG-2", emId, obj["datatype"], emValue);
@@ -616,7 +623,9 @@ export function getFormElement(pathId, formObj,formClass, emValue){
   //    </div>;
   //}
 
-  var lblDiv = (<div id={"lbl_"+pathId} className="leftblock" style={sInner} >{formObj.label} </div>);
+  var rqrd = (formObj.required === true ? "*" : "");
+  var lblDiv = (<div id={"lbl_"+pathId} className="leftblock" style={sInner} >{formObj.label} 
+    <span style={{color:"red"}}> {rqrd}</span> </div>);
   if (emType === "radio"){lblDiv = "";}
   return (
     <div className="leftblock" key={pathId +"_" + emType} style={sOuter}>
