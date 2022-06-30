@@ -95,7 +95,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -159,7 +159,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -250,7 +250,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -346,7 +346,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -430,7 +430,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}
@@ -520,7 +520,7 @@
             "style":{"width":"25%", "margin":"20px 70% 0px 0px"},
             "required":true,
             "value":{
-              "selected":"WURCS",
+              "selected":"GlycoCT",
               "optlist":[
                 {"value":"GlycoCT", "label":"GlycoCT"},
                 {"value":"WURCS", "label":"WURCS"}

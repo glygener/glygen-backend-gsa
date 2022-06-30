@@ -15,7 +15,9 @@ export const apiHash = {
   auth_logout:process.env.REACT_APP_API_URL + "/auth/logout",
   auth_userinfo:process.env.REACT_APP_API_URL + "/auth/userinfo",
   auth_change_password:process.env.REACT_APP_API_URL + "/auth/change_password",
-  auth_reset_password:process.env.REACT_APP_API_URL + "/auth/reset_password"
+  auth_reset_password:process.env.REACT_APP_API_URL + "/auth/reset_password",
+  glycoct_validate:"https://glygen.ccrc.uga.edu/sandbox/api/checkers.php"
+
 };
 
 

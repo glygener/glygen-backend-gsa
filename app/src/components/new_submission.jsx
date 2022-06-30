@@ -461,7 +461,6 @@ class Newsubmission extends Component {
         //$(this).val("");
     });
 
-    console.log("VVVV", valHash);
 
     var errorList = verifyReqObj(valHash, selectedForm);
     if (errorList.length !== 0) {
@@ -493,6 +492,7 @@ class Newsubmission extends Component {
         var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
         tmpState.formKey = "step_four_" + x;
       }
+      this.validateGlycanSequence();
     }
     else if (tmpState.formKey.split("_")[1] === "three"){
       var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
@@ -502,22 +502,54 @@ class Newsubmission extends Component {
       tmpState.formKey = "step_five";
     }
     //alert("after: " + tmpState.formKey);
-
-
     //tmpState.dialog.status = true;
     //tmpState.dialog.msg = <div>{JSON.stringify(tmpState.record, null, 2)}</div>;
     this.setState(tmpState);
     return
 
+  }
 
 
+
+  validateGlycanSequence = () => {
+
+    var reqObj = {
+      glycoct:this.state.record["glycan|sequence"],
+      type:"N",
+      enz:false,
+      related:false,
+      debug:false
+    };
+    console.log("XXXXXXXX", reqObj);
     
+    const svcUrl = LocalConfig.apiHash.glycoct_validate;
+    var params = "glycoct=" + this.state.record["glycan|sequence"];
+    params += "&type=N&enz=false&related=false&debug=false"
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", svcUrl, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {//Call a function when the state changes.
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        alert(xhr.responseText);
+      }
+    }
+    xhr.send(params);
+    return;
+
+
+
+
     const requestOptions = { 
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(reqObj)
+      glycoct:this.state.record["glycan|sequence"],
+      type:"N",
+      enz:false,
+      related:false,
+      debug:false
     };
-    const svcUrl = LocalConfig.apiHash.auth_submissions;
+
     fetch(svcUrl, requestOptions)
       .then((res) => res.json())
       .then(
