@@ -444,7 +444,10 @@ class Newsubmission extends Component {
         for (var i in selectedForm.groups){
             for (var j in selectedForm.groups[i].emlist){
               var emObj = selectedForm.groups[i].emlist[j];
-              if (fieldName === emObj.emid){ 
+              if (fieldName === emObj.emid){
+                if (emObj.datatype.split("|")[1] === "int"){
+                  fieldValue = parseInt(fieldValue);
+                }
                 valHash[fieldName] = fieldValue;
                 if (emObj.emtype === "select"){
                   emObj.value.selected = fieldValue;
@@ -455,8 +458,10 @@ class Newsubmission extends Component {
               }
             }
         }
-        $(this).val("");
+        //$(this).val("");
     });
+
+    console.log("VVVV", valHash);
 
     var errorList = verifyReqObj(valHash, selectedForm);
     if (errorList.length !== 0) {

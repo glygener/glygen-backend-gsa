@@ -20,30 +20,43 @@ let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0
 
 export function verifyReqObj (reqObj, formObj){
     var errorList = [];
-    
+     
     for (var i in formObj.groups){
       var grpObj = formObj.groups[i];
       for (var j in grpObj.emlist){
         var obj = grpObj.emlist[j];
         var emId = obj.emid;
         var emValue =  obj.value;
+        var emLbl = obj.label;
+        if (["text", "int", "float", "select", "textarea"].indexOf(obj.emtype) === -1){
+            continue;
+        }
         if(!(emId in reqObj) === true){
           if (obj.required === true){
             if (obj.emtype !== "button"){
-              errorList.push(<li>field "{emId}" missing in request</li>);
+              errorList.push(<li>"{emLbl}" missing in request</li>);
             }
           }
         }
-        else if (reqObj[emId].toString() === "" ){
-          errorList.push(<li key={"error_in_" + emId}>field "{emId}" cannot be empty value</li>);
+        else if (reqObj[emId] == null){
+          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
         }
-        else if (typeof(reqObj[emId]) !== obj["datatype"] ){
-          errorList.push(<li>field "{emId}" type mismatch</li>);
+        else if (obj.required === true && obj["datatype"].split("|")[1] === "int" && isNaN(reqObj[emId])){
+          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+        } 
+        else if (obj.required === true && reqObj[emId].toString() === "" ){
+          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
         }
+        else if (typeof(reqObj[emId]) !== obj["datatype"].split("|")[0]){
+          errorList.push(<li>"{emLbl}" type mismatch</li>);
+        }
+        //else{
+        //  console.log("FLAG-2", emId, obj["datatype"], emValue);
+        //}
       }
-      if (errorList.length === 0){
-        return errorList;
-      }
+      //if (errorList.length === 0){
+      //  return errorList;
+      //}
     }
     return errorList;
 }
@@ -302,7 +315,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
 
 
   var basicTypeList = [
-      "text","password","int", "float", "datetime","radio", "select", "textarea",
+      "text","password", "int", "float", "datetime","radio", "select", "textarea",
       "stringlist"
   ];
 
@@ -311,7 +324,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
 
 
   var em = "";
-  if (["text","password","int", "float", "datetime"].indexOf(emType) !== -1){
+  if (["text","password", "int", "float", "datetime"].indexOf(emType) !== -1){
     var newType = (["int", "float"].indexOf(emType) !== -1 ? "number": emType);
     var em = [];
     em.push(
