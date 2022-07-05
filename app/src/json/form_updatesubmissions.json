@@ -156,28 +156,22 @@
         "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
-           {
-            "emid":"glycopeptide|uniprotkb_ac", "emtype":"text", "datatype":"string",
-            "label":"UniProtKB Accession", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":""
-          }, 
           {
             "emid":"glycopeptide|sequence", "emtype":"text", "datatype":"string",
             "label":"Peptide Sequence", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
+            "style":{"width":"40%", "margin":"0px 10px 0px 0px"},
             "value":""
           },
           {
             "emid":"glycopeptide|site|start_pos", "emtype":"int", "datatype":"int",
             "label":"Site Start Position", "class":"submissionsform",
-            "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
+            "style":{"width":"26%", "margin":"0px 10px 0px 0px"},
             "value":0
           },
           {
             "emid":"glycopeptide|site|end_pos", "emtype":"int", "datatype":"int",
             "label":"Site End Position", "class":"submissionsform",
-            "style":{"width":"24%"},
+            "style":{"width":"26%"},
             "value":0
           }
 
@@ -197,7 +191,7 @@
         "emlist":[
           {
             "emid":"glycolipid|lipid_id", "emtype":"text", "datatype":"string",
-            "label":"Lipid ID", "class":"submissionsform",
+            "label":"PubChem ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
             "value":""
           },
@@ -224,19 +218,19 @@
           {
             "emid":"gpi|uniprotkb_ac", "emtype":"text", "datatype":"string",
             "label":"UniProtKB Accession", "class":"submissionsform",
-            "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
+            "style":{"width":"30%", "margin":"0px 10px 0px 0px"},
             "value":""
           },
           {
             "emid":"gpi|lipid_id", "emtype":"text", "datatype":"string",
-            "label":"Lipid ID", "class":"submissionsform",
-            "style":{"width":"45%"},
+            "label":"PubChem ID", "class":"submissionsform",
+            "style":{"width":"30%", "margin":"0px 10px 0px 0px"},
             "value":""
           },
           {
             "emid":"gpi|sequence", "emtype":"text", "datatype":"string",
             "label":"Lipid Sequence", "class":"submissionsform",
-            "style":{"width":"45%"},
+            "style":{"width":"30%"},
             "value":""
           }
         ]

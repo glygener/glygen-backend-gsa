@@ -1,0 +1,36 @@
+{
+    "title":"",
+    "description":"",
+    "class":"pageform",
+    "style":{"background":"#fff"},
+    "groups":[
+      {
+        "groupid":"one",
+        "style":{"width":"40%","background":"#fff", "margin":"20px 2% 0px 3%"},
+        "emlist":[
+          {"emid":"fname", "emtype":"text", "datatype":"string", "label":"First Name", 
+            "maxlength":50, "class":"pageform", "value":"", "required":true},
+          {"emid":"lname", "emtype":"text", "datatype":"string", "label":"Last Name", 
+            "maxlength":50, "class":"pageform", "value":"", "required":true},
+          {"emid":"institute", "emtype":"text", "datatype":"string", "label":"Institute",
+             "maxlength":128, "class":"pageform", "value":"", "required":false},
+          {
+            "emid":"savebtn", "emtype":"button", "datatype":"string",
+            "onclick":"this.handleUpdateProfile", "class":"btn btn-outline-secondary",
+            "value":"Submit",
+            "style":{"display":"block", "float":"left", "margin":"10px 10px 10px 0px"}
+          }
+        ]
+      },
+      {
+        "groupid":"two",
+        "style":{"width":"40%","background":"#fff", "margin":"20px 2% 0px 3%"},
+        "emlist":[
+          {"emid":"department", "emtype":"text", "datatype":"string", "label":"Department",
+             "maxlength":128, "class":"pageform", "value":"", "required":false},
+          {"emid":"url", "emtype":"text", "datatype":"string", "label":"Home Page/LinkedIn URL",
+             "maxlength":128, "class":"pageform", "value":"", "required":false}
+        ]
+      }
+    ]
+}

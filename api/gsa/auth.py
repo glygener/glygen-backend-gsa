@@ -498,3 +498,48 @@ def change_password():
     return res_obj, 200
 
 
+@bp.route('/get_profile', methods=('GET', 'POST'))
+@jwt_required
+def get_profile():
+
+    try:
+        req_obj = request.json
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+        current_user = get_jwt_identity()
+        user_info, err_obj, status = get_userinfo(current_user)
+        if status == 0:
+            return err_obj
+        res_obj = get_one({"coll":"c_user", "email" : current_user })
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+    return res_obj, 200
+
+
+
+
+@bp.route('/update_profile', methods=('GET', 'POST'))
+@jwt_required
+def update_profile():
+
+    try:
+        req_obj = request.json
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return jsonify(error_obj), 200
+        current_user = get_jwt_identity()
+        user_info, err_obj, status = get_userinfo(current_user)
+        if status == 0:
+            return err_obj
+        req_obj["useremail"] = current_user
+        qry_obj = {"email":current_user}
+        res_obj = update_one("c_user", qry_obj, req_obj["updateobj"]);
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+
+    return res_obj, 200
+
+

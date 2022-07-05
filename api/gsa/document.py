@@ -36,11 +36,6 @@ def get_one(req_obj):
             return qry_obj
         #return {"error":"xxxxx", "query":qry_obj}
 
-
-        data_ver = req_obj["dataversion"] if "dataversion" in req_obj else init_obj["dataversion"]
-        if coll_name in  ["c_extract", "c_bco", "c_history"]:
-            coll_name += "_v-%s" % (data_ver)
-
         res_obj = {"status":1}
         doc = {}
         if prj_obj != {}:
@@ -51,9 +46,10 @@ def get_one(req_obj):
             msg = "No '%s' record found for your query" % (coll_name)
             #return {"status":0, "error":msg, "query":qry_obj}
             return {"status":0, "error":msg}
-
-        if "_id" in doc:
-            doc.pop("_id")
+        
+        for k in ["_id", "password"]:
+            if k in doc:
+                doc.pop(k)
         for k in ["createdts", "modifiedts"]:
             if k in doc:
                 ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
@@ -64,6 +60,36 @@ def get_one(req_obj):
         res_obj =  log_error(traceback.format_exc())
 
     return res_obj
+
+
+def delete_one(req_obj):
+
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, "conf/config.json")
+    config_obj = json.load(open(json_url))
+
+    try:
+        mongo_dbh, error_obj = get_mongodb()
+        if error_obj != {}:
+            return error_obj
+        if "coll" not in req_obj:
+            return {"status":0, "error":"no collection specified"}
+        if req_obj["coll"] not in config_obj["collinfo"]:
+            return {"status":0, "error":"unknown collection name"}
+        init_obj = mongo_dbh["c_init"].find_one({})
+        coll_name =  req_obj["coll"]
+        res_obj = {"status":0}
+        req_obj.pop("coll")
+        res = mongo_dbh[coll_name].delete_one(req_obj)
+        doc = mongo_dbh[coll_name].find_one(req_obj)
+        if doc == None:
+            res_obj["status"] = 1
+
+    except Exception as e:
+        res_obj =  log_error(traceback.format_exc())
+
+    return res_obj
+
 
 
 def get_many(req_obj):
@@ -95,9 +121,6 @@ def get_many(req_obj):
             return qry_obj
 
         
-        data_ver = init_obj["dataversion"]
-        if coll_name in  ["c_extract", "c_bco", "c_history"]:
-            coll_name += "_v-%s" % (data_ver)
 
 
         #####
@@ -115,15 +138,13 @@ def get_many(req_obj):
         doc_list = list(cur)
 
         for doc in doc_list:
-            if "_id" in doc:
-                doc.pop("_id")
+            for k in ["_id", "password"]:
+                if k in doc:
+                    doc.pop(k)
             for k in ["createdts", "modifiedts"]:
                 if k in doc:
                     ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
                     doc[k] = doc[k].strftime(ts_format)
-            if coll_name.find("c_extract") != -1:
-                if "categories" in doc:
-                    res_obj["recordlist"].append(doc)
             else:
                 res_obj["recordlist"].append(doc)
         #res_obj["query"] = req_obj

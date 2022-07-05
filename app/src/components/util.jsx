@@ -15,6 +15,39 @@ let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0
 
 
 
+export function setFormValues (formObj, itemObj) {
+
+    for (var j in formObj.groups){
+        for (var k in formObj.groups[j]["emlist"]){
+          var obj = formObj.groups[j]["emlist"][k];
+          if (["select"].indexOf(obj.emtype) !== -1){
+            obj.value.selected = itemObj[obj.emid];
+          }
+          else if (["text"].indexOf(obj.emtype) !== -1){
+            obj.value = itemObj[obj.emid];
+          }
+          if (obj.emtype === "objlist"){
+            obj["onadditem"] = this.handleAddItemObj;
+            obj["onremoveitem"] = this.handleRemoveItemObj;
+            for (var q in obj["proplist"]){
+              var o = obj["proplist"][q];
+              if (o.emtype === "stringlist"){
+                  o["onadditem"] = this.handleAddItemValue;
+                  o["onremoveitem"] = this.handleRemoveItemValue;
+              }
+            }
+          }
+          else if (obj.emtype === "stringlist"){
+            obj["onadditem"] = this.handleAddItemValue;
+            obj["onremoveitem"] = this.handleRemoveItemValue;
+          }
+        }
+    }
+  
+    return;
+
+  }
+
 
 
 

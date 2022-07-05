@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Formeditor from "./form_editor";
 import Alertdialog from './dialogbox';
-import formHash from "../json/form_password_reset.json";
+import formHash from "../json/form_reset_password.json";
 import $ from "jquery";
 import { verifyReqObj, verifyPasswords} from './util';
 import Messagecn from './message_cn';
@@ -42,7 +42,7 @@ class Resetpassword extends Component {
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     var reqObj = {};
-    var jqClass = ".passwordresetform";
+    var jqClass = ".pageform";
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();

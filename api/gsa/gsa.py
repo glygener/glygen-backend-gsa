@@ -1,7 +1,7 @@
 import os,sys
 from flask_restx import Namespace, Resource, fields
 from flask import (request, current_app)
-from gsa.document import get_one, get_many, insert_one, update_one, order_json_obj
+from gsa.document import get_one, get_many, insert_one, update_one, delete_one, order_json_obj
 from gsa.auth import get_userinfo
 
 from werkzeug.utils import secure_filename
@@ -49,6 +49,13 @@ gsa_update_query_model = api.model(
     {
         'gsa_id': fields.String(required=True, default="", description='GSA_ID'),
         'update_obj': fields.String(required=True, default="", description='Update Object')
+    }
+)
+
+gsa_delete_query_model = api.model(
+    'GSA Delete Query',
+    {
+        'gsa_id': fields.String(required=True, default="", description='GSA_ID')
     }
 )
 
@@ -134,7 +141,9 @@ class GSARecordlist(Resource):
             {"path":"evidence_type", "label":"Evidence Type", "type":"string"},
             {"path":"glycoconjugate_type", "label":"Glycoconjugate Type", "type":"string"},
             {"path":"createdts", "label":"Created On", "type":"string"},
-            {"path":"createdts", "label":"", "type":"string"}
+            {"path":"createdts", "label":"Edit", "type":"string"},
+            {"path":"createdts", "label":"Delete", "type":"string"}
+
         ]
 
         res_obj = {"tabledata":[], "status":1}
@@ -145,13 +154,15 @@ class GSARecordlist(Resource):
 
         for doc in gsa_obj["recordlist"]:
             row = []
-            for o in field_obj_list[:-1]:
+            for o in field_obj_list[:-2]:
                 p_list = o["path"].split(".")
                 val = ""
                 for p in p_list:
                     val = doc[p] if p in doc else ""
                 row.append(val)
             row.append("<a href=\"/update_submission/%s\">Update/Edit</a>" % (doc["gsa_id"]))
+            row.append("<a href=\"/delete_submission/%s\">Delete</a>" % (doc["gsa_id"]))
+            
             res_obj["tabledata"].append(row)
 
         return res_obj
@@ -255,6 +266,26 @@ class GSA(Resource):
 
         return res_obj
 
+
+
+@api.route('/delete')
+class GSA(Resource):
+    '''Delete gsa '''
+    @api.doc('delete')
+    @api.expect(gsa_delete_query_model)
+    @jwt_required
+    def post(self):
+        '''Delete gsa '''
+        req_obj = request.json
+        current_user = get_jwt_identity()
+        user_info, err_obj, status = get_userinfo(current_user)
+        if status == 0:
+            return err_obj
+        req_obj["coll"] = "c_glycan"
+        res_obj = delete_one(req_obj)
+        req_obj["useremail"] = current_user
+
+        return res_obj
 
 
 

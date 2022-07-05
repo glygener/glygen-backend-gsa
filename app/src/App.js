@@ -16,6 +16,7 @@ import Detail from "./components/detail";
 import Dashboard from "./components/dashboard";
 import Newsubmission from "./components/new_submission";
 import Updatesubmission from "./components/update_submission";
+import Deletesubmission from "./components/delete_submission";
 import Submission from "./components/submissions";
 import Updateprofile from "./components/update_profile";
 import Changepassword from "./components/change_password";
@@ -178,38 +179,46 @@ class App extends Component {
           <Route
             path="/new_submission"
             render={(props) => (
-              <Newsubmission pageId={"new_submission"} initObj={this.state.response.record} userinfo={userInfo}/>
+              <Newsubmission pageId={"new_submission"} userinfo={userInfo}/>
             )}
           />
           <Route
             path="/update_submission/:gsaId"
             render={(props) => (
-              <Updatesubmission pageId={"update_submission"} gsaId={props.match.params.gsaId}  initObj={this.state.response.record} userinfo={userInfo}/>
+              <Updatesubmission pageId={"update_submission"} gsaId={props.match.params.gsaId}  
+                userinfo={userInfo}/>
+            )}
+          />
+          <Route
+            path="/delete_submission/:gsaId"
+            render={(props) => (
+              <Deletesubmission pageId={"delete_submission"} gsaId={props.match.params.gsaId}
+               userinfo={userInfo}/>
             )}
           />
           <Route
             path="/submissions"
             render={(props) => (
-              <Submission pageId={"submissions"} initObj={this.state.response.record} userinfo={userInfo}/>
+              <Submission pageId={"submissions"} userinfo={userInfo}/>
             )}
           />
           <Route
             path="/static/:pageId"
             render={(props) => (
-              <StaticPage pageId={props.match.params.pageId}  initObj={this.state.response.record}/>
+              <StaticPage pageId={props.match.params.pageId}  />
             )}
           />
           <Route
             path="/detail/:gsaId"
             render={(props) => (
-              <Detail gsaId={props.match.params.gsaId}  initObj={this.state.response.record}/>
+              <Detail gsaId={props.match.params.gsaId}/>
             )}
           />
           <Route
             exact
             path="/"
             render={(props) => (
-              <SearchResults  initObj={this.state.response.record}/>
+              <SearchResults  />
             )}
           />
         </Switch>

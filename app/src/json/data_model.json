@@ -21,7 +21,6 @@
     },
     "glycopeptide": {
         "sequence": "",
-        "uniprotkb_ac": "",
         "site": {
           "start_pos": 0,
           "end_pos": 0

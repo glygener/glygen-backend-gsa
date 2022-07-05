@@ -463,6 +463,7 @@ class Newsubmission extends Component {
 
 
     var errorList = verifyReqObj(valHash, selectedForm);
+    errorList = errorList.concat(this.validateInput(valHash));
     if (errorList.length !== 0) {
       var tmpState = this.state;
       tmpState.dialog.status = true;
@@ -470,6 +471,9 @@ class Newsubmission extends Component {
       this.setState(tmpState);
       return;
     }
+
+
+
 
     var tmpState = this.state;
     if (tmpState.formKey === "step_one"){
@@ -492,7 +496,6 @@ class Newsubmission extends Component {
         var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
         tmpState.formKey = "step_four_" + x;
       }
-      //this.validateGlycanSequence();
     }
     else if (tmpState.formKey.split("_")[1] === "three"){
       var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
@@ -511,7 +514,48 @@ class Newsubmission extends Component {
 
 
 
-  validateGlycanSequence = () => {
+  validateInput = (valHash) => {
+
+    var errorList = [];
+    if (this.state.formKey === "step_two_glycoprotein"){
+        var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
+        var startPos = valHash["glycoprotein|site|start_pos"];
+        var endPos = valHash["glycoprotein|site|end_pos"];
+
+        const svcUrl = LocalConfig.apiHash.uniprotkb_entry + uniprotAc + ".json";
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", svcUrl, false);
+        xhr.seqLen = 0;
+        xhr.flag = false;
+        xhr.onreadystatechange = function() {//Call a function when the state changes.
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            var obj = JSON.parse(xhr.responseText);
+            xhr.seqLen = obj["sequence"]["length"];
+            xhr.flag = true;
+          }
+        }
+        xhr.send();
+        if (xhr.flag === false){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Invalid UniProtKB accession</li>);
+        }
+        else if (startPos < 1 || endPos > xhr.seqLen){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
+        }
+    }
+    else if (this.state.formKey === "step_two_glycopeptide"){
+      var pepLen = valHash["glycopeptide|sequence"].length;
+      var startPos = valHash["glycopeptide|site|start_pos"];
+      var endPos = valHash["glycopeptide|site|end_pos"];
+      if (startPos < 1 || endPos > pepLen){
+        var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+        errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
+      }
+    }
+
+    return errorList;
+
 
     var reqObj = {
       glycoct:this.state.record["glycan|sequence"],
@@ -521,7 +565,6 @@ class Newsubmission extends Component {
       debug:false
     };
     console.log("XXXXXXXX", reqObj);
-    
     const svcUrl = LocalConfig.apiHash.glycoct_validate;
     var params = "glycoct=" + this.state.record["glycan|sequence"];
     params += "&type=N&enz=false&related=false&debug=false"

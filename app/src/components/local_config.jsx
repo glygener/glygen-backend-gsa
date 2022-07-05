@@ -8,16 +8,19 @@ export const apiHash = {
   gsa_upload:process.env.REACT_APP_API_URL + "/gsa/upload",
   gsa_submit:process.env.REACT_APP_API_URL + "/gsa/submit",
   gsa_update:process.env.REACT_APP_API_URL + "/gsa/update",
+  gsa_delete:process.env.REACT_APP_API_URL + "/gsa/delete",
   gsa_static_content:process.env.REACT_APP_API_URL + "/gsa/pagecn",
   auth_register_one:process.env.REACT_APP_API_URL + "/auth/register_one",
   auth_register_two:process.env.REACT_APP_API_URL + "/auth/register_two",
   auth_login_direct:process.env.REACT_APP_API_URL + "/auth/login_direct",
   auth_logout:process.env.REACT_APP_API_URL + "/auth/logout",
   auth_userinfo:process.env.REACT_APP_API_URL + "/auth/userinfo",
+  auth_get_profile:process.env.REACT_APP_API_URL + "/auth/get_profile",
+  auth_update_profile:process.env.REACT_APP_API_URL + "/auth/update_profile",
   auth_change_password:process.env.REACT_APP_API_URL + "/auth/change_password",
   auth_reset_password:process.env.REACT_APP_API_URL + "/auth/reset_password",
-  glycoct_validate:"https://glygen.ccrc.uga.edu/sandbox/api/checkers.php"
-
+  glycoct_validate:"https://glygen.ccrc.uga.edu/sandbox/api/checkers.php",
+  uniprotkb_entry:"https://rest.uniprot.org/uniprotkb/"
 };
 
 

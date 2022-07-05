@@ -6,7 +6,7 @@ import * as LocalConfig from "./local_config";
 import { Link } from "react-router-dom";
 import { verifyReqObj, verifyPasswords} from './util';
 import Formeditor from "./form_editor";
-import formHash from "../json/form_password_change.json";
+import formHash from "../json/form_change_password.json";
 
 
 class Changepassword extends Component {
@@ -40,7 +40,7 @@ class Changepassword extends Component {
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     var reqObj = {};
-    var jqClass = ".registerform_one";
+    var jqClass = ".pageform";
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();
