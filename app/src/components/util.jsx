@@ -187,14 +187,14 @@ export function rndrSearchResults(objList, startIdx, endIdx) {
 
     var gsaId = obj.gsa_id;
     var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
+    var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
 
     cardList.push(
       <div className="leftblock" style={{width:"100%", background:"#fff", margin:"10px 0% 0px 0%"}}>
         <div className="leftblock" style={{width:"100%", padding:"15px"}}>
           GSA ID: {gsaLink}<br/>
           GlyToucan Accession: {obj.glycan.glytoucan_ac}<br/>
-          Sequence Type:{obj.glycan.sequence_type}<br/>
-          Sequence:{obj.glycan.sequence}<br/>
+          <img src={imgUrl}/>
         </div>
       </div>
     );

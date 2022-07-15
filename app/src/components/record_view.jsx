@@ -91,14 +91,18 @@ class Recordview extends Component {
             tmpList.push(<li><b>{k}</b>: {recordObj[sec][k]}</li>);
           }
         }
-        cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+        if (tmpList.length > 0){
+          cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+        }
       }
       else if (secGrpTwo.indexOf(sec) != -1){
         var tmpList = [];
         for (var i in recordObj[sec]){
           tmpList.push(<li>{JSON.stringify(recordObj[sec][i], null, 4)}</li>);
         }
-        cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+        if (tmpList.length > 0){
+          cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
+        }
       }
       else{
         cnList.push(<li><b>{sec}</b>: {JSON.stringify(recordObj[sec], null, 4)}</li>);

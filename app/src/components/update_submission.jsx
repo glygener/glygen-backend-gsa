@@ -119,7 +119,16 @@ class Updatesubmission extends Component {
         }
       }
     }
-    targetObj.push(o);
+    
+    var seen = {};
+    for (var i in targetObj){
+      var str = JSON.stringify(targetObj[i]);
+      seen[str] = true;
+    }
+    if (!(JSON.stringify(o) in seen)){
+      targetObj.push(o);
+    }
+
     this.setState(tmpState);
     //this.updateForm();
   }
@@ -146,7 +155,16 @@ class Updatesubmission extends Component {
         }
       }
     }
-    targetObj.push(val);
+    var seen = {};
+    for (var i in targetObj){
+      var str = targetObj[i];
+      seen[str] = true;
+    }
+    if (!(val in seen)){
+      targetObj.push(val);
+    }
+
+
     this.setState(tmpState);
     //this.updateForm();
   }

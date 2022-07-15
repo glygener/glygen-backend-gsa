@@ -10,6 +10,7 @@ export const apiHash = {
   gsa_update:process.env.REACT_APP_API_URL + "/gsa/update",
   gsa_delete:process.env.REACT_APP_API_URL + "/gsa/delete",
   gsa_static_content:process.env.REACT_APP_API_URL + "/gsa/pagecn",
+  gsa_getseq:process.env.REACT_APP_API_URL + "/gsa/getseq",
   auth_register_one:process.env.REACT_APP_API_URL + "/auth/register_one",
   auth_register_two:process.env.REACT_APP_API_URL + "/auth/register_two",
   auth_login_direct:process.env.REACT_APP_API_URL + "/auth/login_direct",

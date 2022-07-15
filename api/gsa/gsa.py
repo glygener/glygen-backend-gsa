@@ -32,8 +32,15 @@ gsa_recordlist_query_model = api.model(
 gsa_detail_query_model = api.model(
     'GSA Detail Query',
     {
-        'bcoid': fields.String(required=True, default="GLY_000001", description='BCO ID'),
-        'dataversion': fields.String(required=False, default="1.12.1", description='Dataset Release [e.g: 1.12.1]'),
+        'gsa_id': fields.String(required=True, default="GSA000007", description='GSA ID')
+    }
+)
+
+gsa_getseq_query_model = api.model(
+    'GSA Get Sequence Query',
+    {
+        'glytoucan_ac': fields.String(required=True, default="G17689DH", description='GlyTouCan AC'),
+        'format':fields.String(required=True, default="glycoct", description='Sequence format')
     }
 )
 
@@ -186,6 +193,32 @@ class GSADetail(Resource):
         #json_url = os.path.join(SITE_ROOT, "conf/config.json")
         #config_obj = json.load(open(json_url))
         res_obj = gsa_obj
+        res_obj["status"] = 1
+
+        return res_obj
+
+
+@api.route('/getseq')
+class GSAGetseq(Resource):
+    '''Get GlyTouCan sequence'''
+    @api.doc('detail')
+    @api.expect(gsa_getseq_query_model)
+    def post(self):
+        '''Get GlyTouCan sequence'''
+        req_obj = request.json
+        seq_format, ac = req_obj["format"], req_obj["glytoucan_ac"]
+        file_path = current_app.config["DATA_PATH"] 
+        file_path += "/downloads/glytoucan/sequences/%s/%s.txt" % (seq_format, ac)
+        if os.path.isfile(file_path) == False:
+            return {"status":0, "error":"sequence not found"}
+        sequence = ""
+        with open(file_path, "r") as FR:
+            for line in FR:
+                sequence += line
+        res_obj = req_obj
+        #res_obj["file_path"] = file_path
+        res_obj["sequence"] = sequence
+
         res_obj["status"] = 1
 
         return res_obj

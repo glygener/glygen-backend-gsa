@@ -169,7 +169,7 @@ class SearchResults extends Component {
         tmpList.push(h);
     }
     var resultSummary = "<b>" + passedObjList.length + "</b> results found";
-    resultSummary += (tmpList.length > 0 ? ", after fileters: '" + tmpList.join("', '") + "'." : "."); 
+    resultSummary += (tmpList.length > 0 ? ", after filters: '" + tmpList.join("', '") + "'." : "."); 
 
    //return (<div>{this.state.pageStartIdx} {this.state.pageEndIdx}</div>);
 

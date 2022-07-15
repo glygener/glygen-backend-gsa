@@ -83,7 +83,7 @@ def login_two():
             totp = TOTP(shared_key, interval=current_app.config["TOTP_INTERVAL"])
             code = totp.now()
             res_obj = {'status': 1, "email": user_doc["email"], "phone":user_doc["phone"], "shared_key":shared_key}
-            message = "<#>GSA: DO NOT share this Sign In code. We will never call you or text you for it. "
+            message = "DO NOT share this Sign In code. We will never call you or text you for it. "
             message += "Code %s" % (code)
             mail_obj = {
                 "sender_email":current_app.config["MAIL_SENDER"],

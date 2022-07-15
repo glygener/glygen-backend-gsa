@@ -11,7 +11,6 @@ import dataModel from "../json/data_model.json";
 import { Link } from "react-router-dom";
 
 
-
 class Newsubmission extends Component {
   state = {
     user_id:"",
@@ -221,6 +220,66 @@ class Newsubmission extends Component {
   }
 
 
+  handleRetrieveSequence = () => {
+
+    var jqClass = ".submissionsform";
+    var valHash = {};
+    $(jqClass).each(function () {
+        var fieldName = $(this).attr("id");
+        var fieldValue = $(this).val();
+        if (fieldValue.trim() !== ""){
+          valHash[fieldName] = fieldValue;
+        }
+    });
+   
+    if (!("glycan|glytoucan_ac" in valHash) || !("glycan|sequence_type" in valHash)){ 
+      var tmpState = this.state;
+      tmpState.dialog.status = true;
+      tmpState.dialog.msg = "Please entery GlyTouCan accession and sequence format";
+      this.setState(tmpState);
+    }
+    var glytoucan_ac = valHash["glycan|glytoucan_ac"];
+    var seq_format = valHash["glycan|sequence_type"];
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    var reqObj = {"glytoucan_ac":glytoucan_ac, "format":seq_format};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqObj)
+    };
+    const svcUrl = LocalConfig.apiHash.gsa_getseq;
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.response = result;
+          tmpState.isLoaded = true;
+          if (tmpState.response.status === 0){
+            tmpState.dialog.status = true;
+            tmpState.dialog.msg = tmpState.response.error;
+          }
+          tmpState.loginforward = "msg" in result;
+          var emObj = document.getElementById("glycan|sequence");
+          emObj.value = result.sequence;
+          console.log("Retrieveseq", result);
+          this.setState(tmpState);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+          //console.log("Ajax error:", error);
+        }
+      );
+ 
+  }
+
+
+
   handleSubmit = () => {  
     document.body.scrollTop = document.documentElement.scrollTop = 0;
 
@@ -273,8 +332,8 @@ class Newsubmission extends Component {
         for (var j in formHash[k]["groups"][i]["emlist"]){
           var emObj = formHash[k]["groups"][i]["emlist"][j];
           if (emObj.emtype === "button"){
-            var f = (emObj.value === "Back" ? this.handleBack : this.handleNext);
-            formHash[k]["groups"][i]["emlist"][j]["onclick"] = f;
+            //var f = (emObj.value === "Back" ? this.handleBack : this.handleNext);
+            emObj["onclick"] = eval(emObj.onclick);
           }
           if (emObj.emtype === "objlist"){
             formHash[k]["groups"][i]["emlist"][j]["onadditem"] = this.handleAddItemObj;
@@ -333,15 +392,25 @@ class Newsubmission extends Component {
         var p = fieldName.replace(k + "_last_", "");
         o[p] =  fieldValue;
         var jqId = "#" + fieldName;
-        $(jqId).val("");
+        if (fieldName !== "publication_last_type"){
+          $(jqId).val("");
+        }
       }
     });
+    
     var tmpState = this.state;
     if (!(k in tmpState.record)){
       tmpState.record[k] = [];
     }
     var objList = tmpState.record[k];
-    objList.push(o);
+    var seen = {};
+    for (var i in objList){
+      var str = JSON.stringify(objList[i]);
+      seen[str] = true;
+    }
+    if (!(JSON.stringify(o) in seen)){
+      objList.push(o);
+    }
     this.setState(tmpState);
     this.updateForm();
   }
@@ -360,7 +429,16 @@ class Newsubmission extends Component {
     if (!(k in tmpState.record)){
       tmpState.record[k] = [];
     }
-    var objList = tmpState.record[k].push(val);
+    var valList = tmpState.record[k];
+    var seen = {};
+    for (var i in valList){
+      seen[valList[i]] = true;
+    }
+    if (!(val in seen)){
+      valList.push(val);
+    }
+
+
     this.setState(tmpState);
     this.updateForm();
   }
@@ -441,6 +519,7 @@ class Newsubmission extends Component {
     $(jqClass).each(function () {
         var fieldName = $(this).attr("id");
         var fieldValue = $(this).val();
+
         for (var i in selectedForm.groups){
             for (var j in selectedForm.groups[i].emlist){
               var emObj = selectedForm.groups[i].emlist[j];
@@ -521,7 +600,6 @@ class Newsubmission extends Component {
         var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
         var startPos = valHash["glycoprotein|site|start_pos"];
         var endPos = valHash["glycoprotein|site|end_pos"];
-
         const svcUrl = LocalConfig.apiHash.uniprotkb_entry + uniprotAc + ".json";
         const xhr = new XMLHttpRequest();
         xhr.open("GET", svcUrl, false);
@@ -554,70 +632,63 @@ class Newsubmission extends Component {
       }
     }
 
+
+    const svcUrl = LocalConfig.apiHash.glycoct_validate;
+    if (this.state.formKey.indexOf("step_two") != -1){
+      var glycoctSeq = valHash["glycan|sequence"];
+      var params = "glycoct=" + glycoctSeq + "&type=N&enz=false&related=false&debug=false"
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", svcUrl + "?" + params, true);
+      //xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+      //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if(xhr.readyState == 4 && xhr.status == 200) {
+          console.log(xhr.responseText);
+        }
+      }
+      xhr.send();
+    }
+
+    if (false){
+
+      var reqObj = {
+        glycoct:this.state.record["glycan|sequence"], 
+        type:"N", enz:false,related:false,debug:false
+      };
+      const requestOptions = { 
+        method: 'POST',
+        body: JSON.stringify(reqObj)
+      };
+      console.log("XXXX", reqObj);
+      fetch(svcUrl, requestOptions)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            var tmpState = this.state;
+            tmpState.response = result;
+            tmpState.isLoaded = true;  
+            tmpState.toconfirmation = true;       
+            if (tmpState.response.status === 0){
+              tmpState.toconfirmation = false;
+              tmpState.dialog.status = true;
+              tmpState.dialog.msg = this.state.response.error;
+            }
+            this.setState(tmpState);
+            //recaptchaEm.componentDidMount();
+            console.log("XXXXXYYYYYZZZZZ:", result);
+          },
+          (error) => {
+            this.setState({
+              isLoaded: true,
+              error,
+            });
+            console.log("Ajax error:", error);
+          }
+        );
+    }
+
     return errorList;
 
-
-    var reqObj = {
-      glycoct:this.state.record["glycan|sequence"],
-      type:"N",
-      enz:false,
-      related:false,
-      debug:false
-    };
-    console.log("XXXXXXXX", reqObj);
-    const svcUrl = LocalConfig.apiHash.glycoct_validate;
-    var params = "glycoct=" + this.state.record["glycan|sequence"];
-    params += "&type=N&enz=false&related=false&debug=false"
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", svcUrl, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); 
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {//Call a function when the state changes.
-      if(xhr.readyState == 4 && xhr.status == 200) {
-        alert(xhr.responseText);
-      }
-    }
-    xhr.send(params);
-    return;
-
-
-
-
-    const requestOptions = { 
-      method: 'POST',
-      glycoct:this.state.record["glycan|sequence"],
-      type:"N",
-      enz:false,
-      related:false,
-      debug:false
-    };
-
-    fetch(svcUrl, requestOptions)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          var tmpState = this.state;
-          tmpState.response = result;
-          tmpState.isLoaded = true;  
-          tmpState.toconfirmation = true;       
-          if (tmpState.response.status === 0){
-            tmpState.toconfirmation = false;
-            tmpState.dialog.status = true;
-            tmpState.dialog.msg = this.state.response.error;
-          }
-          this.setState(tmpState);
-          //recaptchaEm.componentDidMount();
-          console.log("Ajax response:", result);
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-          console.log("Ajax error:", error);
-        }
-      );
   };
 
 

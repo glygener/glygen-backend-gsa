@@ -59,6 +59,7 @@
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -86,6 +87,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -106,7 +108,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -116,13 +118,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -150,6 +153,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -170,7 +174,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -207,13 +211,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -241,6 +246,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -261,7 +267,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -297,13 +303,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -331,6 +338,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -351,7 +359,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -381,13 +389,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -415,6 +424,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -435,7 +445,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -471,13 +481,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -505,6 +516,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -525,7 +537,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":"RES\n1b:x-dgal-HEX-1:5\n2s:n-typographicalError\n3b:b-dgal-HEX-1:5\nLIN\n1:1d(2+1)2n\n2:1o(3+1)3d\n"
+            "value":""
           }
         ]
       },
@@ -561,13 +573,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -662,13 +675,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -737,13 +751,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -796,7 +811,7 @@
             "emid":"xrefs","emtype":"objlist",  "label":"Database References",
             "wrapperstyle":{"width":"45%", "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false,
             "proplist":[
               {"prop":"database", "emtype":"text", "label":"Database",
                 "style":{"width":"15%", "marginRight":"20px"}
@@ -822,7 +837,7 @@
             "emid":"experimental_data","emtype":"objlist",  "label":"Experimental Data",
             "wrapperstyle":{ "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false,
             "proplist":[
               {"prop":"type", "emtype":"text", "label":"Type",
                 "style":{"width":"20%", "marginRight":"20px"}
@@ -867,13 +882,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -926,7 +942,7 @@
             "emid":"experimental_data","emtype":"objlist",  "label":"Experimental Data",
             "wrapperstyle":{ "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false,
             "proplist":[
               {"prop":"type", "emtype":"text", "label":"Type",
                 "style":{"width":"20%", "marginRight":"20px"}
@@ -971,13 +987,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
@@ -1000,7 +1017,7 @@
             "emid":"xrefs","emtype":"objlist",  "label":"Database References",
             "wrapperstyle":{"width":"45% !important","padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px solid green", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false,
             "proplist":[
               {"prop":"database", "emtype":"text", "label":"Database",
                 "style":{"width":"20%", "marginRight":"20px"}
@@ -1035,13 +1052,14 @@
         "emlist":[
           {
             "emid":"backbtn", "emtype":"button", "datatype":"string|string",
-            "onclick":"handleBack", "class":"btn btn-outline-secondary",
+            "onclick":"this.handleBack", "class":"btn btn-outline-secondary",
             "value":"Back",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           },
           {
             "emid":"nextbtn", "emtype":"button", "datatype":"string|string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleNext",
             "value":"Next",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 0px"}
           }
