@@ -62,13 +62,10 @@ export function verifyReqObj (reqObj, formObj){
         var emId = obj.emid;
         var emValue =  obj.value;
         var emLbl = obj.label;
-        
-
         if (typeList.indexOf(obj.emtype) === -1){
             continue;
         } 
         else if (obj.required === true && ["stringlist", "objlist"].indexOf(obj.emtype) !== -1){
-          console.log("OOOO", obj);
           if (emValue === undefined){
             errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
           }
@@ -85,9 +82,11 @@ export function verifyReqObj (reqObj, formObj){
         else if (obj.required === true && reqObj[emId].toString() === "" ){
           errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
         }
-        else if (obj["datatype"].split("|")[0] === "number"){
-          if (typeof(reqObj[emId]) !== obj["datatype"].split("|")[0]){
-            errorList.push(<li>"{emLbl}" type mismatch</li>);
+        else if ("datatype" in obj){
+          if (obj["datatype"].split("|")[0] === "number"){
+            if (typeof(reqObj[emId]) !== obj["datatype"].split("|")[0]){
+              errorList.push(<li>"{emLbl}" type mismatch</li>);
+            }
           }
         }
         //else{
@@ -417,6 +416,11 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         disabled={disableFlag}
       >
       </textarea>
+    );
+  }
+  else if (emType === "plaintext"){
+    em = (
+      <pre>{emValue}</pre>
     );
   }
   else if (emType === "select"){

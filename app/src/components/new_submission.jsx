@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Formeditor from "./form_editor";
 import Alertdialog from './dialogbox';
+import Loadingicon from "./loading_icon";
+
 import Nav from './nav';
 import $ from "jquery";
 import { verifyReqObj, verifyPasswords} from './util';
@@ -15,6 +17,7 @@ class Newsubmission extends Component {
   state = {
     user_id:"",
     loginforward:false,
+    loadingicon:false,
     formKey:"step_one",
     formCnHash:{},
     record:{},
@@ -60,7 +63,6 @@ class Newsubmission extends Component {
           tmpState.loginforward = "msg" in result;
           tmpState.user_id = result.email;
           this.setState(tmpState);
-
         },
         (error) => {
           this.setState({
@@ -87,29 +89,17 @@ class Newsubmission extends Component {
 
 
   getConfirmationCn() {
-
     var gsaId = this.state.response.record.gsa_id;
     var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
-
-    var ttlStyle = {"width":"90%", "margin":"40px 0px 15px 5%", "fontWeight":"bold"};
-    var sOne = { width:"90%",margin:"15px 0px 0px 5%", padding:"20px",
-      border:"1px solid #ccc", borderRadius:"10px"};
-    var cn = (
-      <div className="leftblock" style={{width:"100%"}}>
-        <div className="leftblock" style={ttlStyle}>GSA Submission confirmation </div>
-        <div className="leftblock" style={sOne}>
-          Record saved successfully! The GSA ID for this record is <b>{gsaLink}</b>.
-        </div>
-    </div>
-    );
-    return cn;
+    var msg = (<span>
+      Record saved successfully! The GSA ID for this record is <b>{gsaLink}</b>
+    </span>);
+    return msg;
   }
 
 
 
   getSummaryCn () {
- 
-
     var grpOne = ["glycan", "biological_source"];
     var grpTwo = [
       "user_id", "evidence_type", "data_source_type", "glycoconjugate_type",
@@ -191,32 +181,10 @@ class Newsubmission extends Component {
       }
     }
     
-    //cnList.push(<pre>{JSON.stringify(this.state.record, null, 4)}</pre>);
-    //cnList.push(<pre>{JSON.stringify(dataModel, null, 4)}</pre>);
 
     var cn = (<ul>{cnList}</ul>);
-
-
-    var ttlStyle = {"width":"90%", "margin":"40px 0px 15px 5%", "fontWeight":"bold"};
-    var sOne = { width:"90%",margin:"15px 0px 0px 5%", padding:"20px 0px 0px 0px", 
-      border:"1px solid #ccc", borderRadius:"10px"};
-    var cn = (
-      <div className="leftblock" style={{width:"100%"}}>
-        <div className="leftblock" style={ttlStyle}>GSA Submission step 5 of 5 </div>
-        <div className="leftblock" style={sOne}>
-          {cn}<br/>
-        </div>
-      <div className="leftblock" style={{width:"90%", margin:"20px 0px 0px 5%"}}>
-        <button id={"final_back"} className={"btn btn-outline-secondary"} 
-            onClick={this.handleBack}>Back</button> &nbsp;
-        <button id={"final_submit"} className={"btn btn-outline-secondary"}
-            onClick={this.handleSubmit}>Submit</button>
-      </div>
-    </div>
-
-    );
-
     return cn;
+
   }
 
 
@@ -281,6 +249,7 @@ class Newsubmission extends Component {
 
 
   handleSubmit = () => {  
+   
     document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     let access_csrf = localStorage.getItem("access_csrf")
@@ -308,7 +277,9 @@ class Newsubmission extends Component {
             tmpState.dialog.msg = tmpState.response.error;
           }
           tmpState.loginforward = "msg" in result;
-          tmpState.formKey = "step_six";
+          var msg = this.getConfirmationCn();
+          tmpState.record["confirmation|message"] = msg;
+          this.updateForm();
           this.setState(tmpState);
         },
         (error) => {
@@ -345,7 +316,7 @@ class Newsubmission extends Component {
           }
           var emId = emObj.emid;
           if (emId in tmpState.record){
-              if (["text", "int", "objlist", "stringlist"].indexOf(emObj.emtype) != -1){
+              if (["text", "int", "objlist", "stringlist", "plaintext"].indexOf(emObj.emtype) != -1){
                 emObj.value =  tmpState.record[emId];
               }
               else if (emObj.emtype === "select"){
@@ -485,20 +456,24 @@ class Newsubmission extends Component {
       tmpState.formKey = "step_two_" + x;
     }
     else if (tmpState.formKey.split("_")[1] === "four"){
+      tmpState.formKey = "step_three_all";
+    }
+    else if (tmpState.formKey.split("_")[1] === "five"){
       var x = tmpState.record["evidence_type"].split(" ")[0].toLowerCase();
       if (["biological", "recombinant"].indexOf(x) != -1){
-        tmpState.formKey = "step_three_" + x;
+        tmpState.formKey = "step_four_" + x;
       }
       else{
         var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
         tmpState.formKey = "step_two_" + x;
       }
     }
-    else if (tmpState.formKey.split("_")[1] === "five"){
+    else if (tmpState.formKey.split("_")[1] === "six"){
       var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
-      tmpState.formKey = "step_four_" + x;
+      tmpState.formKey = "step_five_" + x;
 
     }
+    alert(tmpState.formKey);
     this.setState(tmpState);
   }
 
@@ -567,25 +542,32 @@ class Newsubmission extends Component {
       tmpState.formKey = "step_two_" + x;
     }
     else if (tmpState.formKey.split("_")[1] === "two"){
+      tmpState.formKey = "step_three_all";
+    }
+    else if (tmpState.formKey.split("_")[1] === "three"){
       var x = tmpState.record["evidence_type"].split(" ")[0].toLowerCase();
       if (["biological", "recombinant"].indexOf(x) != -1){
-        tmpState.formKey = "step_three_" + x;
+        tmpState.formKey = "step_four_" + x;
       }
       else{
         var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
-        tmpState.formKey = "step_four_" + x;
+        tmpState.formKey = "step_five_" + x;
       }
     }
-    else if (tmpState.formKey.split("_")[1] === "three"){
-      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
-      tmpState.formKey = "step_four_" + x;
-    }
     else if (tmpState.formKey.split("_")[1] === "four"){
-      tmpState.formKey = "step_five";
+      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+      tmpState.formKey = "step_five_" + x;
     }
-    //alert("after: " + tmpState.formKey);
-    //tmpState.dialog.status = true;
-    //tmpState.dialog.msg = <div>{JSON.stringify(tmpState.record, null, 2)}</div>;
+    else if (tmpState.formKey.split("_")[1] === "five"){
+      tmpState.formKey = "step_six_all";
+      var summary = this.getSummaryCn();
+      tmpState.record["review|summary"] = summary;
+      this.updateForm();
+    }
+    else if (tmpState.formKey === "step_six_all"){
+      this.handleSubmit();
+      tmpState.formKey = "step_seven_all";
+    }
     this.setState(tmpState);
     return
 
@@ -633,58 +615,53 @@ class Newsubmission extends Component {
     }
 
 
-    const svcUrl = LocalConfig.apiHash.glycoct_validate;
+    var svcUrl = LocalConfig.apiHash.glycoct_validate;
     if (this.state.formKey.indexOf("step_two") != -1){
+      var tmpState = this.state;
+      tmpState.loadingicon = true;
+      this.setState(tmpState);
       var glycoctSeq = valHash["glycan|sequence"];
-      var params = "glycoct=" + glycoctSeq + "&type=N&enz=false&related=false&debug=false"
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", svcUrl + "?" + params, true);
-      //xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-      //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function() {//Call a function when the state changes.
-        if(xhr.readyState == 4 && xhr.status == 200) {
-          console.log(xhr.responseText);
-        }
-      }
-      xhr.send();
-    }
-
-    if (false){
-
-      var reqObj = {
-        glycoct:this.state.record["glycan|sequence"], 
-        type:"N", enz:false,related:false,debug:false
-      };
-      const requestOptions = { 
-        method: 'POST',
-        body: JSON.stringify(reqObj)
-      };
-      console.log("XXXX", reqObj);
-      fetch(svcUrl, requestOptions)
+      //var params = "glycoct=" + glycoctSeq
+      //params += "&type=N&enz=false&related=false&debug=false"
+      svcUrl += "?glycoct=" + glycoctSeq;
+      svcUrl += "&type=N&enz=false&related=false&debug=false";
+      fetch(svcUrl, {})
         .then((res) => res.json())
         .then(
           (result) => {
-            var tmpState = this.state;
-            tmpState.response = result;
-            tmpState.isLoaded = true;  
-            tmpState.toconfirmation = true;       
-            if (tmpState.response.status === 0){
-              tmpState.toconfirmation = false;
-              tmpState.dialog.status = true;
-              tmpState.dialog.msg = this.state.response.error;
+            var resObj = result;
+            var errList = [];
+            var vList = [];
+            if ("error" in resObj){
+              for (var i in resObj["error"]){
+                var o = resObj["error"][i];
+                errList.push(o.message);
+              }
             }
+            if ("rule_violations" in resObj){
+              for (var i in resObj["rule_violations"]){
+                var o = resObj["rule_violations"][i];
+                vList.push(o.assertion);
+              }
+            }
+            errList = (errList.length > 0 ? errList : ["no errors found"]);
+            vList = (vList.length > 0 ? 
+              vList : ["no rule violations found"]);
+            var tmpState = this.state;
+            tmpState.record["validation|errors"] = JSON.stringify(errList, null, 2);
+            tmpState.record["validation|violations"] = JSON.stringify(vList, null, 2);
+            tmpState.loadingicon = false;
+            this.updateForm();
             this.setState(tmpState);
-            //recaptchaEm.componentDidMount();
-            console.log("XXXXXYYYYYZZZZZ:", result);
           },
-          (error) => {
-            this.setState({
-              isLoaded: true,
-              error,
-            });
-            console.log("Ajax error:", error);
-          }
-        );
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+          //console.log("Ajax error:", error);
+        }
+      );
     }
 
     return errorList;
@@ -696,18 +673,17 @@ class Newsubmission extends Component {
 
   render() {
 
+
+    if (this.state.loadingicon === true){
+      return <Loadingicon/>
+    }
+
     if(this.state.loginforward === true){
       window.location.href = "/login";
     }
 
+
     var cn = this.state.formCnHash[this.state.formKey];
-    if (this.state.formKey === "step_five"){
-      cn = this.getSummaryCn();
-    }
-    else if (this.state.formKey === "step_six"){
-      cn = this.getConfirmationCn();
-    }
-    //this.dumpFormValues(this.state.formKey);
     
     return (
       <div>
