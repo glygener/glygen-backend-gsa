@@ -281,19 +281,19 @@
             "emid":"glycopeptide|sequence", "emtype":"text", "datatype":"string|string",
             "label":"Peptide Sequence", "class":"submissionsform",
             "style":{"width":"40%", "margin":"0px 10px 0px 0px"},
-            "value":"SSPPNNAAA"
+            "placeholder":"SSPPNNAAA"
           },
           {
             "emid":"glycopeptide|site|start_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"26%", "margin":"0px 10px 0px 0px"},
-            "placeholder":294, "required":true
+            "placeholder":5, "required":true
           },
           {
             "emid":"glycopeptide|site|end_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"26%"},
-            "placeholder":294, "required":true
+            "placeholder":5, "required":true
           }
         ]
       },
@@ -590,32 +590,18 @@
   },
   "step_three_all":{
     "title":"GSA Submission step 3 of 7",
+    "description":"Given below is validation response for your glycan sequence in GlycoCT format. You can ignore these errors and rule violations and proceed or go back and change sequence.",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
     "groups":[
       {
         "groupid":"one",
-        "title":"Sequence Validation Errors",
+        "title":"Sequence Validation",
         "style":{"width":"90%","margin":"0px 30px 30px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
-            "emid":"validation|errors", "emtype":"plaintext", "datatype":"string|string",
-            "onclick":"this.handleBack", "class":"",
-            "value":"xxxx",
-            "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 20px"}
-          }
-        ]
-      },
-      {
-        "groupid":"two",
-        "title":"Sequence Validation Rule Violations",
-        "style":{"width":"90%","margin":"0px 30px 30px 0px",
-           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
-        "emlist":[
-          {
-            "emid":"validation|violations", "emtype":"plaintext", 
-            "datatype":"string|string",
+            "emid":"validation", "emtype":"plaintext", "datatype":"string|string",
             "onclick":"this.handleBack", "class":"",
             "value":"xxxx",
             "style":{"display":"block", "float":"left", "margin":"10px 10px 0px 20px"}

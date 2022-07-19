@@ -11,6 +11,7 @@ import * as LocalConfig from "./local_config";
 import formHash from "../json/form_submissions.json";
 import dataModel from "../json/data_model.json";
 import { Link } from "react-router-dom";
+import {validateGlycoctSequence} from './util';
 
 
 class Newsubmission extends Component {
@@ -473,7 +474,6 @@ class Newsubmission extends Component {
       tmpState.formKey = "step_five_" + x;
 
     }
-    alert(tmpState.formKey);
     this.setState(tmpState);
   }
 
@@ -541,10 +541,10 @@ class Newsubmission extends Component {
       var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
       tmpState.formKey = "step_two_" + x;
     }
-    else if (tmpState.formKey.split("_")[1] === "two"){
+    else if (tmpState.formKey.split("_")[1] === "two" && valHash["glycan|sequence_type"] === "GlycoCT"){
       tmpState.formKey = "step_three_all";
     }
-    else if (tmpState.formKey.split("_")[1] === "three"){
+    else if (tmpState.formKey.split("_")[1] === "two" || tmpState.formKey.split("_")[1] === "three"){
       var x = tmpState.record["evidence_type"].split(" ")[0].toLowerCase();
       if (["biological", "recombinant"].indexOf(x) != -1){
         tmpState.formKey = "step_four_" + x;
@@ -603,6 +603,10 @@ class Newsubmission extends Component {
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
         }
+      else if (startPos > endPos){
+        var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+        errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
+      }
     }
     else if (this.state.formKey === "step_two_glycopeptide"){
       var pepLen = valHash["glycopeptide|sequence"].length;
@@ -612,56 +616,25 @@ class Newsubmission extends Component {
         var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
         errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
       }
+      else if (startPos > endPos){
+        var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+        errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
+      }
     }
 
-
     var svcUrl = LocalConfig.apiHash.glycoct_validate;
-    if (this.state.formKey.indexOf("step_two") != -1){
+    if (this.state.formKey.indexOf("step_two") != -1 && valHash["glycan|sequence_type"] === "GlycoCT"){
       var tmpState = this.state;
       tmpState.loadingicon = true;
       this.setState(tmpState);
       var glycoctSeq = valHash["glycan|sequence"];
-      //var params = "glycoct=" + glycoctSeq
-      //params += "&type=N&enz=false&related=false&debug=false"
-      svcUrl += "?glycoct=" + glycoctSeq;
-      svcUrl += "&type=N&enz=false&related=false&debug=false";
-      fetch(svcUrl, {})
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            var resObj = result;
-            var errList = [];
-            var vList = [];
-            if ("error" in resObj){
-              for (var i in resObj["error"]){
-                var o = resObj["error"][i];
-                errList.push(o.message);
-              }
-            }
-            if ("rule_violations" in resObj){
-              for (var i in resObj["rule_violations"]){
-                var o = resObj["rule_violations"][i];
-                vList.push(o.assertion);
-              }
-            }
-            errList = (errList.length > 0 ? errList : ["no errors found"]);
-            vList = (vList.length > 0 ? 
-              vList : ["no rule violations found"]);
-            var tmpState = this.state;
-            tmpState.record["validation|errors"] = JSON.stringify(errList, null, 2);
-            tmpState.record["validation|violations"] = JSON.stringify(vList, null, 2);
-            tmpState.loadingicon = false;
-            this.updateForm();
-            this.setState(tmpState);
-          },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-          //console.log("Ajax error:", error);
-        }
-      );
+      validateGlycoctSequence(glycoctSeq).then(resObj => {
+        var tmpState = this.state;
+        tmpState.record["validation"] = JSON.stringify(resObj, null, 2);
+        tmpState.loadingicon = false;
+        this.updateForm();
+        this.setState(tmpState);
+      });
     }
 
     return errorList;

@@ -482,6 +482,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
           <div className="leftblock"  style={{width:"80%"}}>
             <input id={inputId} key={inputId}
               className={"form-control " + formClass}
+              maxLength={formObj.maxlength}
               type={"text"} defaultValue={""} 
               disabled={false} 
             />
@@ -671,7 +672,36 @@ export function getFormElement(pathId, formObj,formClass, emValue){
   );
 }
 
+export async function validateGlycoctSequence(glycoctSeq)  {
 
+  var svcUrl = LocalConfig.apiHash.glycoct_validate;
+  svcUrl += "?glycoct=" + glycoctSeq;
+  svcUrl += "&type=N&enz=false&related=false&debug=false";
+
+  const response = await fetch(svcUrl, {});
+  var resObj = await response.json();
+  var valObj = {"errors":[], "rule_violations":[]};
+  var errList = [];
+  var vList = [];
+  if ("error" in resObj){
+    for (var i in resObj["error"]){
+      var o = resObj["error"][i];
+      valObj["errors"].push(o.message);
+    }
+  }
+  
+  if ("rule_violations" in resObj){
+    for (var i in resObj["rule_violations"]){
+      var o = resObj["rule_violations"][i];
+      valObj["rule_violations"].push(o.assertion);
+    }
+  }
+  valObj["errors"] = (valObj["errors"].length > 0 ? valObj["errors"] :
+    ["no errors found"]);
+  valObj["rule_violations"] = (valObj["rule_violations"].length > 0 ?
+    valObj["rule_violations"] : ["no rule violations found"]);
+  return valObj;
+}
 
 export async function getLoginDirectResponse  (loginForm)  {
 
@@ -706,9 +736,10 @@ export async function getLoginDirectResponse  (loginForm)  {
   else if (result.status === 0){
     return {status:0, errorlist:[<li>{result.error}</li>]}
   }
-
   return result;
 }
+
+
 
 
 export async function getLoginOneResponse  (loginForm)  {

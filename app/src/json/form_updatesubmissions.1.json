@@ -89,6 +89,7 @@
           {
             "emid":"retrievbtn", "emtype":"button", "datatype":"string",
             "class":"btn btn-outline-secondary",
+            "onclick":"this.handleRetrieveSequence",
             "value":"Retrieve",
             "style":{"display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
           },
@@ -109,6 +110,33 @@
             "maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
             "value":""
+          } 
+        ]
+      }
+    ]
+  },
+  "step_three_all":{
+    "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"one",
+        "title":"Sequence Validation",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "display":"none",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"validation|errors", "emtype":"plaintext", "datatype":"string|string",
+            "onclick":"this.handleBack", "class":"", "label":"Errors",
+            "value":"",
+            "style":{"width":"100%", "display":"block", "float":"left", "margin":"10px 10px 0px 20px"}
+          },
+          {
+            "emid":"validation|violations", "emtype":"plaintext",
+            "datatype":"string|string", "label":"Rule Violations",
+            "onclick":"this.handleBack", "class":"",
+            "value":"",
+            "style":{"width":"100%", "display":"block", "float":"left", "margin":"10px 10px 0px 20px"}
           }
         ]
       }
@@ -121,7 +149,7 @@
       {
         "groupid":"two",
         "title":"Glycoprotein Site Information",
-        "style":{"width":"96%","margin":"20px 20% 0px 0px", "padding":"20px", 
+        "style":{"width":"96%","margin":"20px 2% 0px 0px", "padding":"20px", 
           "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -368,7 +396,7 @@
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"}, 
         "emlist":[
           {
-            "emid":"publication", "emtype":"objlist",  "label":"", 
+            "emid":"publication", "emtype":"objlist",  "label":"publication","required":true, 
             "wrapperstyle":{ "padding":"0px 10px 20px 10px", 
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
             "value":[],
@@ -392,6 +420,44 @@
       }
     ]
   },
+  "experimental_method":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"four",
+        "title":"Experimental Method",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
+            "label":"", "class":"submissionsform","required":true,"label":"experimental method", 
+            "style":{"width":"85%", "margin":"5px"}
+          }
+        ]
+      }
+    ]
+  },
+  "keywords":{
+    "title":"",
+    "class":"submissionsform",
+    "groups":[
+      {
+        "groupid":"five",
+        "title":"Keywords",
+        "style":{"width":"96%","margin":"20px 2% 0px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+        "emlist":[
+          {
+            "emid":"keywords", "emtype":"stringlist", "datatype":"string",
+            "label":"", "class":"submissionsform", "label":"keywords", "required":true,
+            "style":{"width":"85%", "margin":"5px"}
+          }
+        ]
+      }
+    ]
+  },
   "database_reference":{
     "title":"",
     "class":"submissionsform",
@@ -406,7 +472,7 @@
             "emid":"xrefs","emtype":"objlist",  "label":"",
             "wrapperstyle":{"width":"45%", "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false, "label":"database references",
             "proplist":[
               {"prop":"database", "emtype":"text", "label":"Database",
                 "style":{"width":"15%", "marginRight":"20px"}
@@ -435,10 +501,10 @@
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
-            "emid":"experimental_data","emtype":"objlist",  "label":"",
+            "emid":"experimental_data","emtype":"objlist",  "label":"experimental data",
             "wrapperstyle":{ "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px dashed DodgerBlue", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":true,
+            "maxlength":20,  "value":"", "required":false,
             "proplist":[
               {"prop":"type", "emtype":"text", "label":"Type",
                 "style":{"width":"20%", "marginRight":"20px"}
@@ -448,44 +514,6 @@
               }
             ],
             "value":[]
-          }
-        ]
-      }
-    ]
-  },
-  "experimental_method":{
-    "title":"",
-    "class":"submissionsform",
-    "groups":[
-      {
-        "groupid":"four",
-        "title":"Experimental Method",
-        "style":{"width":"96%","margin":"20px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
-        "emlist":[
-          {
-            "emid":"experimental_method", "emtype":"stringlist", "datatype":"string",
-            "label":"", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
-          }
-        ]
-      }
-    ]
-  },
-  "keywords":{
-    "title":"",
-    "class":"submissionsform",
-    "groups":[
-      {
-        "groupid":"five",
-        "title":"Keywords",
-        "style":{"width":"96%","margin":"20px 2% 0px 0px",
-           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
-        "emlist":[
-          {
-            "emid":"keywords", "emtype":"stringlist", "datatype":"string",
-            "label":"", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
           }
         ]
       }

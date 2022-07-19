@@ -5,11 +5,11 @@ import $ from "jquery";
 import * as LocalConfig from "./local_config";
 import { Link } from "react-router-dom";
 import Nav from './nav';
-
 import Formeditor from "./form_editor";
-import formHash from "../json/form_updatesubmissions.json";
+import formHash from "../json/form_updatesubmissions.1.json";
+import extraObjList from "../json/form_updatesubmissions.2.json";
 import dataModel from "../json/data_model.json";
-
+import {validateGlycoctSequence} from './util';
 
 
  var filterHashOne = {
@@ -92,6 +92,11 @@ class Updatesubmission extends Component {
       );
   }
 
+  handleDialogClose = () => {
+    var tmpState = this.state;
+    tmpState.dialog.status = false;
+    this.setState(tmpState);
+  }
 
   handleAddItemObj = (e) => {
     var k = e.target.id.split("^")[0];
@@ -300,8 +305,32 @@ class Updatesubmission extends Component {
     //this.updateForm();
   }
 
+
+
   updateForm() {
 
+    var seen = {};
+    for (var j in formHash["glycan"]["groups"][0]["emlist"]){
+      var emObj = formHash["glycan"]["groups"][0]["emlist"][j];
+      seen[emObj.emid] = true;
+    }
+
+    if (this.state.record.glycan.sequence_type === "GlycoCT"){
+      if (!("validatebtn" in seen)){
+        formHash["glycan"]["groups"][0]["emlist"].push(extraObjList[0]);
+      }
+    }
+    else{
+      var tmpList = [];
+      for (var j in formHash["glycan"]["groups"][0]["emlist"]){
+        var emObj = formHash["glycan"]["groups"][0]["emlist"][j];
+        if (["validatebtn", "validation"].indexOf(emObj.emid) === -1){
+          tmpList.push(emObj)
+        }
+      }
+      formHash["glycan"]["groups"][0]["emlist"] = tmpList;
+    }
+    
 
     for (var k in formHash){
       for (var i in formHash[k]["groups"]){
@@ -324,7 +353,6 @@ class Updatesubmission extends Component {
             }
           }
         
-
           if ("onclick" in emObj){
             emObj.onclick = eval(emObj.onclick);
           }
@@ -349,7 +377,155 @@ class Updatesubmission extends Component {
     }
   }
 
+  handleRetrieveSequence = () => {
 
+    var jqClass = ".submissionsform";
+    var valHash = {};
+    $(jqClass).each(function () {
+        var fieldName = $(this).attr("id");
+        var fieldValue = $(this).val();
+        if (fieldValue.trim() !== ""){
+          valHash[fieldName] = fieldValue;
+        }
+    });
+   
+    if (!("glycan|glytoucan_ac" in valHash) || !("glycan|sequence_type" in valHash)){ 
+      var tmpState = this.state;
+      tmpState.dialog.status = true;
+      tmpState.dialog.msg = "Please entery GlyTouCan accession and sequence format";
+      this.setState(tmpState);
+    }
+    var glytoucanAc = valHash["glycan|glytoucan_ac"];
+    var seqFormat = valHash["glycan|sequence_type"];
+
+
+    var reqObj = {"glytoucan_ac":glytoucanAc, "format":seqFormat};
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqObj)
+    };
+    const svcUrl = LocalConfig.apiHash.gsa_getseq;
+    fetch(svcUrl, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var tmpState = this.state;
+          tmpState.response = result;
+          tmpState.isLoaded = true;
+          if (tmpState.response.status === 0){
+            tmpState.dialog.status = true;
+            tmpState.dialog.msg = tmpState.response.error;
+          }
+          tmpState.loginforward = "msg" in result;
+          //var emObj = document.getElementById("glycan|sequence");
+          //emObj.value = result.sequence;
+          tmpState.record.glycan.sequence = result.sequence;
+
+          tmpState.record.glycan.sequence_type = seqFormat ;
+          console.log("xxxx", tmpState.record);
+          console.log("Retrieveseq", result);
+          this.setState(tmpState);
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+          //console.log("Ajax error:", error);
+        }
+      );
+ 
+  }
+
+
+
+  handleValidateSequence = () => {
+    
+    var glycoctSeq = this.state.record.glycan.sequence;
+    var seen = {};
+    for (var j in formHash["glycan"]["groups"][0]["emlist"]){
+      var emObj = formHash["glycan"]["groups"][0]["emlist"][j];
+      seen[emObj.emid] = true;
+    }
+    var tmpState = this.state;
+    extraObjList[1].value = (<Loadingicon/>);
+    if (!("validation" in seen)){
+      formHash["glycan"]["groups"][0]["emlist"].push(extraObjList[1]);
+    }
+    this.updateForm();
+    this.setState(tmpState);
+    validateGlycoctSequence(glycoctSeq).then(resObj => {
+      var tmpState = this.state;
+      var len = formHash["glycan"]["groups"][0]["emlist"].length;
+      var emObj = formHash["glycan"]["groups"][0]["emlist"][len-1];
+      emObj.value = JSON.stringify(resObj, null, 2);
+      this.updateForm();
+      this.setState(tmpState);
+    });
+  }
+
+
+
+  handleValidateSequenceOld = () => {
+    var seen = {};
+    for (var j in formHash["glycan"]["groups"][0]["emlist"]){
+      var emObj = formHash["glycan"]["groups"][0]["emlist"][j];
+      seen[emObj.emid] = true;
+    }
+    
+    var svcUrl = LocalConfig.apiHash.glycoct_validate;
+    var tmpState = this.state;
+    extraObjList[1].value = (<Loadingicon/>);
+    if (!("validation" in seen)){
+      formHash["glycan"]["groups"][0]["emlist"].push(extraObjList[1]);
+    }
+    this.updateForm();
+    this.setState(tmpState);
+
+
+
+    var glycoctSeq = this.state.record.glycan.sequence;
+    svcUrl += "?glycoct=" + glycoctSeq;
+    svcUrl += "&type=N&enz=false&related=false&debug=false";
+    
+    fetch(svcUrl, {}).then((res) => res.json()).then(
+      (result) => {
+        var resObj = result;
+        var valObj = {"errors":[], "rule_violations":[]};
+        var errList = [];
+        var vList = [];
+        if ("error" in resObj){
+          for (var i in resObj["error"]){
+            var o = resObj["error"][i];
+            valObj["errors"].push(o.message);
+          }
+        }
+        if ("rule_violations" in resObj){
+          for (var i in resObj["rule_violations"]){
+            var o = resObj["rule_violations"][i];
+            valObj["rule_violations"].push(o.assertion);
+          }
+        }
+        valObj["errors"] = (valObj["errors"].length > 0 ? valObj["errors"] : 
+          ["no errors found"]);
+        valObj["rule_violations"] = (valObj["rule_violations"].length > 0 ? 
+          valObj["rule_violations"] : ["no rule violations found"]);
+        
+        var tmpState = this.state;
+        var len = formHash["glycan"]["groups"][0]["emlist"].length;
+        var emObj = formHash["glycan"]["groups"][0]["emlist"][len-1];
+        emObj.value = JSON.stringify(valObj, null, 2);
+        this.updateForm();
+        this.setState(tmpState);
+      },
+      (error) => { this.setState({isLoaded: true, error,});}
+    );
+
+    return;
+  }
 
 
   render() {
@@ -363,7 +539,6 @@ class Updatesubmission extends Component {
       return <Loadingicon/>
     }
     var recordObj = this.state.record;
-    
     this.updateForm();
 
     //cnList.push(<pre>{JSON.stringify(recordObj, null, 4)}</pre>);

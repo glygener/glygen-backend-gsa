@@ -1,0 +1,15 @@
+[
+  {
+            "emid":"validatebtn", "emtype":"button", "datatype":"string",
+            "class":"btn btn-outline-secondary",
+            "onclick":"this.handleValidateSequence",
+            "value":"Validate Sequence",
+            "style":{"width":"100%","display":"block", "float":"left", "margin":"18px 0px 0px 10px"}
+          },
+          {
+            "emid":"validation", "emtype":"plaintext", "datatype":"string|string",
+            "label":"",
+            "value":"",
+            "style":{"width":"99%", "border":"1px solid #ddd", "display":"block", "float":"left", "padding":"20px", "margin":"10px 10px 0px 10px", "borderRadius":"10px"}
+          }
+]
