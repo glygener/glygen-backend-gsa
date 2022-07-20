@@ -21,7 +21,9 @@ export const apiHash = {
   auth_change_password:process.env.REACT_APP_API_URL + "/auth/change_password",
   auth_reset_password:process.env.REACT_APP_API_URL + "/auth/reset_password",
   glycoct_validate:"https://glygen.ccrc.uga.edu/sandbox/api/checkers.php",
-  uniprotkb_entry:"https://rest.uniprot.org/uniprotkb/"
+  uniprotkb_entry:"https://rest.uniprot.org/uniprotkb/",
+  url_exists:process.env.REACT_APP_API_URL + "/misc/urlexists",
+  taxid_exists:process.env.REACT_APP_API_URL + "/misc/taxidexists"
 };
 
 

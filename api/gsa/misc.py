@@ -73,6 +73,44 @@ def info():
     return jsonify(res_obj), 200
 
 
+@bp.route('/urlexists', methods=('GET', 'POST'))
+def urlexists():
+
+    req_obj = request.json
+    res_obj = {}
+    try:
+        import requests
+        response = requests.get(req_obj["url"])
+        if response.status_code == 200:
+            res_obj = {"status":1}
+        else:
+            res_obj = {"status":0}
+    except Exception as e:
+        res_obj = {"status":0, "error":"unable to check url!"}
+
+    return jsonify(res_obj), 200
+
+
+@bp.route('/taxidexists', methods=('GET', 'POST'))
+def taxidexists():
+
+    req_obj = request.json
+    res_obj = {"status":0}
+    try:
+        import requests
+        url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=taxonomy&retmode=json&id="
+        url += req_obj["tax_id"]
+        response = requests.get(url)
+        if response.status_code == 200:
+            res = response.json()
+            if "error" not in res:
+                res_obj = {"status":1}
+    except Exception as e:
+        res_obj = {"status":0, "error":"unable to check url!"}
+
+    return jsonify(res_obj), 200
+
+
 @bp.route('/sendmail', methods=('GET', 'POST'))
 def sendmail():
 

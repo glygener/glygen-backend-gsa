@@ -5,13 +5,12 @@ import Loadingicon from "./loading_icon";
 
 import Nav from './nav';
 import $ from "jquery";
-import { verifyReqObj, verifyPasswords} from './util';
+import { verifyReqObj, verifyPasswords, validateGlycoctSequence, validateUrl, validateTaxId} from './util';
 import Messagecn from './message_cn';
 import * as LocalConfig from "./local_config";
 import formHash from "../json/form_submissions.json";
 import dataModel from "../json/data_model.json";
 import { Link } from "react-router-dom";
-import {validateGlycoctSequence} from './util';
 
 
 class Newsubmission extends Component {
@@ -369,7 +368,8 @@ class Newsubmission extends Component {
         }
       }
     });
-    
+ 
+
     var tmpState = this.state;
     if (!(k in tmpState.record)){
       tmpState.record[k] = [];
@@ -380,11 +380,35 @@ class Newsubmission extends Component {
       var str = JSON.stringify(objList[i]);
       seen[str] = true;
     }
-    if (!(JSON.stringify(o) in seen)){
-      objList.push(o);
+
+    if (["publication", "xrefs"].indexOf(k) !== -1){
+      var errorList = [];
+      var urlHash = {
+        "PubMed":"https://pubmed.ncbi.nlm.nih.gov/",
+        "DOI":"https://doi.org/"
+      }
+      var url = urlHash[o.type] + o.id;
+      url = (k === "xrefs" ? o.url : url); 
+      validateUrl(url).then(errorList => {
+        if (errorList.length > 0){
+          tmpState.dialog.status = true;
+          tmpState.dialog.msg = <div><ul> {errorList} </ul></div>;
+          this.setState(tmpState);
+        }
+        else if (!(JSON.stringify(o) in seen)){
+          objList.push(o);
+          this.setState(tmpState);
+          this.updateForm();
+        }
+      });
     }
-    this.setState(tmpState);
-    this.updateForm();
+    else{
+      if (!(JSON.stringify(o) in seen)){
+        objList.push(o);
+        this.setState(tmpState);
+        this.updateForm();
+      }
+    }
   }
 
 
@@ -578,7 +602,9 @@ class Newsubmission extends Component {
   validateInput = (valHash) => {
 
     var errorList = [];
+
     if (this.state.formKey === "step_two_glycoprotein"){
+        errorList = [];
         var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
         var startPos = valHash["glycoprotein|site|start_pos"];
         var endPos = valHash["glycoprotein|site|end_pos"];
@@ -587,11 +613,14 @@ class Newsubmission extends Component {
         xhr.open("GET", svcUrl, false);
         xhr.seqLen = 0;
         xhr.flag = false;
+        xhr.uniprotAc = uniprotAc;  
         xhr.onreadystatechange = function() {//Call a function when the state changes.
           if(xhr.readyState == 4 && xhr.status == 200) {
             var obj = JSON.parse(xhr.responseText);
             xhr.seqLen = obj["sequence"]["length"];
-            xhr.flag = true;
+            if (obj.primaryAccession === xhr.uniprotAc){
+              xhr.flag = true;
+            }
           }
         }
         xhr.send();
@@ -599,16 +628,18 @@ class Newsubmission extends Component {
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Invalid UniProtKB accession</li>);
         }
-        else if (startPos < 1 || endPos > xhr.seqLen){
+        if (startPos < 1 || endPos > xhr.seqLen){
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
         }
-      else if (startPos > endPos){
-        var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
-        errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
-      }
+        if (startPos > endPos){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
+        }
+      return errorList;
     }
     else if (this.state.formKey === "step_two_glycopeptide"){
+      errorList = [];
       var pepLen = valHash["glycopeptide|sequence"].length;
       var startPos = valHash["glycopeptide|site|start_pos"];
       var endPos = valHash["glycopeptide|site|end_pos"];
@@ -616,14 +647,30 @@ class Newsubmission extends Component {
         var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
         errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
       }
-      else if (startPos > endPos){
+      if (startPos > endPos){
         var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
         errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
       }
+      return errorList;
+    }
+    else if (this.state.formKey === "step_four_biological"){
+      errorList = [];
+      var taxId = valHash["biological_source|tax_id"];
+      validateTaxId(taxId).then(errorList => {
+        return errorList; 
+      });
+    }
+    else if (this.state.formKey === "step_four_recombinant"){
+       errorList = [];
+      var taxId = valHash["expression_system|tax_id"];
+      validateTaxId(taxId).then(errorList => {
+        return errorList;
+      });
     }
 
-    var svcUrl = LocalConfig.apiHash.glycoct_validate;
     if (this.state.formKey.indexOf("step_two") != -1 && valHash["glycan|sequence_type"] === "GlycoCT"){
+      var svcUrl = LocalConfig.apiHash.glycoct_validate;
+      errorList = [];
       var tmpState = this.state;
       tmpState.loadingicon = true;
       this.setState(tmpState);
@@ -635,8 +682,9 @@ class Newsubmission extends Component {
         this.updateForm();
         this.setState(tmpState);
       });
+      return errorList;
     }
-
+    
     return errorList;
 
   };

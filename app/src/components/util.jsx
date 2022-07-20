@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import * as LocalConfig from "./local_config";
 import RemoveOutlinedIcon from '@material-ui/icons/RemoveOutlined';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import urlExist from "url-exist"
 
 
 
@@ -671,6 +672,49 @@ export function getFormElement(pathId, formObj,formClass, emValue){
     </div>
   );
 }
+
+
+export async function validateUrl(url){
+
+  var errorList = [];
+  const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({"url":url})
+  };
+  var svcUrl = LocalConfig.apiHash.url_exists;
+  const response = await fetch(svcUrl, requestOptions);
+  var resObj = await response.json();
+  if (resObj.status !== 1){
+    errorList =  [<li>Invalid Url: {url}</li>];
+  }
+
+  return errorList;
+
+}
+
+
+export async function validateTaxId(taxId){
+
+  var errorList = [];
+  const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({"tax_id":taxId})
+  };
+  var svcUrl = LocalConfig.apiHash.taxid_exists;
+  const response = await fetch(svcUrl, requestOptions);
+  var resObj = await response.json();
+  alert("GGG" + resObj.status);
+  if (resObj.status !== 1){
+    errorList =  [<li>Invalid Tax ID: {taxId}</li>];
+  }
+
+  return errorList;
+
+}
+
+
 
 export async function validateGlycoctSequence(glycoctSeq)  {
 
