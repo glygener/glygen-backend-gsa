@@ -601,10 +601,10 @@ class Newsubmission extends Component {
 
   validateInput = (valHash) => {
 
-    var errorList = [];
 
+
+    var errorList = [];
     if (this.state.formKey === "step_two_glycoprotein"){
-        errorList = [];
         var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
         var startPos = valHash["glycoprotein|site|start_pos"];
         var endPos = valHash["glycoprotein|site|end_pos"];
@@ -636,10 +636,8 @@ class Newsubmission extends Component {
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
         }
-      return errorList;
     }
     else if (this.state.formKey === "step_two_glycopeptide"){
-      errorList = [];
       var pepLen = valHash["glycopeptide|sequence"].length;
       var startPos = valHash["glycopeptide|site|start_pos"];
       var endPos = valHash["glycopeptide|site|end_pos"];
@@ -651,26 +649,17 @@ class Newsubmission extends Component {
         var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
         errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
       }
-      return errorList;
     }
     else if (this.state.formKey === "step_four_biological"){
-      errorList = [];
       var taxId = valHash["biological_source|tax_id"];
-      validateTaxId(taxId).then(errorList => {
-        return errorList; 
-      });
+      this.handleValidateTaxId(taxId);
     }
     else if (this.state.formKey === "step_four_recombinant"){
-       errorList = [];
       var taxId = valHash["expression_system|tax_id"];
-      validateTaxId(taxId).then(errorList => {
-        return errorList;
-      });
+      this.handleValidateTaxId(taxId);
     }
 
     if (this.state.formKey.indexOf("step_two") != -1 && valHash["glycan|sequence_type"] === "GlycoCT"){
-      var svcUrl = LocalConfig.apiHash.glycoct_validate;
-      errorList = [];
       var tmpState = this.state;
       tmpState.loadingicon = true;
       this.setState(tmpState);
@@ -682,13 +671,37 @@ class Newsubmission extends Component {
         this.updateForm();
         this.setState(tmpState);
       });
-      return errorList;
     }
-    
+   
+    //this.endLoadingIcon();
+
     return errorList;
 
   };
 
+
+
+  handleValidateTaxId = (taxId) => {
+      var tmpState = this.state;
+      tmpState.loadingicon = true;
+      this.setState(tmpState);
+      validateTaxId(taxId).then(resObj => {
+        var tmpState = this.state;
+        if (resObj.status !== 1){
+          tmpState.dialog.status = true;
+          tmpState.dialog.msg = (<li>Invalid Tax ID: {taxId}</li>);
+          tmpState.formKey = "step_four_biological";
+        }
+        tmpState.loadingicon = false;
+        this.updateForm();
+        this.setState(tmpState);
+      });
+
+    return;
+  }
+
+
+          
 
 
 

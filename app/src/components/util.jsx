@@ -694,25 +694,25 @@ export async function validateUrl(url){
 }
 
 
-export async function validateTaxId(taxId){
 
-  var errorList = [];
+export async function validateTaxId(taxId)  {
+
+  var reqObj = {"tax_id":taxId};
   const requestOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({"tax_id":taxId})
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqObj)
   };
+  var errorList = [];
   var svcUrl = LocalConfig.apiHash.taxid_exists;
   const response = await fetch(svcUrl, requestOptions);
   var resObj = await response.json();
-  alert("GGG" + resObj.status);
-  if (resObj.status !== 1){
-    errorList =  [<li>Invalid Tax ID: {taxId}</li>];
-  }
 
-  return errorList;
-
+  return resObj;
 }
+
 
 
 
