@@ -252,12 +252,11 @@ def register_one():
             shared_key = random_base32()
             totp = TOTP(shared_key, interval=current_app.config["TOTP_INTERVAL"])
             code = totp.now()
-            if current_app.config["SERVER"] == "dev":
-                shared_key, code = "xxx", "xxx"
-
             res_obj = {'status': 1, "email": new_email, "shared_key":shared_key,
                 "fname":req_obj["record"]["fname"], "lname":req_obj["record"]["lname"]
             }
+            if current_app.config["SERVER"] == "dev":
+                res_obj["code"] = code
             body = "<#>GSA: DO NOT share this Sign In code. "
             body += "We will never call you or text  you for it. "
             body += "Code %s" % (code)
@@ -292,9 +291,7 @@ def register_two():
         code = req_obj["record"]["code"]
         shared_key = req_obj["record"]["shared_key"] 
         totp = TOTP(shared_key, interval=current_app.config["TOTP_INTERVAL"])
-        valid = True
-        if current_app.config["SERVER"] != "dev":
-            valid = totp.verify(code)
+        valid = totp.verify(code)
         if valid:
             if mongo_dbh["c_user"].find({"email":req_obj["record"]["email"]}).count() != 0:
                 return jsonify({"status":0,

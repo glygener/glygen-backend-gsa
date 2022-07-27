@@ -208,7 +208,7 @@ class GSAGetseq(Resource):
         req_obj = request.json
         seq_format, ac = req_obj["format"], req_obj["glytoucan_ac"]
         file_path = current_app.config["DATA_PATH"] 
-        file_path += "/downloads/glytoucan/sequences/%s/%s.txt" % (seq_format, ac)
+        file_path += "/downloads/glytoucan/sequences/%s/%s.txt" % (seq_format.lower(), ac)
         if os.path.isfile(file_path) == False:
             return {"status":0, "error":"sequence not found"}
         sequence = ""

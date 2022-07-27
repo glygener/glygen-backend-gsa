@@ -62,63 +62,76 @@ class Recordview extends Component {
       return <Loadingicon/>
     }
 
-    var recordObj = this.state.response.record;
+    var obj = this.state.response.record;
+    var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
+    var tmpList = [];
+    tmpList.push(<div className="leftblock" style={{width:"90%"}}><b>GSA ID</b>: {obj.gsa_id}</div>);
+    tmpList.push(<div className="leftblock"><img src={imgUrl} 
+      style={{width:"70%", margin:"0px"}}/></div>);
+    
+    tmpList.push(<div className="leftblock" style={{width:"90%"}}>
+      <br/><br/><b>GLYCOCONJUGATE AND EVIDENCE TYPES</b><br/>
+        <div className="leftblock" style={{width:"100%", marginLeft:"20px"}}>
+          <b>Glycoconjugate Type</b>: {obj.glycoconjugate_type}<br/>
+          <b>Evidence Type</b>: {obj.evidence_type}<br/>
+          <b>Data Source Type</b>: {obj.data_source_type}<br/>
+        </div>
+      </div>);
 
-    var secList = [
-      "gsa_id","createdts","user_id","evidence_type", "data_source_type", "glycan",
-      "glycoconjugate_type", "biological_source",
-      "glycoprotein", "glycopeptide", "glycolipid", "gpi",
-      "keywords", "xrefs", "experimental_method",
-      "publication","experimental_data"
-    ];
-    var secGrpOne = ["glycan", "biological_source", "glycoprotein", "glycopeptide",
-      "glycolipid","gpi"];
-    var secGrpTwo = ["xrefs", "publication","experimental_data"];
-    var secGrpThree = ["keywords",  "experimental_method"];
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+        <b>GLYCAN DETAILS</b><br/>
+        <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+          <b>GlyTouCan Accession</b>: {obj.glycan.glytoucan_ac}<br/>
+          <b>Sequence Type</b>: {obj.glycan.sequence_type}<br/>
+          <b>Sequence</b>: {obj.glycan.sequence}<br/>
+          <b>GlycoTree Approved</b>: {obj.glycan.glycotree_approved}<br/>
+        </div>
+      </div>);
 
-    var cnList = [];
-    for (var i in secList){
-      var sec = secList[i];
-      if (secGrpOne.indexOf(sec) != -1){
-        var tmpList = [];
-        for (var k in recordObj[sec]){
-          if (k === "site"){
-            for (var q in recordObj[sec][k]){
-              tmpList.push(<li><b>{k}_{q}</b>: {recordObj[sec][k][q]}</li>);
-            }
-          }
-          else{
-            tmpList.push(<li><b>{k}</b>: {recordObj[sec][k]}</li>);
-          }
-        }
-        if (tmpList.length > 0){
-          cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
-        }
-      }
-      else if (secGrpTwo.indexOf(sec) != -1){
-        var tmpList = [];
-        for (var i in recordObj[sec]){
-          tmpList.push(<li>{JSON.stringify(recordObj[sec][i], null, 4)}</li>);
-        }
-        if (tmpList.length > 0){
-          cnList.push(<li><b>{sec}</b>: <ul>{tmpList}</ul></li>);
-        }
-      }
-      else{
-        cnList.push(<li><b>{sec}</b>: {JSON.stringify(recordObj[sec], null, 4)}</li>);
-      }
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+      <b>BIOLOGICAL SOURCE</b><br/>
+        <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+          <b>Organism</b>: {obj.biological_source.tax_name}<br/>
+          <b>Taxonomy ID</b>: {obj.biological_source.tax_id}<br/>
+        </div>
+      </div>);
+
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+      <b>PUBLICATION</b><br/>
+      </div>);
+
+
+    for (var i in obj.publication){
+      tmpList.push(
+        <div className="leftblock" style={{width:"90%", marginBottom:"20px"}}>
+          <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+            <b>Type</b>: {obj.publication[i].type}<br/>
+            <b>ID</b>: {obj.publication[i].id}<br/>
+            <b>Title</b>: {}<br/>
+            <b>Author(s)</b>: {}<br/>
+          </div>
+        </div>
+      );
     }
 
-    //cnList.push(<pre>{JSON.stringify(recordObj, null, 4)}</pre>);
-    var cn = (<ul>{cnList}</ul>);
+    tmpList.push(
+      <div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+        <br/><br/><b>ENTRY HISTORY</b><br/>
+        <div className="leftblock" style={{marginLeft:"20px"}}>
+          <b>Created</b>: {obj.createdts}<br/>
+          <b>User</b>: {obj.user_id}<br/>
+        </div>
+      </div>
+    );
+
     
-    var sOne = { width:"100%",margin:"0px", padding:"20px",
+    var sOne = { width:"100%",margin:"20px 0px 0px 20px", padding:"20px",
       border:"0px solid #ccc", borderRadius:"10px"};
     return (
       <div>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
           <div className="leftblock" style={sOne}> 
-            {cn}
+            {tmpList}
           </div>
       </div>
 

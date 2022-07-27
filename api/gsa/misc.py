@@ -2,6 +2,7 @@ import os,sys
 import json
 import traceback
 import csv
+import requests
 from flask import (Blueprint,request,jsonify,current_app)
 from gsa.db import get_mongodb, log_error, next_sequence_value
 from flask_restx import Resource, Api
@@ -79,7 +80,6 @@ def urlexists():
     req_obj = request.json
     res_obj = {}
     try:
-        import requests
         response = requests.get(req_obj["url"])
         if response.status_code == 200:
             res_obj = {"status":1}
@@ -97,7 +97,6 @@ def taxidexists():
     req_obj = request.json
     res_obj = {"status":0}
     try:
-        import requests
         url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=taxonomy&retmode=json&id="
         url += req_obj["tax_id"]
         response = requests.get(url)

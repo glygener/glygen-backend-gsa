@@ -218,6 +218,8 @@ class Newsubmission extends Component {
       body: JSON.stringify(reqObj)
     };
     const svcUrl = LocalConfig.apiHash.gsa_getseq;
+    console.log("svcURL", svcUrl);
+    console.log("reqObj", reqObj);
     fetch(svcUrl, requestOptions)
       .then((res) => res.json())
       .then(
