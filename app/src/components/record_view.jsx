@@ -67,9 +67,9 @@ class Recordview extends Component {
     var tmpList = [];
     tmpList.push(<div className="leftblock" style={{width:"90%"}}><b>GSA ID</b>: {obj.gsa_id}</div>);
     tmpList.push(<div className="leftblock"><img src={imgUrl} 
-      style={{width:"70%", margin:"0px"}}/></div>);
+      style={{width:"70%"}}/></div>);
     
-    tmpList.push(<div className="leftblock" style={{width:"90%"}}>
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"-40px"}}>
       <br/><br/><b>GLYCOCONJUGATE AND EVIDENCE TYPES</b><br/>
         <div className="leftblock" style={{width:"100%", marginLeft:"20px"}}>
           <b>Glycoconjugate Type</b>: {obj.glycoconjugate_type}<br/>
@@ -78,7 +78,7 @@ class Recordview extends Component {
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
         <b>GLYCAN DETAILS</b><br/>
         <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
           <b>GlyTouCan Accession</b>: {obj.glycan.glytoucan_ac}<br/>
@@ -88,7 +88,7 @@ class Recordview extends Component {
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
       <b>BIOLOGICAL SOURCE</b><br/>
         <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
           <b>Organism</b>: {obj.biological_source.tax_name}<br/>
@@ -96,7 +96,7 @@ class Recordview extends Component {
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
       <b>PUBLICATION</b><br/>
       </div>);
 
@@ -115,7 +115,7 @@ class Recordview extends Component {
     }
 
     tmpList.push(
-      <div className="leftblock" style={{width:"90%", marginTop:"30px"}}>
+      <div className="leftblock" style={{width:"90%"}}>
         <br/><br/><b>ENTRY HISTORY</b><br/>
         <div className="leftblock" style={{marginLeft:"20px"}}>
           <b>Created</b>: {obj.createdts}<br/>
