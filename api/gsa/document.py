@@ -240,6 +240,7 @@ def insert_one(req_obj):
         doc = req_obj["record"]
         doc[primary_id] = next_sequence_value(mongo_dbh["c_counter"], sequence_name)
         doc["createdts"] = datetime.datetime.now()
+        doc["modifiedts"] = doc["createdts"]
         if coll_name == "c_glycan":
             pid_str = str(doc[primary_id])
             doc["gsa_id"] = "GSA000000000"[0:9-len(str(pid_str))] + pid_str

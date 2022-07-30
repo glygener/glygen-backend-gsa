@@ -62,23 +62,29 @@ class Recordview extends Component {
       return <Loadingicon/>
     }
 
+    var sOne = {width:"96%", marginTop:"10px", padding:"20px", background:"#f1f1f1",
+      border:"1px solid #ccc", borderRadius:"10px"};
+
     var obj = this.state.response.record;
     var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
     var tmpList = [];
-    tmpList.push(<div className="leftblock" style={{width:"90%"}}><b>GSA ID</b>: {obj.gsa_id}</div>);
-    tmpList.push(<div className="leftblock"><img src={imgUrl} 
-      style={{width:"70%"}}/></div>);
-    
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"-40px"}}>
-      <br/><br/><b>GLYCOCONJUGATE AND EVIDENCE TYPES</b><br/>
+    tmpList.push(<div className="leftblock" style={sOne}>
+      <b>GSA ID</b>: {obj.gsa_id}<br/>
+      <div className="leftblock"><img src={imgUrl} style={{width:"70%"}}/></div>
+      </div>); 
+
+    obj.data_source_type = (obj.data_source_type === "Both" ? "Database & Paper" : obj.data_source_type);
+    tmpList.push(<div className="leftblock" style={sOne}>
+      <b>SUBMISSION AND EVIDENCE TYPES</b><br/>
         <div className="leftblock" style={{width:"100%", marginLeft:"20px"}}>
-          <b>Glycoconjugate Type</b>: {obj.glycoconjugate_type}<br/>
+          <b>Submission Type</b>: {obj.glycoconjugate_type}<br/>
           <b>Evidence Type</b>: {obj.evidence_type}<br/>
           <b>Data Source Type</b>: {obj.data_source_type}<br/>
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
+    obj.glycan.glytoucan_ac = (obj.glycan.glytoucan_ac === "" ? "N/A" : obj.glycan.glytoucan_ac);
+    tmpList.push(<div className="leftblock" style={sOne}>
         <b>GLYCAN DETAILS</b><br/>
         <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
           <b>GlyTouCan Accession</b>: {obj.glycan.glytoucan_ac}<br/>
@@ -88,7 +94,9 @@ class Recordview extends Component {
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
+    obj.biological_source.tax_name = (obj.biological_source.tax_name === "" ? "N/A" : obj.biological_source.tax_name);
+    obj.biological_source.tax_id = (obj.biological_source.tax_id === 0 ? "N/A" : obj.biological_source. tax_id);
+    tmpList.push(<div className="leftblock" style={sOne}>
       <b>BIOLOGICAL SOURCE</b><br/>
         <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
           <b>Organism</b>: {obj.biological_source.tax_name}<br/>
@@ -96,41 +104,47 @@ class Recordview extends Component {
         </div>
       </div>);
 
-    tmpList.push(<div className="leftblock" style={{width:"90%", marginTop:"40px"}}>
-      <b>PUBLICATION</b><br/>
-      </div>);
+    var urlHash = {
+        "PubMed":"https://pubmed.ncbi.nlm.nih.gov/",
+        "DOI":"https://doi.org/"
+    };
 
-
+    var subList = [];
     for (var i in obj.publication){
-      tmpList.push(
-        <div className="leftblock" style={{width:"90%", marginBottom:"20px"}}>
-          <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
-            <b>Type</b>: {obj.publication[i].type}<br/>
-            <b>ID</b>: {obj.publication[i].id}<br/>
-            <b>Title</b>: {}<br/>
-            <b>Author(s)</b>: {}<br/>
-          </div>
-        </div>
+      var url = urlHash[obj.publication[i].type] + obj.publication[i].id;
+      var link = (<a href={url} target="_">{obj.publication[i].id}</a>);
+      subList.push(
+            <li>{obj.publication[i].type}: {link}</li>
       );
     }
 
+    tmpList.push(<div className="leftblock" style={sOne}>
+      <b>PUBLICATION</b><br/>
+        <ul>{subList}</ul>
+      </div>);
+
+    obj.createdts = (obj.createdts === "" ? "N/A" : obj.createdts);
+    obj.modifiedts = (obj.modifiedts === "" ? "N/A" : obj.modifiedts);
+    obj.modifiedts = (obj.modifiedts === undefined ? "N/A" : obj.modifiedts);
+    
     tmpList.push(
-      <div className="leftblock" style={{width:"90%"}}>
-        <br/><br/><b>ENTRY HISTORY</b><br/>
+      <div className="leftblock" style={sOne}>
+        <b>ENTRY HISTORY</b><br/>
         <div className="leftblock" style={{marginLeft:"20px"}}>
-          <b>Created</b>: {obj.createdts}<br/>
+          <b>Created On</b>: {obj.createdts}<br/>
+          <b>Last Update</b>: {obj.modifiedts}<br/>
           <b>User</b>: {obj.user_id}<br/>
         </div>
       </div>
     );
-
+    console.log(obj);
     
-    var sOne = { width:"100%",margin:"20px 0px 0px 20px", padding:"20px",
+    var sTwo = { width:"100%",margin:"0px 0px 0px 20px", padding:"20px",
       border:"0px solid #ccc", borderRadius:"10px"};
     return (
       <div>
           <Alertdialog dialog={this.state.dialog} onClose={this.handleDialogClose}/>
-          <div className="leftblock" style={sOne}> 
+          <div className="leftblock" style={sTwo}> 
             {tmpList}
           </div>
       </div>

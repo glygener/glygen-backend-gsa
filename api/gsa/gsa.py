@@ -116,11 +116,13 @@ class GSAList(Resource):
                 p, lbl, child_p = obj["prop"], obj["label"], obj["childprop"]
                 if p in doc:
                     if child_p in doc[p]:
-                        doc["categories"][lbl] = doc[p][child_p]
+                        v = doc[p][child_p] if doc[p][child_p] != "" else "Uknown"
+                        doc["categories"][lbl] = v
             for obj in catObjListTwo:
                 p, lbl = obj["prop"], obj["label"]
                 if p in doc:
                     if doc[p] != {}:
+                        v = lbl if lbl != "" else "Unknown"
                         doc["categories"]["Glycoconjugate Type"] = lbl
 
 

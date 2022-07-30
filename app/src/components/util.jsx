@@ -188,13 +188,15 @@ export function rndrSearchResults(objList, startIdx, endIdx) {
     var gsaId = obj.gsa_id;
     var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
     var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
-    obj.glycoconjugagte_type = (obj.glycoconjugagte_type === undefined ? "None" : obj.glycoconjugagte_type);
+    obj.glycoconjugagte_type = (obj.glycoconjugagte_type === undefined ? "N/A" : obj.glycoconjugagte_type);
+    obj.glycan.glytoucan_ac = (obj.glycan.glytoucan_ac === "" ? "N/A" : obj.glycan.glytoucan_ac);
+
     cardList.push(
       <div className="leftblock" style={{width:"30%", background:"#fff", margin:"20px 20px 0px 0%"}}>
         <div className="leftblock" style={{width:"100%", padding:"15px"}}>
           GSA ID: {gsaLink}<br/>
           GlyToucan Accession: {obj.glycan.glytoucan_ac}<br/>
-          Glycoconjugate Type: {obj.glycoconjugate_type}<br/>
+          Submission Type: {obj.glycoconjugate_type}<br/>
           Evidence Type: {obj.evidence_type}<br/>
           <img src={imgUrl} style={{width:"100%"}}/>
         </div>
