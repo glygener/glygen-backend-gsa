@@ -194,14 +194,14 @@
             "emid":"glycoprotein|site|start_pos", "emtype":"int", "maxlength":5, "datatype":"number|int", "maxlength":5,
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"30%", "margin":"0px 10px 0px 0px"},
-            "placeholder":294, "required":true
+            "placeholder":294, "required":false
           },
           {
             "emid":"glycoprotein|site|end_pos", "emtype":"int", "datatype":"number|int",
             "maxlength":5,
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"30%"},
-            "placeholder":294, "required":true
+            "placeholder":294, "required":false
           }
         ]
       },
@@ -288,13 +288,13 @@
             "emid":"glycopeptide|site|start_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"26%", "margin":"0px 10px 0px 0px"},
-            "placeholder":5, "required":true
+            "placeholder":5, "required":false
           },
           {
             "emid":"glycopeptide|site|end_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"26%"},
-            "placeholder":5, "required":true
+            "placeholder":5, "required":false
           }
         ]
       },
@@ -565,13 +565,13 @@
             "emid":"other_glycoconjugate|site|start_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site Start Position", "class":"submissionsform",
             "style":{"width":"24%", "margin":"0px 10px 0px 0px"},
-            "placeholder":294, "required":true
+            "placeholder":294, "required":false
           },
           {
             "emid":"other_glycoconjugate|site|end_pos", "emtype":"int", "maxlength":5, "datatype":"number|int",
             "label":"Site End Position", "class":"submissionsform",
             "style":{"width":"24%"},
-            "placeholder":294, "required":true
+            "placeholder":294, "required":false
           }
         ]
       },

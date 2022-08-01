@@ -113,9 +113,10 @@ class Recordview extends Component {
     for (var i in obj.publication){
       var url = urlHash[obj.publication[i].type] + obj.publication[i].id;
       var link = (<a href={url} target="_">{obj.publication[i].id}</a>);
-      subList.push(
-            <li>{obj.publication[i].type}: {link}</li>
-      );
+      subList.push(<li>{obj.publication[i].type}: {link}</li>);
+    }
+    if (subList.length === 0){
+      subList.push(<li>N/A</li>);
     }
 
     tmpList.push(<div className="leftblock" style={sOne}>

@@ -651,6 +651,16 @@ class Newsubmission extends Component {
         var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
         errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
       }
+      var aaListAll = "ARNDCQEGHILKMFPSTWYVX".split("");
+      var aaList = valHash["glycopeptide|sequence"].toUpperCase().split("");
+      for (var i=0; i < pepLen; i++){
+        var aa = aaList[i];
+        if (aaListAll.indexOf(aa) === -1){
+           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Invalid amino acid {aa}</li>);
+        }
+      }
+
     }
     else if (this.state.formKey === "step_four_biological"){
       var taxId = valHash["biological_source|tax_id"];
@@ -668,7 +678,8 @@ class Newsubmission extends Component {
       var glycoctSeq = valHash["glycan|sequence"];
       validateGlycoctSequence(glycoctSeq).then(resObj => {
         var tmpState = this.state;
-        tmpState.record["validation"] = JSON.stringify(resObj, null, 2);
+        //tmpState.record["validation"] = JSON.stringify(resObj, null, 2);
+        tmpState.record["validation"] = resObj;
         tmpState.loadingicon = false;
         this.updateForm();
         this.setState(tmpState);

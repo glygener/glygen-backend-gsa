@@ -724,9 +724,14 @@ export async function validateTaxId(taxId)  {
 
 export async function validateGlycoctSequence(glycoctSeq)  {
 
+  //glycoctSeq = glycoctSeq.replace("\\n", " ");
+  var tmpList = glycoctSeq.split("\n");
+  glycoctSeq = tmpList.join(" ");
+
   var svcUrl = LocalConfig.apiHash.glycoct_validate;
   svcUrl += "?glycoct=" + glycoctSeq;
   svcUrl += "&type=N&enz=false&related=false&debug=false";
+
 
   const response = await fetch(svcUrl, {});
   var resObj = await response.json();
@@ -736,21 +741,31 @@ export async function validateGlycoctSequence(glycoctSeq)  {
   if ("error" in resObj){
     for (var i in resObj["error"]){
       var o = resObj["error"][i];
-      valObj["errors"].push(o.message);
+      valObj["errors"].push(<li>{o.message}</li>);
     }
   }
   
   if ("rule_violations" in resObj){
     for (var i in resObj["rule_violations"]){
       var o = resObj["rule_violations"][i];
-      valObj["rule_violations"].push(o.assertion);
+      valObj["rule_violations"].push(<li>{o.assertion}</li>);
     }
   }
   valObj["errors"] = (valObj["errors"].length > 0 ? valObj["errors"] :
-    ["no errors found"]);
+    (<li>No errors found.</li>));
   valObj["rule_violations"] = (valObj["rule_violations"].length > 0 ?
-    valObj["rule_violations"] : ["no rule violations found"]);
-  return valObj;
+    valObj["rule_violations"] : (<li>No rule violations found.</li>));
+  
+  return (
+    <div>
+    <b>Errors</b><br/>
+    <ul>{valObj["errors"]}</ul>
+    
+    <b>Rule Violations</b><br/>
+    <ul>{valObj["rule_violations"]}</ul>
+    </div>
+  );
+
 }
 
 export async function getLoginDirectResponse  (loginForm)  {
