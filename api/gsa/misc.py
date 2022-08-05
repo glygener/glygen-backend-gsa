@@ -84,7 +84,7 @@ def urlexists():
         if response.status_code == 200:
             res_obj = {"status":1}
         else:
-            res_obj = {"status":0}
+            res_obj = {"status":0, "code":response.status_code}
     except Exception as e:
         res_obj = {"status":0, "error":"unable to check url!"}
 
