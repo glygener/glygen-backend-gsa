@@ -2,17 +2,19 @@
   "step_one":{
     "title":"GSA Submission step 1 of 7",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
+    "description":"This is a test system all submitted data will be lost once when version  1 will be released. You can export your submissions into a file to archive them.",
+    "descstyle":{"width":"100%", "background":"#ffff00", "padding":"15px","margin":"0px 0px 15px 0px"},
     "class":"submissionsform",
     "groups":[
       {
         "groupid":"one",
-        "title":"Glycoconjugate and evidence types",
+        "title":"Submission and evidence types",
         "style":{"width":"45%","margin":"0px 30px 30px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"glycoconjugate_type", "emtype":"select", "datatype":"string|string", 
-            "required":true,"label":"Glycoconjugate Type", "class":"submissionsform", 
+            "required":true,"label":"Submission Type", "class":"submissionsform", 
             "value":{
               "selected":"Glycan",
               "optlist":[
@@ -42,11 +44,11 @@
             "emid":"data_source_type", "emtype":"select", "datatype":"string|string",
             "required":true,"label":"Data Source Type", "class":"submissionsform",
             "value":{
-              "selected":"Both",
+              "selected":"Paper",
               "optlist":[
                 {"value":"Paper", "label":"Paper"},
                 {"value":"Database", "label":"Database"},
-                {"value":"Both", "label":"Both"}
+                {"value":"Paper and Database", "label":"Paper and Database"}
               ]
             }
           }
@@ -108,7 +110,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -174,7 +176,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -267,7 +269,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -360,7 +362,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -372,18 +374,10 @@
         "emlist":[
           {
             "emid":"glycolipid|lipid_id", "emtype":"text", "datatype":"string|string",
-            "label":"PubChem ID", "class":"submissionsform",
+            "label":"Lipid PubChem ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
             "required":true,
-            "placeholder":"25098607"
-          },
-          {
-            "emid":"glycolipid|sequence", "emtype":"text", "datatype":"string|string",
-            "label":"Lipid Sequence", "class":"submissionsform",
-            "style":{"width":"45%"},
-            "required":true,
-            "placeholder":"VLTRNETHATY",
-            "value":""
+            "placeholder":"9877306"
           }
         ]
       },
@@ -449,7 +443,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -467,18 +461,10 @@
           },
           {
             "emid":"gpi|lipid_id", "emtype":"text", "datatype":"string|string",
-            "label":"PubChem ID", "class":"submissionsform",
-            "style":{"width":"20%", "margin":"0px 10px 0px 0px"},
+            "label":"Lipid PubChem ID", "class":"submissionsform",
+            "style":{"width":"40%", "margin":"0px 10px 0px 0px"},
             "required":true,
-            "placeholder":"25098607"
-          },
-          {
-            "emid":"gpi|sequence", "emtype":"text", "datatype":"string|string",
-            "label":"Lipid Sequence", "class":"submissionsform",
-            "style":{"width":"45%"},
-            "required":true,
-            "placeholder":"VLTRNETHATY",
-            "value":""
+            "placeholder":"9877306"
           }
         ]
       },
@@ -544,7 +530,7 @@
             "emid":"glycan|sequence", "emtype":"textarea", "datatype":"string|string",
             "required":true,"maxlength":1000, "label":"Glycan Sequence", "class":"submissionsform",
             "style":{"width":"100%", "margin":"10px 0px 0px 0px"},
-            "value":""
+            "placeholder":"RES 1b:b-dglc-HEX-1:5 2s:n-acetyl 3b:b-dglc-HEX-1:5 4s:n-acetyl 5b:b-dman-HEX-1:5 6b:a-dman-HEX-1:5 7b:b-dglc-HEX-1:5 8s:n-acetyl 9b:b-dgal-HEX-1:5 10b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 11s:n-acetyl 12b:a-dman-HEX-1:5 13b:b-dglc-HEX-1:5 14s:n-acetyl 15b:b-dgal-HEX-1:5 16b:a-dgro-dgal-NON-2:6|1:a|2:keto|3:d 17s:n-acetyl 18b:a-lgal-HEX-1:5|6:d LIN 1:1d(2+1)2n 2:1o(4+1)3d 3:3d(2+1)4n 4:3o(4+1)5d 5:5o(3+1)6d 6:6o(2+1)7d 7:7d(2+1)8n 8:7o(4+1)9d 9:9o(3+2)10d 10:10d(5+1)11n 11:5o(6+1)12d 12:12o(2+1)13d 13:13d(2+1)14n 14:13o(4+1)15d 15:15o(3+2)16d 16:16d(5+1)17n 17:1o(6+1)18d"
           }
         ]
       },
@@ -652,43 +638,43 @@
             "emid":"biological_source|tax_id", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":"9606", "required":true
+            "value":"", "placeholder":"6016", "required":true
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Strain", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"EDL933"
           },
           {
             "emid":"biological_source|serotype", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Serotype", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"O157:H7"
           },
           {
             "emid":"biological_source|tissue", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Tissue", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"UBERON:0000160"
           },
           {
             "emid":"biological_source|cell_type", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"CVCL_0030"
           },
           {
             "emid":"biological_source|fluid", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Fluid", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"UBERON:0000178"
           },
           {
             "emid":"biological_source|disease", "emtype":"stringlist", "datatype":"string|string",
             "maxlength":128, "label":"Disease", "class":"submissionsform",
             "style":{"width":"80%", "margin":"5px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"DOID:5041"
           }
         ]
       },
@@ -702,19 +688,19 @@
             "emid":"expression_system|tax_id", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"", "required":true
+            "placeholder":"9986", "required":true
           },
           {
             "emid":"expression_system|strain", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Strain", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"NZW"
           },
           {
             "emid":"expression_system|cell_type", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"CVCL_Z068"
           }
         ]
       },
@@ -754,43 +740,43 @@
             "emid":"biological_source|tax_id", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":"9606", "required":true
+            "value":"", "placeholder":"6016", "required":true
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Strain", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"EDL933"
           },
           {
             "emid":"biological_source|serotype", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Serotype", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"O157:H7"
           },
           {
             "emid":"biological_source|tissue", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Tissue", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"UBERON:0000160"
           },
           {
             "emid":"biological_source|cell_type", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Cell Type", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"CVCL_0030"
           },
           {
             "emid":"biological_source|fluid", "emtype":"text", "datatype":"string|string",
             "maxlength":128, "label":"Fluid", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 0px 0px 0px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"UBERON:0000178"
           },
           {
             "emid":"biological_source|disease", "emtype":"stringlist", "datatype":"string|string",
             "maxlength":128, "label":"Disease", "class":"submissionsform",
             "style":{"width":"80%", "margin":"5px"},
-            "value":"", "placeholder":""
+            "value":"", "placeholder":"DOID:5041"
           }
         ]
       },
@@ -815,7 +801,7 @@
       }
     ]
   },
-  "step_five_both":{
+  "step_five_paper_and_database":{
     "title":"GSA Submission step 5 of 7",
     "titlestyle":{"width":"100%", "margin":"0px 0px 15px 0px", "fontWeight":"bold"},
     "class":"submissionsform",
@@ -844,7 +830,7 @@
                 }
               }
               ,{"prop":"id",  "emtype":"text", "datatype":"string|string", "label":"ID",
-                  "style":{"width":"45%"}
+                  "style":{"width":"45%"}, "placeholder":"31616925"
               }
             ]
           }
@@ -859,7 +845,7 @@
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":             "string|string",
             "required":true,"label":"Experimental Method", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
+            "style":{"width":"85%", "margin":"5px"}, "placeholder":"MALDI-TOF-MS"
           }
         ]
       },
@@ -872,7 +858,7 @@
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
             "required":true,"label":"Keywords", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
+            "style":{"width":"85%", "margin":"5px"}, "placeholder":"glycomics"
           }
         ]
       },
@@ -886,16 +872,17 @@
             "emid":"xrefs","emtype":"objlist",  "label":"Database References",
             "wrapperstyle":{"width":"90%", "padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":false,
+            "maxlength":20,  "value":"", "required":true,
             "proplist":[
-              {"prop":"database", "emtype":"text", "label":"Database",
-                "style":{"width":"15%", "marginRight":"20px"}
+              {"prop":"database", "emtype":"text", "label":"Database","placeholder":"PubChem",
+                "style":{"width":"15%", "marginRight":"20px"},  "maxlength":32
               }
-              ,{"prop":"id", "emtype":"text", "label":"ID",
-                "style":{"width":"15%", "marginRight":"20px"}
+              ,{"prop":"id", "emtype":"text", "label":"ID", "placeholder":"25098607",
+                "style":{"width":"15%", "marginRight":"20px"},  "maxlength":32
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"60%"}
+                "style":{"width":"60%"},  "maxlength":128,
+                "placeholder":"https://pubchem.ncbi.nlm.nih.gov/compound/25098607"
               }
             ],
             "value":[]
@@ -914,11 +901,11 @@
               "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":false,
             "proplist":[
-              {"prop":"type", "emtype":"text", "label":"Type",
-                "style":{"width":"20%", "marginRight":"20px"}
+              {"prop":"type", "emtype":"text", "label":"Type", "placeholder":"csv",
+                "style":{"width":"20%", "marginRight":"20px"}, "maxlength":32
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"70%", "marginRight":"0px"}
+                "style":{"width":"70%", "marginRight":"0px"}, "maxlength":128
               }
             ],
             "value":[]
@@ -954,7 +941,7 @@
       {
         "groupid":"one",
         "title":"Publication",
-        "style":{"width":"40%","margin":"0px 30px 30px 0px",
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -975,7 +962,7 @@
                 }
               }
               ,{"prop":"id",  "emtype":"text", "datatype":"string|string", "label":"ID",
-                  "style":{"width":"45%"}
+                  "style":{"width":"45%"}, "placeholder":"31616925"
               }
             ]
           }
@@ -984,33 +971,33 @@
       {
         "groupid":"two",
         "title":"Experimental Method",
-        "style":{"width":"30%","margin":"0px 30px 30px 0px",
-           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"experimental_method", "emtype":"stringlist", "datatype":"string|string",
             "required":true,"label":"Experimental Method", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
+            "style":{"width":"85%", "margin":"5px"}, "placeholder":"MALDI-TOF-MS"
           }
         ]
       },
       {
         "groupid":"three",
         "title":"Keywords",
-        "style":{"width":"30%","margin":"0px 30px 30px 0px",
-           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
             "required":true,"label":"Keywords", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
+            "style":{"width":"85%", "margin":"5px"}, "placeholder":"glycomics"
           }
         ]
       },
       {
         "groupid":"four",
         "title":"Experimental Data",
-        "style":{"width":"40%","margin":"0px 30px 30px 0px",
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
@@ -1019,11 +1006,11 @@
               "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
             "maxlength":20,  "value":"", "required":false,
             "proplist":[
-              {"prop":"type", "emtype":"text", "label":"Type",
-                "style":{"width":"20%", "marginRight":"20px"}
+              {"prop":"type", "emtype":"text", "label":"Type", "placeholder":"csv",
+                "style":{"width":"20%", "marginRight":"20px"}, "maxlength":32
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"70%", "marginRight":"0px"}
+                "style":{"width":"70%", "marginRight":"0px"}, "maxlength":128
               }
             ],
             "value":[]
@@ -1059,36 +1046,37 @@
        {
         "groupid":"one",
         "title":"Keywords",
-        "style":{"width":"30%","margin":"0px 30px 30px 0px",
-           "padding":"10px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
+           "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"keywords", "emtype":"stringlist", "datatype":"string|string",
             "required":true,"label":"Keywords", "class":"submissionsform",
-            "style":{"width":"85%", "margin":"5px"}
+            "style":{"width":"85%", "margin":"5px"}, "placeholder":"glycomics"
           }
         ]
       },
       {
         "groupid":"two",
         "title":"Database References",
-        "style":{"width":"50%","margin":"0px 30px 30px 0px",
+         "style":{"width":"90%","margin":"0px 30px 30px 0px",
            "padding":"20px", "border":"1px solid DodgerBlue", "borderRadius":"10px"},
         "emlist":[
           {
             "emid":"xrefs","emtype":"objlist",  "label":"Database References",
             "wrapperstyle":{"width":"90% !important","padding":"0px 10px 20px 10px",
               "margin":"0px 20px 10px 0px", "border":"1px solid #ccc", "borderRadius":"10px"},
-            "maxlength":20,  "value":"", "required":false,
+            "maxlength":20,  "value":"", "required":true,
             "proplist":[
-              {"prop":"database", "emtype":"text", "label":"Database",
-                "style":{"width":"20%", "marginRight":"20px"}
+              {"prop":"database", "emtype":"text", "label":"Database", "placeholder":"PubChem",
+                "style":{"width":"20%", "marginRight":"20px"}, "maxlength":32
               }
-              ,{"prop":"id", "emtype":"text", "label":"ID",
-                "style":{"width":"20%", "marginRight":"20px"}
+              ,{"prop":"id", "emtype":"text", "label":"ID", "placeholder":"25098607",
+                "style":{"width":"20%", "marginRight":"20px"},  "maxlength":32
               },
               {"prop":"url", "emtype":"text", "label":"URL",
-                "style":{"width":"20%", "marginRight":"0px"}
+                "style":{"width":"20%", "marginRight":"0px"}, "maxlength":128,
+                "placeholder":"https://pubchem.ncbi.nlm.nih.gov/compound/25098607"
               }
             ],
             "value":[]

@@ -8,6 +8,8 @@
         "emlist":[
           {"emid":"fname", "emtype":"text", "datatype":"string", "label":"First Name", "maxlength":50, "class":          "registerform_one", "value":"", "required":true},
           {"emid":"lname", "emtype":"text", "datatype":"string", "label":"Last Name", "maxlength":50, "class":           "registerform_one", "value":"", "required":true},
+          {"emid":"institute", "emtype":"text", "datatype":"string", "label":"Institute",
+             "maxlength":128, "class":"registerform_one", "value":"", "required":false},
           {"emid":"email", "emtype":"text", "datatype":"string", "label":"Email Address", "maxlength":320, "class":        "registerform_one", "value":"", "required":true,
           "description":"Email must have at least one '@' and one '.' character"}
         ]

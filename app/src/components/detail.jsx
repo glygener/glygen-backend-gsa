@@ -29,6 +29,7 @@ class Detail extends Component {
         <Nav navinfo={this.state.navinfo[this.state.pageid]} navParamInfo={this.state.navparaminfo}/>
         <div className="pagecn" style={{background:"#fff"}}>
           <Recordview gsaId={this.props.gsaId}/>
+
         </div>
       </div>
 

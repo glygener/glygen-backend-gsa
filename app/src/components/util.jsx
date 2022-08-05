@@ -420,7 +420,9 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         maxLength={formObj.maxlength} id={pathId}
         className={"form-control " + formClass}
         defaultValue={emValue || ''}
+        placeholder={formObj.placeholder}
         disabled={disableFlag}
+        style={formObj.style}
       >
       </textarea>
     );
@@ -492,6 +494,7 @@ export function getFormElement(pathId, formObj,formClass, emValue){
               maxLength={formObj.maxlength}
               type={"text"} defaultValue={""} 
               disabled={false} 
+              placeholder={formObj.placeholder}
             />
           </div>
           <div className="leftblock" style={{margin:"2px 0px 0px 5px"}}>

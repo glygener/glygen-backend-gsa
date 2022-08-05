@@ -219,14 +219,8 @@
         "emlist":[
           {
             "emid":"glycolipid|lipid_id", "emtype":"text", "datatype":"string",
-            "label":"PubChem ID", "class":"submissionsform",
+            "label":"Lipid PubChem ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"0px 10px 0px 0px"},
-            "value":""
-          },
-          {
-            "emid":"glycolipid|sequence", "emtype":"text", "datatype":"string",
-            "label":"Lipid Sequence", "class":"submissionsform",
-            "style":{"width":"45%"},
             "value":""
           }
         ]
@@ -251,14 +245,8 @@
           },
           {
             "emid":"gpi|lipid_id", "emtype":"text", "datatype":"string",
-            "label":"PubChem ID", "class":"submissionsform",
+            "label":"Lipid PubChem ID", "class":"submissionsform",
             "style":{"width":"30%", "margin":"0px 10px 0px 0px"},
-            "value":""
-          },
-          {
-            "emid":"gpi|sequence", "emtype":"text", "datatype":"string",
-            "label":"Lipid Sequence", "class":"submissionsform",
-            "style":{"width":"30%"},
             "value":""
           }
         ]

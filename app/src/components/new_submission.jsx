@@ -370,9 +370,24 @@ class Newsubmission extends Component {
         }
       }
     });
- 
+
 
     var tmpState = this.state;
+    var errorList = [];
+    for (var p in o){
+      if (o[p].trim() === ""){
+        errorList.push(<li>value expected for property {p} </li>);
+      }
+    }
+    
+    if (errorList.length > 0){
+      tmpState.dialog.status = true;
+      tmpState.dialog.msg = <div><ul> {errorList} </ul></div>;
+      this.setState(tmpState);
+      return false;
+    }
+
+
     if (!(k in tmpState.record)){
       tmpState.record[k] = [];
     }
@@ -496,7 +511,7 @@ class Newsubmission extends Component {
       }
     }
     else if (tmpState.formKey.split("_")[1] === "six"){
-      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+      var x = tmpState.record["data_source_type"].toLowerCase().replace(" ", "_");
       tmpState.formKey = "step_five_" + x;
 
     }
@@ -576,12 +591,12 @@ class Newsubmission extends Component {
         tmpState.formKey = "step_four_" + x;
       }
       else{
-        var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+        var x = tmpState.record["data_source_type"].toLowerCase().replaceAll(" ", "_");
         tmpState.formKey = "step_five_" + x;
       }
     }
     else if (tmpState.formKey.split("_")[1] === "four"){
-      var x = tmpState.record["data_source_type"].split(" ")[0].toLowerCase();
+      var x = tmpState.record["data_source_type"].toLowerCase().replaceAll(" ", "_");
       tmpState.formKey = "step_five_" + x;
     }
     else if (tmpState.formKey.split("_")[1] === "five"){
@@ -600,6 +615,28 @@ class Newsubmission extends Component {
   }
 
 
+  validateUniprotAc = (uniprotAc) => {
+    
+    const svcUrl = LocalConfig.apiHash.uniprotkb_entry + uniprotAc + ".json";
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", svcUrl, false);
+    xhr.seqLen = 0;
+    xhr.flag = false;
+    xhr.uniprotAc = uniprotAc;
+    xhr.onreadystatechange = function() {//Call a function when the state changes.
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        var obj = JSON.parse(xhr.responseText);
+        if (obj.primaryAccession === xhr.uniprotAc){
+          xhr.flag = true;
+          xhr.seqLen = obj["sequence"]["length"];
+        }
+      }
+    }
+    xhr.send();
+    return xhr.seqLen;
+
+  }
+
 
   validateInput = (valHash) => {
 
@@ -610,27 +647,12 @@ class Newsubmission extends Component {
         var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
         var startPos = valHash["glycoprotein|site|start_pos"];
         var endPos = valHash["glycoprotein|site|end_pos"];
-        const svcUrl = LocalConfig.apiHash.uniprotkb_entry + uniprotAc + ".json";
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", svcUrl, false);
-        xhr.seqLen = 0;
-        xhr.flag = false;
-        xhr.uniprotAc = uniprotAc;  
-        xhr.onreadystatechange = function() {//Call a function when the state changes.
-          if(xhr.readyState == 4 && xhr.status == 200) {
-            var obj = JSON.parse(xhr.responseText);
-            xhr.seqLen = obj["sequence"]["length"];
-            if (obj.primaryAccession === xhr.uniprotAc){
-              xhr.flag = true;
-            }
-          }
-        }
-        xhr.send();
-        if (xhr.flag === false){
+        var seqLen = this.validateUniprotAc(uniprotAc);
+        if (seqLen === 0){
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Invalid UniProtKB accession</li>);
         }
-        if (startPos < 1 || endPos > xhr.seqLen){
+        if (startPos < 1 || endPos > seqLen){
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Site range outside of sequence length</li>);
         }
@@ -671,19 +693,52 @@ class Newsubmission extends Component {
       this.handleValidateTaxId(taxId);
     }
 
-    if (this.state.formKey.indexOf("step_two") != -1 && valHash["glycan|sequence_type"] === "GlycoCT"){
+    if (this.state.formKey.indexOf("step_two") != -1){
       var tmpState = this.state;
       tmpState.loadingicon = true;
       this.setState(tmpState);
-      var glycoctSeq = valHash["glycan|sequence"];
-      validateGlycoctSequence(glycoctSeq).then(resObj => {
-        var tmpState = this.state;
-        //tmpState.record["validation"] = JSON.stringify(resObj, null, 2);
-        tmpState.record["validation"] = resObj;
-        tmpState.loadingicon = false;
-        this.updateForm();
-        this.setState(tmpState);
-      });
+      var glycanSeq = valHash["glycan|sequence"];
+      var formKey = this.state.formKey;
+      if (["step_two_glycolipid", "step_two_gpi"].indexOf(formKey) !== -1){
+        var lipidId = (formKey === "step_two_gpi" ? 
+          valHash["gpi|lipid_id"] : valHash["glycolipid|lipid_id"])
+        var url = "https://pubchem.ncbi.nlm.nih.gov/compound/" + lipidId;
+        if (formKey === "step_two_gpi"){
+          var seqLen = this.validateUniprotAc(valHash["gpi|uniprotkb_ac"]);
+          if (seqLen === 0){
+             var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+            errorList.push(<li key={"error_" + randStr}>Invalid UniProtKB Accession</li>);
+          }
+        }
+        validateUrl(url).then(errorList => {
+          if (errorList.length > 0){
+            var tmpState = this.state;
+            tmpState.dialog.status = true;
+            tmpState.loadingicon = false;
+            tmpState.formKey = formKey;
+            tmpState.dialog.msg = <div><ul> {errorList} </ul></div>;
+            this.setState(tmpState);
+          }
+          else if (valHash["glycan|sequence_type"] === "GlycoCT"){
+            validateGlycoctSequence(glycanSeq).then(resObj => {
+              var tmpState = this.state;
+              tmpState.record["validation"] = resObj;
+              tmpState.loadingicon = false;
+              this.updateForm();
+              this.setState(tmpState);
+            });
+          }
+        });
+      }
+      else if (valHash["glycan|sequence_type"] === "GlycoCT"){
+        validateGlycoctSequence(glycanSeq).then(resObj => {
+          var tmpState = this.state;
+          tmpState.record["validation"] = resObj;
+          tmpState.loadingicon = false;
+          this.updateForm();
+          this.setState(tmpState);
+        });
+      }
     }
    
     //this.endLoadingIcon();

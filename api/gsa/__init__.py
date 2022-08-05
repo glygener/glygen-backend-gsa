@@ -1,4 +1,5 @@
 import os
+import datetime
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -28,6 +29,9 @@ def create_app():
         app.config.from_pyfile('config.prd.py', silent=True)
     else:
         app.config.from_pyfile('config.dev.py', silent=True)
+
+    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(days=1)
+    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(days=30)
 
     jwt = JWTManager(app)
 
