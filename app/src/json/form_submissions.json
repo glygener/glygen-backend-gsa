@@ -636,9 +636,9 @@
         "emlist":[
           {
             "emid":"biological_source|tax_id", "emtype":"text", "datatype":"string|string",
-            "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
+            "maxlength":128, "label":"Biological Source Tax ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":"6016", "required":true
+            "value":"", "placeholder":"155864", "required":true
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string|string",
@@ -686,7 +686,7 @@
         "emlist":[
           {
             "emid":"expression_system|tax_id", "emtype":"text", "datatype":"string|string",
-            "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
+            "maxlength":128, "label":"Expression System Tax ID", "class":"submissionsform",
             "style":{"width":"90%", "margin":"10px 0% 0px 0px"},
             "placeholder":"9986", "required":true
           },
@@ -738,9 +738,9 @@
         "emlist":[
           {
             "emid":"biological_source|tax_id", "emtype":"text", "datatype":"string|string",
-            "maxlength":128, "label":"Species Taxonomy ID", "class":"submissionsform",
+            "maxlength":128, "label":"Biological Source Tax ID", "class":"submissionsform",
             "style":{"width":"45%", "margin":"10px 20px 0px 0px"},
-            "value":"", "placeholder":"6016", "required":true
+            "value":"", "placeholder":"155864", "required":true
           },
           {
             "emid":"biological_source|strain", "emtype":"text", "datatype":"string|string",

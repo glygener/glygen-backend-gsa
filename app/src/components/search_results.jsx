@@ -77,7 +77,7 @@ class SearchResults extends Component {
           }
           this.setState(tmpState);
           //console.log("Request:",svcUrl);
-          console.log("Ajax response:", result);
+          //console.log("Ajax response:", result);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow

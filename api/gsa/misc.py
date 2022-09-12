@@ -81,7 +81,7 @@ def urlexists():
     res_obj = {}
     try:
         response = requests.get(req_obj["url"])
-        if response.status_code == 200:
+        if response.status_code in [200, 403]:
             res_obj = {"status":1}
         else:
             res_obj = {"status":0, "code":response.status_code}
@@ -103,7 +103,9 @@ def taxidexists():
         if response.status_code == 200:
             res = response.json()
             if "error" not in res:
-                res_obj = {"status":1}
+                tax_id = str(req_obj["tax_id"])
+                org_name = res["result"][tax_id]["scientificname"]
+                res_obj = {"status":1, "orgname":org_name}
     except Exception as e:
         res_obj = {"status":0, "error":"unable to check url!"}
 

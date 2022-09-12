@@ -171,7 +171,7 @@ def login_direct():
                 error = "Login failed: either your email or password is incorrect."
         res_obj = {"status":1}
         if error is None:
-            access_token = create_access_token(identity=username)
+            access_token = create_access_token(identity=username, expires_delta=None)
             refresh_token = create_refresh_token(identity=username)
             res_obj["access_csrf"] = get_csrf_token(access_token)
             res_obj["refresh_csrf"] = get_csrf_token(refresh_token)

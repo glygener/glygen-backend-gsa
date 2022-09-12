@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import * as LocalConfig from "./local_config";
 import RemoveOutlinedIcon from '@material-ui/icons/RemoveOutlined';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
-import urlExist from "url-exist"
+import urlExistSync from "url-exist-sync";
 
 
 
@@ -56,6 +56,7 @@ export function verifyReqObj (reqObj, formObj){
     
     var typeList = ["text", "int", "float", "select", "textarea", "stringlist", "obj", "objlist"];
     var errorList = [];
+    var idx = 0;
     for (var i in formObj.groups){
       var grpObj = formObj.groups[i];
       for (var j in grpObj.emlist){
@@ -63,25 +64,28 @@ export function verifyReqObj (reqObj, formObj){
         var emId = obj.emid;
         var emValue =  obj.value;
         var emLbl = obj.label;
+        idx += 1;
+        var li_key = emId + "_" + idx;
+        reqObj[emId] = (reqObj[emId] === null ? "" : reqObj[emId]);
         if (typeList.indexOf(obj.emtype) === -1){
             continue;
         } 
         else if (obj.required === true && ["stringlist", "objlist"].indexOf(obj.emtype) !== -1){
           if (emValue === undefined){
-            errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+            errorList.push(<li key={"error_in_" + li_key}>"{emLbl}" cannot be empty value</li>);
           }
           else if (emValue.length === 0){
-            errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+            errorList.push(<li key={"error_in_" + li_key}>"{emLbl}" cannot be empty value</li>);
           }
         }
-        else if (obj.required === true && reqObj[emId] == null){
-          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+        else if (obj.required === true && reqObj[emId] === ""){
+          errorList.push(<li key={"error_in_" + li_key}>"{emLbl}" cannot be empty value</li>);
         }
         else if (obj.required === true && obj["datatype"].split("|")[1] === "int" && isNaN(reqObj[emId])){
-          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+          errorList.push(<li key={"error_in_" + li_key}>"{emLbl}" cannot be empty value</li>);
         } 
         else if (obj.required === true && reqObj[emId].toString() === "" ){
-          errorList.push(<li key={"error_in_" + emId}>"{emLbl}" cannot be empty value</li>);
+          errorList.push(<li key={"error_in_" + li_key}>"{emLbl}" cannot be empty value</li>);
         }
         else if ("datatype" in obj){
           if (obj["datatype"].split("|")[0] === "number"){
@@ -98,6 +102,7 @@ export function verifyReqObj (reqObj, formObj){
       //  return errorList;
       //}
     }
+
     return errorList;
 }
 
@@ -187,9 +192,13 @@ export function rndrSearchResults(objList, startIdx, endIdx) {
 
     var gsaId = obj.gsa_id;
     var gsaLink = (<Link to={"/detail/" + gsaId }>{gsaId}</Link>);
-    var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
     obj.glycoconjugagte_type = (obj.glycoconjugagte_type === undefined ? "N/A" : obj.glycoconjugagte_type);
     obj.glycan.glytoucan_ac = (obj.glycan.glytoucan_ac === "" ? "N/A" : obj.glycan.glytoucan_ac);
+    var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
+    if (obj.glycan.glytoucan_ac === "N/A"){
+      imgUrl = process.env.PUBLIC_URL + '/imglib/placeholder.png';
+    }
+
 
     cardList.push(
       <div className="leftblock" style={{width:"30%", background:"#fff", margin:"20px 20px 0px 0%"}}>
@@ -198,7 +207,7 @@ export function rndrSearchResults(objList, startIdx, endIdx) {
           GlyToucan Accession: {obj.glycan.glytoucan_ac}<br/>
           Submission Type: {obj.glycoconjugate_type}<br/>
           Evidence Type: {obj.evidence_type}<br/>
-          <img src={imgUrl} style={{width:"100%"}}/>
+          <img src={imgUrl} style={{height:"100px"}}/>
         </div>
       </div>
     );
@@ -343,15 +352,6 @@ export function getFormElement(pathId, formObj,formClass, emValue){
         }
       }
 
-
-      //if (validationHash["email"] && validationHash["password_one"] 
-      //    && validationHash["password_two"] && validationHash["password"]){
-      //  document.getElementById("registerbtn_one").disabled = false;
-      //
-      //}
-      //else{
-      //  document.getElementById("registerbtn_one").disabled = true;
-      //}
     }
 
 
@@ -727,9 +727,12 @@ export async function validateTaxId(taxId)  {
 
 export async function validateGlycoctSequence(glycoctSeq)  {
 
-  //glycoctSeq = glycoctSeq.replace("\\n", " ");
-  var tmpList = glycoctSeq.split("\n");
-  glycoctSeq = tmpList.join(" ");
+  glycoctSeq = glycoctSeq.replaceAll("\n", "%20");
+  glycoctSeq = glycoctSeq.replaceAll("+", "%2B");
+  glycoctSeq = glycoctSeq.replaceAll(":", "%3A");
+
+  //var tmpList = glycoctSeq.split("\n");
+  //glycoctSeq = tmpList.join(" ");
 
   var svcUrl = LocalConfig.apiHash.glycoct_validate;
   svcUrl += "?glycoct=" + glycoctSeq;

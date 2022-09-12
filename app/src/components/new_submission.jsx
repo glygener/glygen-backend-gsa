@@ -22,6 +22,7 @@ class Newsubmission extends Component {
     formCnHash:{},
     record:{},
     pageid:"new_submission",
+    retseq:{glytoucan_ac:"", format:"", sequence:""},
     navinfo:{
       new_submission:[
           {id:"dashboard", label: "Dashboard", url: "/dashboard"},  
@@ -80,7 +81,6 @@ class Newsubmission extends Component {
     for (var i in formHash[k]["groups"]){
       for (var j in formHash[k]["groups"][i]["emlist"]){
         var emObj = formHash[k]["groups"][i]["emlist"][j];
-        console.log("DUMP", emObj.emid, emObj.value)
       }
     }
 
@@ -100,7 +100,9 @@ class Newsubmission extends Component {
 
 
   getSummaryCn () {
-    var grpOne = ["glycan", "biological_source"];
+    
+
+    var grpOne = ["glycan", "biological_source", "expression_system"];
     var grpTwo = [
       "user_id", "evidence_type", "data_source_type", "glycoconjugate_type",
       "keywords", "xrefs", "experimental_method", "publication","experimental_data"
@@ -114,9 +116,10 @@ class Newsubmission extends Component {
       }
       else if (grpTwo.indexOf(parts[0]) != -1){
         dataModel[parts[0]] = this.state.record[k];
-        if (dataModel["glycoconjugate_type"] === "Glycan"){
-          dataModel["glycoconjugate_type"] = "";
-        }
+        
+        //if (dataModel["glycoconjugate_type"] === "Glycan"){
+        //  dataModel["glycoconjugate_type"] = "";
+        //}
       }
       else if (parts[1] === "site"){
         dataModel[parts[0]]["site"][parts[2]] = parseInt(this.state.record[k]);
@@ -136,9 +139,10 @@ class Newsubmission extends Component {
     }
 
 
+
     var secList = [
       "user_id","evidence_type", "data_source_type", "glycan", 
-      "glycoconjugate_type", "biological_source", 
+      "glycoconjugate_type", "biological_source", "expression_system", 
       "glycoprotein", "glycopeptide", "glycolipid", "gpi",
       "keywords", "xrefs", "experimental_method",
       "publication","experimental_data"
@@ -218,8 +222,8 @@ class Newsubmission extends Component {
       body: JSON.stringify(reqObj)
     };
     const svcUrl = LocalConfig.apiHash.gsa_getseq;
-    console.log("svcURL", svcUrl);
-    console.log("reqObj", reqObj);
+    //console.log("svcURL", svcUrl);
+    //console.log("reqObj", reqObj);
     fetch(svcUrl, requestOptions)
       .then((res) => res.json())
       .then(
@@ -234,7 +238,8 @@ class Newsubmission extends Component {
           tmpState.loginforward = "msg" in result;
           var emObj = document.getElementById("glycan|sequence");
           emObj.value = result.sequence;
-          console.log("Retrieveseq", result);
+          tmpState.retseq = result
+          //console.log("Retrieveseq", result);
           this.setState(tmpState);
         },
         (error) => {
@@ -327,6 +332,7 @@ class Newsubmission extends Component {
           }
         }
       }
+
 
       tmpState.formCnHash[k] = (
         <div key={"form_div"+k} className="leftblock "
@@ -568,16 +574,17 @@ class Newsubmission extends Component {
     }
 
 
-
-
     var tmpState = this.state;
     if (tmpState.formKey === "step_one"){
       tmpState.record = {"user_id":this.state.user_id};
     }
     for (var f in valHash){
-      tmpState.record[f] = valHash[f];
+      if (valHash[f] !== undefined){
+        tmpState.record[f] = valHash[f];
+      }
     }
-    
+
+
     if (tmpState.formKey === "step_one"){
       var x = tmpState.record["glycoconjugate_type"].split(" ")[0].toLowerCase();
       tmpState.formKey = "step_two_" + x;
@@ -610,6 +617,9 @@ class Newsubmission extends Component {
       tmpState.formKey = "step_seven_all";
     }
     this.setState(tmpState);
+    
+
+
     return
 
   }
@@ -643,11 +653,31 @@ class Newsubmission extends Component {
 
 
     var errorList = [];
+    if (this.state.formKey.indexOf("step_two") !== -1){
+      if (this.state.retseq.sequence !== ""){
+        if (valHash["glycan|glytoucan_ac"] !== this.state.retseq.glytoucan_ac){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Invalid GlyTouCan accession</li>);  
+        }
+        if (valHash["glycan|sequence"] !== this.state.retseq.sequence){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Invalid glycan sequence</li>);
+        }
+      }
+    }
+
     if (this.state.formKey === "step_two_glycoprotein"){
         var uniprotAc = valHash["glycoprotein|uniprotkb_ac"];
         var startPos = valHash["glycoprotein|site|start_pos"];
         var endPos = valHash["glycoprotein|site|end_pos"];
         var seqLen = this.validateUniprotAc(uniprotAc);
+        var tmpList = [];
+        if (isNaN(startPos) === false){ tmpList.push(startPos);}
+        if (isNaN(endPos) === false){ tmpList.push(endPos);}
+        if (tmpList.length === 1){
+          var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
+          errorList.push(<li key={"error_" + randStr}>Provide both start and end site positions</li>);
+        }
         if (seqLen === 0){
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Invalid UniProtKB accession</li>);
@@ -660,6 +690,7 @@ class Newsubmission extends Component {
           var randStr = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 16);
           errorList.push(<li key={"error_" + randStr}>Start position cannot be greater than end position</li>);
         }
+        
     }
     else if (this.state.formKey === "step_two_glycopeptide"){
       var pepLen = valHash["glycopeptide|sequence"].length;
@@ -685,12 +716,20 @@ class Newsubmission extends Component {
 
     }
     else if (this.state.formKey === "step_four_biological"){
-      var taxId = valHash["biological_source|tax_id"];
-      this.handleValidateTaxId(taxId);
+      var taxId = valHash["biological_source|tax_id"].trim();
+      if (taxId !== ""){
+        this.handleValidateTaxId(taxId, "biological_source|tax_id", "Biological Source Tax ID");
+      }
     }
     else if (this.state.formKey === "step_four_recombinant"){
-      var taxId = valHash["expression_system|tax_id"];
-      this.handleValidateTaxId(taxId);
+      var taxId = valHash["biological_source|tax_id"].trim();
+      if (taxId !== ""){
+        this.handleValidateTaxId(taxId, "biological_source|tax_id", "Biological Source Tax ID");
+      }
+      var taxId = valHash["expression_system|tax_id"].trim();
+      if (taxId !== ""){
+        this.handleValidateTaxId(taxId, "expression_system|tax_id", "Expression System Tax ID");
+      }
     }
 
     if (this.state.formKey.indexOf("step_two") != -1){
@@ -749,7 +788,7 @@ class Newsubmission extends Component {
 
 
 
-  handleValidateTaxId = (taxId) => {
+  handleValidateTaxId = (taxId, fieldName, fieldLbl) => {
       var tmpState = this.state;
       tmpState.loadingicon = true;
       this.setState(tmpState);
@@ -757,9 +796,11 @@ class Newsubmission extends Component {
         var tmpState = this.state;
         if (resObj.status !== 1){
           tmpState.dialog.status = true;
-          tmpState.dialog.msg = (<li>Invalid Tax ID: {taxId}</li>);
-          tmpState.formKey = "step_four_biological";
+          tmpState.dialog.msg = (<li>Invalid: {fieldLbl}</li>);
+          //tmpState.formKey = "step_four_biological";
         }
+        var parts = fieldName.split("|");
+        dataModel[parts[0]]["tax_name"] = resObj["orgname"];
         tmpState.loadingicon = false;
         this.updateForm();
         this.setState(tmpState);
@@ -785,8 +826,8 @@ class Newsubmission extends Component {
     }
 
 
+
     var cn = this.state.formCnHash[this.state.formKey];
-    
     return (
       <div>
         <Nav navinfo={this.state.navinfo[this.state.pageid]} />

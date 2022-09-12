@@ -30,7 +30,7 @@ def create_app():
     else:
         app.config.from_pyfile('config.dev.py', silent=True)
 
-    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(days=1)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(days=1)
     app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(days=30)
 
     jwt = JWTManager(app)

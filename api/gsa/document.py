@@ -144,7 +144,8 @@ def get_many(req_obj):
             for k in ["createdts", "modifiedts"]:
                 if k in doc:
                     ts_format = "%Y-%m-%d %H:%M:%S %Z%z"
-                    doc[k] = doc[k].strftime(ts_format)
+                    if type(doc[k]) is not str:
+                        doc[k] = doc[k].strftime(ts_format)
             else:
                 res_obj["recordlist"].append(doc)
         #res_obj["query"] = req_obj

@@ -66,11 +66,16 @@ class Recordview extends Component {
       border:"1px solid #ccc", borderRadius:"10px"};
 
     var obj = this.state.response.record;
+    obj.glycan.glytoucan_ac = (obj.glycan.glytoucan_ac === "" ? "N/A" : obj.glycan.glytoucan_ac);
     var imgUrl = "https://image.glycosmos.org/snfg/png/" + obj.glycan.glytoucan_ac;
+    if (obj.glycan.glytoucan_ac === "N/A"){
+      imgUrl = process.env.PUBLIC_URL + '/imglib/placeholder.png';
+    }
+
     var tmpList = [];
     tmpList.push(<div className="leftblock" style={sOne}>
       <b>GSA ID</b>: {obj.gsa_id}<br/>
-      <div className="leftblock"><img src={imgUrl} style={{width:"70%"}}/></div>
+      <div className="leftblock"><img src={imgUrl} style={{height:"120px"}}/></div>
       </div>); 
 
     obj.data_source_type = (obj.data_source_type === "Both" ? "Database & Paper" : obj.data_source_type);
@@ -83,8 +88,6 @@ class Recordview extends Component {
         </div>
       </div>);
 
-
-    obj.glycan.glytoucan_ac = (obj.glycan.glytoucan_ac === "" ? "N/A" : obj.glycan.glytoucan_ac);
     
     var moleculeList = [];
     moleculeList.push(<div><b>GlyTouCan Accession</b>: {obj.glycan.glytoucan_ac}<br/></div>);
@@ -135,6 +138,47 @@ class Recordview extends Component {
           <b>Taxonomy ID</b>: {obj.biological_source.tax_id}<br/>
         </div>
       </div>);
+
+    if ("expression_system" in obj){
+      if ("tax_id" in obj["expression_system"]){
+        obj.expression_system.tax_name = (obj.expression_system.tax_name === "" ? "N/A" : obj.expression_system.tax_name);
+        tmpList.push(<div className="leftblock" style={sOne}>
+          <b>EXPRESSION SYSTEM</b><br/>
+          <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+            <b>Organism</b>: {obj.expression_system.tax_name}<br/>
+            <b>Taxonomy ID</b>: {obj.expression_system.tax_id}<br/>
+        </div>
+      </div>);
+      }
+    }
+
+    if ("keywords" in obj){
+      if (obj["keywords"].length > 0){
+        tmpList.push(
+          <div className="leftblock" style={sOne}>
+            <b>KEYWORDS</b><br/>
+            <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+              {obj["keywords"].join("; ")}
+            </div>
+          </div>
+        );
+      }
+    }
+
+    if ("experimental_method" in obj){
+      if (obj["experimental_method"].length > 0){
+        tmpList.push(
+          <div className="leftblock" style={sOne}>
+            <b>EXPERIMENTAL METHODS</b><br/>
+            <div className="leftblock" style={{width:"90%",marginLeft:"20px"}}>
+              {obj["experimental_method"].join("; ")}
+            </div>
+          </div>
+        );
+      }
+    }
+
+
 
     var urlHash = {
         "PubMed":"https://pubmed.ncbi.nlm.nih.gov/",
